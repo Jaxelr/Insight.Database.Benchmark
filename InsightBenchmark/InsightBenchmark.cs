@@ -6,36 +6,49 @@ using System.Linq;
 
 namespace InsightBenchmark
 {
-    [BenchmarkCategory("Insight")]
+    [BenchmarkCategory("Insight.Database")]
     public class InsightBenchmark
     {
         private const int MAX = 10000;
         protected SqlConnection _connection;
-        private readonly string connectionString = "Server=.;database=master;Trusted_Connection=true;";
         private int param = 0;
 
         public InsightBenchmark()
         {
-            _connection = new SqlConnection(connectionString);
+            _connection = new SqlConnection(Program.ConnectionString);
             SqlInsightDbProvider.RegisterProvider();
             _connection.Open();
         }
 
-        [Benchmark(Description = "Single By Id")]
+        [Benchmark(Description = "Single")]
         public Post GetSinglePost()
         {
-            Bump();
+            Increment();
             return _connection.SingleSql<Post>("SELECT * FROM Post WHERE Id = @param", new { param });
         }
 
-        [Benchmark(Description = "Query By Id")]
+        [Benchmark(Description = "Query<T>")]
         public Post GetQueryPost()
         {
-            Bump();
+            Increment();
             return _connection.QuerySql<Post>("SELECT * FROM Post WHERE Id = @param", new { param }).First();
         }
 
-        private void Bump()
+        [Benchmark(Description ="Auto Interface Single")]
+        public Post AutoInterfaceSinglePost()
+        {
+            Increment();
+            return _connection.As<IPostRepository>().AutoISinglePost(param);
+        }
+
+        [Benchmark(Description = "Auto Interface Query")]
+        public Post AutoInterfaceQueryPost()
+        {
+            Increment();
+            return _connection.As<IPostRepository>().AutoIQueryPost(param);
+        }
+
+        private void Increment()
         {
             if (param > MAX)
                 param = 0;
@@ -45,7 +58,7 @@ namespace InsightBenchmark
         [GlobalSetup]
         public void DbSetup()
         {
-            using var cn = new SqlConnection(connectionString);
+            using var cn = new SqlConnection(Program.ConnectionString);
 
             cn.Open();
             var cmd = cn.CreateCommand();
@@ -109,7 +122,7 @@ namespace InsightBenchmark
         [GlobalCleanup]
         public void DbCleanup()
         {
-            using var cn = new SqlConnection(connectionString);
+            using var cn = new SqlConnection(Program.ConnectionString);
 
             cn.Open();
             var cmd = cn.CreateCommand();

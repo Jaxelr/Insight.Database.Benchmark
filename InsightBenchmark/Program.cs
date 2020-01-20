@@ -19,7 +19,7 @@ namespace InsightBenchmark
 
             ConnectionString = configuration.GetConnectionString("Default");
 
-            BenchmarkSwitcher.FromAssembly(typeof(InsightBenchmark).Assembly).Run(args, new  DebugInProcessConfig());
+            BenchmarkSwitcher.FromAssembly(typeof(InsightBenchmark).Assembly).Run(args, new DebugInProcessConfig());
         }
     }
 }
