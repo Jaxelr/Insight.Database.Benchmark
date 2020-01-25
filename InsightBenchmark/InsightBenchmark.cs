@@ -9,7 +9,6 @@ namespace InsightBenchmark
     [BenchmarkCategory("Insight.Database")]
     public class InsightBenchmark
     {
-        private const int MAX = 10000;
         protected SqlConnection _connection;
         private int param = 0;
 
@@ -50,7 +49,7 @@ namespace InsightBenchmark
 
         private void Increment()
         {
-            if (param > MAX)
+            if (param > Program.Iterations)
                 param = 0;
             param++;
         }
@@ -99,7 +98,7 @@ namespace InsightBenchmark
 					DELETE FROM dbo.Comment;
 
 					DECLARE @i INT = 0;
-					WHILE (@i <= {MAX})
+					WHILE (@i <= {Program.Iterations})
 					BEGIN
 						DECLARE @PostId INT;
 
