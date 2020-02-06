@@ -7,49 +7,39 @@ using System.Linq;
 namespace InsightBenchmark
 {
     [BenchmarkCategory("Insight.Database")]
-    public class InsightBenchmark
+    public class InsightBenchmark : BaseBenchmark
     {
         protected SqlConnection _connection;
         private int param = 0;
 
-        public InsightBenchmark()
-        {
-            _connection = new SqlConnection(Program.ConnectionString);
-            SqlInsightDbProvider.RegisterProvider();
-            _connection.Open();
-        }
-
         [Benchmark(Description = "Single")]
         public Post GetSinglePost()
         {
-            Increment();
             return _connection.SingleSql<Post>("SELECT * FROM Post WHERE Id = @param", new { param });
         }
 
         [Benchmark(Description = "Query<T>")]
         public Post GetQueryPost()
         {
-            Increment();
             return _connection.QuerySql<Post>("SELECT * FROM Post WHERE Id = @param", new { param }).First();
         }
 
-        [Benchmark(Description ="Auto Interface Single")]
+        [Benchmark(Description = "Auto Interface Single")]
         public Post AutoInterfaceSinglePost()
         {
-            Increment();
             return _connection.As<IPostRepository>().AutoISinglePost(param);
         }
 
         [Benchmark(Description = "Auto Interface Query")]
         public Post AutoInterfaceQueryPost()
         {
-            Increment();
             return _connection.As<IPostRepository>().AutoIQueryPost(param);
         }
 
-        private void Increment()
+        [IterationSetup]
+        public void Increment()
         {
-            if (param > Program.Iterations)
+            if (param > Iterations)
                 param = 0;
             param++;
         }
@@ -57,10 +47,13 @@ namespace InsightBenchmark
         [GlobalSetup]
         public void DbSetup()
         {
-            using var cn = new SqlConnection(Program.ConnectionString);
+            System.Console.Write($"Connection string: {ConnectionString}");
 
-            cn.Open();
-            var cmd = cn.CreateCommand();
+            _connection = new SqlConnection(ConnectionString);
+            SqlInsightDbProvider.RegisterProvider();
+            _connection.Open();
+
+            var cmd = _connection.CreateCommand();
 
             cmd.CommandText = $@"
 					SET NOCOUNT ON;
@@ -98,7 +91,7 @@ namespace InsightBenchmark
 					DELETE FROM dbo.Comment;
 
 					DECLARE @i INT = 0;
-					WHILE (@i <= {Program.Iterations})
+					WHILE (@i <= {Iterations})
 					BEGIN
 						DECLARE @PostId INT;
 
@@ -114,22 +107,22 @@ namespace InsightBenchmark
 					END;
                 ";
 
-            cmd.Connection = cn;
+            cmd.Connection = _connection;
             cmd.ExecuteNonQuery();
         }
 
         [GlobalCleanup]
         public void DbCleanup()
         {
-            using var cn = new SqlConnection(Program.ConnectionString);
-
-            cn.Open();
-            var cmd = cn.CreateCommand();
+            var cmd = _connection.CreateCommand();
 
             cmd.CommandText = @"DROP TABLE Post; DROP TABLE Comment;";
 
-            cmd.Connection = cn;
+            cmd.Connection = _connection;
             cmd.ExecuteNonQuery();
+
+            _connection.Close();
+            _connection.Dispose();
         }
     }
 }
