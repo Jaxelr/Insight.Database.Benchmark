@@ -40,7 +40,7 @@ namespace InsightBenchmark
         [Benchmark(Description = "Query<T> Parent/Child Together")]
         public Post PostCommentTogether()
         {
-            return _connection.QuerySql("SELECT  * FROM Post p INNER JOIN Comment c ON p.Id = c.PostId", 
+            return _connection.QuerySql("SELECT  * FROM Post p INNER JOIN Comment c ON p.Id = c.PostId WHERE p.Id = @param", 
                 new { param },
                 Query.Returns(Together<Post, Comment>.Records)).First();
         }
@@ -48,7 +48,7 @@ namespace InsightBenchmark
         [Benchmark(Description = "Query<T> Parent/Child")]
         public Post PostComment()
         {
-            return _connection.QuerySql("SELECT  * FROM Post p; SELECT * FROM Comment c;",
+            return _connection.QuerySql("DECLARE @Id int = @param; SELECT  * FROM Post p WHERE Id = @Id; SELECT * FROM Comment c WHERE PostId = @Id;",
                 new { param },
                 Query.Returns<Post>()
                 .ThenChildren(Some<Comment>.Records)).First();
@@ -66,8 +66,6 @@ namespace InsightBenchmark
         [GlobalSetup]
         public void DbSetup()
         {
-            System.Console.Write($"Connection string: {ConnectionString}");
-
             _connection = new SqlConnection(ConnectionString);
             SqlInsightDbProvider.RegisterProvider();
             _connection.Open();
