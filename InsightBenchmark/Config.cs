@@ -30,7 +30,7 @@ namespace InsightBenchmark
 
             Add(Job.ShortRun
              .WithLaunchCount(5)
-             .WithWarmupCount(20)
+             .WithWarmupCount(10)
              .WithMaxIterationCount(100)
              .WithIterationCount(10));
 
