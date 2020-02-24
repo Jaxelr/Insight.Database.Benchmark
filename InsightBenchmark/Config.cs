@@ -29,7 +29,7 @@ namespace InsightBenchmark
             Add(DefaultColumnProviders.Metrics);
 
             Add(Job.ShortRun
-             .WithLaunchCount(10)
+             .WithLaunchCount(5)
              .WithWarmupCount(20)
              .WithMaxIterationCount(100)
              .WithIterationCount(10));
