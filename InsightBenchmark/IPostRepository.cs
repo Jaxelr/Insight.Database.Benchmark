@@ -10,5 +10,7 @@ namespace InsightBenchmark
 
         [Sql("SELECT * FROM Post WHERE Id = @param")]
         Post AutoISinglePost(int param);
+
+
     }
 }

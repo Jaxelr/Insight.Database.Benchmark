@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using Insight.Database;
+using Insight.Database.Structure;
 using InsightBenchmark.Models;
 using System.Data.SqlClient;
 using System.Linq;
@@ -35,6 +36,24 @@ namespace InsightBenchmark
         {
             return _connection.As<IPostRepository>().AutoIQueryPost(param);
         }
+
+        [Benchmark(Description = "Query<T> Parent/Child Together")]
+        public Post PostCommentTogether()
+        {
+            return _connection.QuerySql("SELECT  * FROM Post p INNER JOIN Comment c ON p.Id = c.PostId", 
+                new { param },
+                Query.Returns(Together<Post, Comment>.Records)).First();
+        }
+
+        [Benchmark(Description = "Query<T> Parent/Child")]
+        public Post PostComment()
+        {
+            return _connection.QuerySql("SELECT  * FROM Post p; SELECT * FROM Comment c;",
+                new { param },
+                Query.Returns<Post>()
+                .ThenChildren(Some<Comment>.Records)).First();
+        }
+
 
         [IterationSetup]
         public void Increment()
