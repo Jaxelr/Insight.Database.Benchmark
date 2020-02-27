@@ -2,7 +2,7 @@
 
 These are benchmark scenarios for the ORM library [Insight.Database](https://github.com/jonwagner/Insight.Database)
 
-## Performance Results
+## Results for SQL Server Benchmark
 
 ``` ini
 
