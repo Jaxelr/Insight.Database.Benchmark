@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System.IO;
 
-namespace InsightBenchmark
+namespace Insight.Database.Benchmark
 {
     public class BaseBenchmark
     {

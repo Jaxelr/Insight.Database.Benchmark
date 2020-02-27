@@ -5,54 +5,38 @@ using InsightBenchmark.Models;
 using System.Data.SqlClient;
 using System.Linq;
 
-namespace InsightBenchmark
+namespace Insight.Database.Benchmark
 {
     [BenchmarkCategory("Insight.Database")]
     public class InsightBenchmark : BaseBenchmark
     {
-        protected SqlConnection _connection;
+        protected SqlConnection connection;
         private int param = 0;
 
         [Benchmark(Description = "Single")]
-        public Post GetSinglePost()
-        {
-            return _connection.SingleSql<Post>("SELECT * FROM Post WHERE Id = @param", new { param });
-        }
+        public Post GetSinglePost() => connection.SingleSql<Post>("SELECT * FROM Post WHERE Id = @param", new { param });
 
         [Benchmark(Description = "Query<T>")]
-        public Post GetQueryPost()
-        {
-            return _connection.QuerySql<Post>("SELECT * FROM Post WHERE Id = @param", new { param }).First();
-        }
+        public Post GetQueryPost() => connection.QuerySql<Post>("SELECT * FROM Post WHERE Id = @param", new { param }).First();
 
         [Benchmark(Description = "Auto Interface Single")]
-        public Post AutoInterfaceSinglePost()
-        {
-            return _connection.As<IPostRepository>().AutoISinglePost(param);
-        }
+        public Post AutoInterfaceSinglePost() => connection.As<IPostRepository>().AutoISinglePost(param);
 
         [Benchmark(Description = "Auto Interface Query")]
-        public Post AutoInterfaceQueryPost()
-        {
-            return _connection.As<IPostRepository>().AutoIQueryPost(param);
-        }
+        public Post AutoInterfaceQueryPost() => connection.As<IPostRepository>().AutoIQueryPost(param);
 
         [Benchmark(Description = "Query<T> Parent/Child Together")]
-        public Post PostCommentTogether()
-        {
-            return _connection.QuerySql("SELECT  * FROM Post p INNER JOIN Comment c ON p.Id = c.PostId WHERE p.Id = @param", 
+        public Post PostCommentTogether() =>
+                connection.QuerySql("SELECT  * FROM Post p INNER JOIN Comment c ON p.Id = c.PostId WHERE p.Id = @param",
                 new { param },
                 Query.Returns(Together<Post, Comment>.Records)).First();
-        }
 
         [Benchmark(Description = "Query<T> Parent/Child")]
-        public Post PostComment()
-        {
-            return _connection.QuerySql("DECLARE @Id int = @param; SELECT  * FROM Post p WHERE Id = @Id; SELECT * FROM Comment c WHERE PostId = @Id;",
+        public Post PostComment() =>
+                connection.QuerySql("DECLARE @Id int = @param; SELECT  * FROM Post p WHERE Id = @Id; SELECT * FROM Comment c WHERE PostId = @Id;",
                 new { param },
                 Query.Returns<Post>()
                 .ThenChildren(Some<Comment>.Records)).First();
-        }
 
 
         [IterationSetup]
@@ -66,11 +50,11 @@ namespace InsightBenchmark
         [GlobalSetup]
         public void DbSetup()
         {
-            _connection = new SqlConnection(ConnectionString);
+            connection = new SqlConnection(ConnectionString);
             SqlInsightDbProvider.RegisterProvider();
-            _connection.Open();
+            connection.Open();
 
-            var cmd = _connection.CreateCommand();
+            var cmd = connection.CreateCommand();
 
             cmd.CommandText = $@"
 					SET NOCOUNT ON;
@@ -124,22 +108,22 @@ namespace InsightBenchmark
 					END;
                 ";
 
-            cmd.Connection = _connection;
+            cmd.Connection = connection;
             cmd.ExecuteNonQuery();
         }
 
         [GlobalCleanup]
         public void DbCleanup()
         {
-            var cmd = _connection.CreateCommand();
+            var cmd = connection.CreateCommand();
 
             cmd.CommandText = @"DROP TABLE Post; DROP TABLE Comment;";
 
-            cmd.Connection = _connection;
+            cmd.Connection = connection;
             cmd.ExecuteNonQuery();
 
-            _connection.Close();
-            _connection.Dispose();
+            connection.Close();
+            connection.Dispose();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using BenchmarkDotNet.Running;
 
-namespace InsightBenchmark
+namespace Insight.Database.Benchmark
 {
     internal static class Program
     {

@@ -6,7 +6,7 @@ using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Order;
 
-namespace InsightBenchmark
+namespace Insight.Database.Benchmark
 {
     public class Config : ManualConfig
     {

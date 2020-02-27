@@ -1,7 +1,7 @@
 ﻿using Insight.Database;
 using InsightBenchmark.Models;
 
-namespace InsightBenchmark
+namespace Insight.Database.Benchmark
 {
     public interface IPostRepository
     {
