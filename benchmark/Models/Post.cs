@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace InsightBenchmark.Models
+namespace Insight.Database.Benchmark.Models
 {
     public class Post
     {

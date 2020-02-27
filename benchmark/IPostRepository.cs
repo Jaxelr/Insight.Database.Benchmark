@@ -1,5 +1,4 @@
-﻿using Insight.Database;
-using InsightBenchmark.Models;
+﻿using Insight.Database.Benchmark.Models;
 
 namespace Insight.Database.Benchmark
 {

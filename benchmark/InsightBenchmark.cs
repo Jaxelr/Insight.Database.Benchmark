@@ -1,9 +1,8 @@
-﻿using BenchmarkDotNet.Attributes;
-using Insight.Database;
-using Insight.Database.Structure;
-using InsightBenchmark.Models;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using System.Linq;
+using BenchmarkDotNet.Attributes;
+using Insight.Database.Benchmark.Models;
+using Insight.Database.Structure;
 
 namespace Insight.Database.Benchmark
 {
@@ -37,7 +36,6 @@ namespace Insight.Database.Benchmark
                 new { param },
                 Query.Returns<Post>()
                 .ThenChildren(Some<Comment>.Records)).First();
-
 
         [IterationSetup]
         public void Increment()
