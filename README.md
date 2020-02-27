@@ -1,4 +1,4 @@
-# Insight.Database Benchmark
+# Insight.Database.Benchmark
 
 These are benchmark scenarios for the ORM library [Insight.Database](https://github.com/jonwagner/Insight.Database)
 
