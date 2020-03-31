@@ -1,5 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System;
 using System.IO;
+using Microsoft.Extensions.Configuration;
 
 namespace Insight.Database.Benchmark
 {
@@ -10,6 +11,8 @@ namespace Insight.Database.Benchmark
 
         public BaseBenchmark()
         {
+            string connEnv = Environment.GetEnvironmentVariable("Sql_Connection");
+
             var builder = new ConfigurationBuilder()
                             .SetBasePath(Directory.GetCurrentDirectory())
                             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
@@ -17,6 +20,13 @@ namespace Insight.Database.Benchmark
             IConfigurationRoot configuration = builder.Build();
 
             ConnectionString = configuration.GetConnectionString("Default");
+
+            //Overwrite with external configuration
+            if (!string.IsNullOrEmpty(connEnv))
+            {
+                ConnectionString = connEnv;
+            }
+
             Iterations = int.Parse(configuration.GetSection("Records").Value);
         }
     }
