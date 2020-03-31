@@ -1,0 +1,22 @@
+version: '1.0.0.{build}'
+image: Visual Studio 2019
+branches:
+  only:
+  - master
+init:
+  - cmd: git config --global core.autocrlf true
+configuration:
+  - Release
+services:
+  - mssql2017
+nuget:
+  disable_publish_on_pr: true
+before_build:
+  - cmd: dotnet --version
+build_script:
+  - cmd: dotnet build . -v quiet
+after_test:
+  - cmd: dotnet run ./benchmark/Insight.Database.Benchmarks.csproj  --filter *Insight.Database.Benchmark.InsightBenchmark*
+skip_commits:
+  files:
+    - '**/*.md'
