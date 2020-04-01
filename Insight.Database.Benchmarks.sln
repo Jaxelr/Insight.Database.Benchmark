@@ -7,14 +7,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Insight.Database.Benchmarks
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".SolutionItems", ".SolutionItems", "{2D8FB582-91C2-4570-9445-E9DBC47BFB47}"
 	ProjectSection(SolutionItems) = preProject
-		\.editorconfig = \.editorconfig
-		\.gitignore = \.gitignore
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		appveyor.yml = appveyor.yml
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{B2B2D061-4064-4B19-AFE4-8D10E92317AF}"
 	ProjectSection(SolutionItems) = preProject
-		\.github\CONTRIBUTING.md = \.github\CONTRIBUTING.md
-		\.github\PULL_REQUEST_TEMPLATE.md = \.github\PULL_REQUEST_TEMPLATE.md
+		.github\CONTRIBUTING.md = .github\CONTRIBUTING.md
+		.github\PULL_REQUEST_TEMPLATE.md = .github\PULL_REQUEST_TEMPLATE.md
 	EndProjectSection
 EndProject
 Global
