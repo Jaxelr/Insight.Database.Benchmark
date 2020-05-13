@@ -12,23 +12,23 @@ namespace Insight.Database.Benchmark
     {
         public Config()
         {
-            Add(ConsoleLogger.Default);
-            Add(MarkdownExporter.GitHub);
+            AddLogger(ConsoleLogger.Default);
+            AddExporter(MarkdownExporter.GitHub);
 
             var md = MemoryDiagnoser.Default;
-            Add(md);
+            AddDiagnoser(md);
 
-            Add(TargetMethodColumn.Method);
-            Add(TargetMethodColumn.Type);
-            Add(StatisticColumn.Mean);
-            Add(StatisticColumn.StdDev);
-            Add(StatisticColumn.Error);
-            Add(StatisticColumn.Min);
-            Add(StatisticColumn.Max);
-            Add(StatisticColumn.OperationsPerSecond);
-            Add(DefaultColumnProviders.Metrics);
+            AddColumn(TargetMethodColumn.Method);
+            AddColumn(TargetMethodColumn.Type);
+            AddColumn(StatisticColumn.Mean);
+            AddColumn(StatisticColumn.StdDev);
+            AddColumn(StatisticColumn.Error);
+            AddColumn(StatisticColumn.Min);
+            AddColumn(StatisticColumn.Max);
+            AddColumn(StatisticColumn.OperationsPerSecond);
+            AddColumnProvider(DefaultColumnProviders.Metrics);
 
-            Add(Job.ShortRun
+            AddJob(Job.ShortRun
              .WithLaunchCount(5)
              .WithWarmupCount(10)
              .WithMaxIterationCount(100)
