@@ -4,12 +4,14 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Configs;
 using Insight.Database.Benchmark.Models;
 using Insight.Database.Structure;
 
 namespace Insight.Database.Benchmark
 {
     [BenchmarkCategory("Insight.Database")]
+    [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
     public class InsightBenchmark : BaseBenchmark
     {
         protected SqlConnection connection;
@@ -21,32 +23,40 @@ namespace Insight.Database.Benchmark
         }
 
         [Benchmark(Description = "Single")]
-        public Post GetSinglePost() => connection.SingleSql<Post>("SELECT * FROM Post WHERE Id = @param", new { param });
+        [BenchmarkCategory("Get")]
+        public Post SinglePost() => connection.SingleSql<Post>("SELECT * FROM Post WHERE Id = @param", new { param });
 
         [Benchmark(Description = "Single Async")]
-        public async Task<Post> GetSinglePostAsync() => await connection.SingleSqlAsync<Post>("SELECT * FROM Post WHERE Id = @param", new { param });
+        [BenchmarkCategory("Get")]
+        public async Task<Post> SinglePostAsync() =>
+            await connection.SingleSqlAsync<Post>("SELECT * FROM Post WHERE Id = @param", new { param })
+            .ConfigureAwait(false);
 
         [Benchmark(Description = "Insert<T>")]
+        [BenchmarkCategory("Post")]
         [ArgumentsSource(nameof(Posts))]
-        public Post InsertSinglePost(Post post) => connection.InsertSql("INSERT INTO Post (Text, CreationDate, LastChangeDate) VALUES (@Text, @CreationDate, @LastChangeDate) ", post);
+        public Post InsertPost(Post post) => connection.InsertSql("INSERT INTO Post (Text, CreationDate, LastChangeDate) VALUES (@Text, @CreationDate, @LastChangeDate) ", post);
 
         [Benchmark(Description = "Insert<T> Async")]
+        [BenchmarkCategory("Post")]
         [ArgumentsSource(nameof(Posts))]
-        public async Task<Post> InsertSinglePostAsync(Post post) =>
+        public async Task<Post> InsertPostAsync(Post post) =>
             await connection.InsertSqlAsync("INSERT INTO Post (Text, CreationDate, LastChangeDate) VALUES (@Text, @CreationDate, @LastChangeDate)", post)
             .ConfigureAwait(false);
 
         [Benchmark(Description = "Update<T>")]
+        [BenchmarkCategory("Post")]
         [ArgumentsSource(nameof(Posts))]
-        public Post UpdateSinglePost(Post post)
+        public Post UpdatePost(Post post)
         {
             post.Id = param;
             return connection.QueryOntoSql("UPDATE Post SET Text = @Text, CreationDate = @CreationDate, LastChangeDate = @LastChangeDate output inserted.* WHERE Id = @Id", post);
         }
 
         [Benchmark(Description = "Update<T> Async")]
+        [BenchmarkCategory("Post")]
         [ArgumentsSource(nameof(Posts))]
-        public async Task<Post> UpdateSinglePostAsync(Post post)
+        public async Task<Post> UpdatePostAsync(Post post)
         {
             post.Id = param;
             return await connection.QueryOntoSqlAsync("UPDATE Post SET Text = @Text, CreationDate = @CreationDate, LastChangeDate = @LastChangeDate output inserted.* WHERE Id = @Id", post)
@@ -54,10 +64,12 @@ namespace Insight.Database.Benchmark
         }
 
         [Benchmark(Description = "Query<T>")]
-        public Post GetQueryPost() => connection.QuerySql<Post>("SELECT * FROM Post WHERE Id = @param", new { param }).First();
+        [BenchmarkCategory("Get")]
+        public Post QueryPost() => connection.QuerySql<Post>("SELECT * FROM Post WHERE Id = @param", new { param }).First();
 
         [Benchmark(Description = "Query<T> Async")]
-        public async Task<Post> GetQueryPostAsync()
+        [BenchmarkCategory("Get")]
+        public async Task<Post> QueryPostAsync()
         {
             var result = await connection.QuerySqlAsync<Post>("SELECT * FROM Post WHERE Id = @param", new { param })
                 .ConfigureAwait(false);
@@ -66,18 +78,22 @@ namespace Insight.Database.Benchmark
         }
 
         [Benchmark(Description = "Auto Interface Single")]
+        [BenchmarkCategory("Get")]
         public Post AutoInterfaceSinglePost() => connection.As<IPostRepository>().AutoISinglePost(param);
 
         [Benchmark(Description = "Auto Interface Query")]
+        [BenchmarkCategory("Get")]
         public Post AutoInterfaceQueryPost() => connection.As<IPostRepository>().AutoIQueryPost(param);
 
         [Benchmark(Description = "Query<T> Parent/Child Together")]
+        [BenchmarkCategory("Get")]
         public Post PostCommentTogether() =>
                 connection.QuerySql("SELECT  * FROM Post p INNER JOIN Comment c ON p.Id = c.PostId WHERE p.Id = @param",
                 new { param },
                 Query.Returns(Together<Post, Comment>.Records)).First();
 
         [Benchmark(Description = "Query<T> Parent/Child")]
+        [BenchmarkCategory("Get")]
         public Post PostComment() =>
                 connection.QuerySql("DECLARE @Id int = @param; SELECT  * FROM Post p WHERE Id = @Id; SELECT * FROM Comment c WHERE PostId = @Id;",
                 new { param },
