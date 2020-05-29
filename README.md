@@ -8,24 +8,31 @@ These are benchmark scenarios for the ORM library [Insight.Database](https://git
 
 ``` ini
 
-BenchmarkDotNet=v0.12.0, OS=Windows 10.0.18362
-Intel Core i7-8550U CPU 1.80GHz (Kaby Lake R), 1 CPU, 8 logical and 4 physical cores
-.NET Core SDK=3.1.102
-  [Host]   : .NET Core 3.1.2 (CoreCLR 4.700.20.6602, CoreFX 4.700.20.6702), X64 RyuJIT  [AttachedDebugger]
-  ShortRun : .NET Core 3.1.2 (CoreCLR 4.700.20.6602, CoreFX 4.700.20.6702), X64 RyuJIT
+BenchmarkDotNet=v0.12.1, OS=Windows 10.0.18363.836 (1909/November2018Update/19H2)
+Intel Core i5-5250U CPU 1.60GHz (Broadwell), 1 CPU, 4 logical and 2 physical cores
+.NET Core SDK=3.1.300
+  [Host]   : .NET Core 3.1.4 (CoreCLR 4.700.20.20201, CoreFX 4.700.20.22101), X64 RyuJIT  [AttachedDebugger]
+  ShortRun : .NET Core 3.1.4 (CoreCLR 4.700.20.20201, CoreFX 4.700.20.22101), X64 RyuJIT
 
 Type=InsightBenchmark  
 
 ```
+|                           Method |       Mean |      StdDev |     Error |        Min |         Max |    Op/s | Gen 0 | Gen 1 | Gen 2 | Allocated |
+|--------------------------------- |-----------:|------------:|----------:|-----------:|------------:|--------:|------:|------:|------:|----------:|
+|                           Single |   408.4 μs |    50.24 μs |  27.11 μs |   338.6 μs |    578.8 μs | 2,448.6 |     - |     - |     - |  21.31 KB |
+|          &#39;Auto Interface Single&#39; |   423.3 μs |    59.01 μs |  31.01 μs |   345.2 μs |    613.8 μs | 2,362.5 |     - |     - |     - |  21.62 KB |
+|           &#39;Auto Interface Query&#39; |   436.0 μs |   114.81 μs |  62.79 μs |   346.8 μs |    909.4 μs | 2,293.8 |     - |     - |     - |  21.62 KB |
+|                         Query&lt;T&gt; |   485.1 μs |   159.52 μs |  82.79 μs |   343.8 μs |    993.1 μs | 2,061.5 |     - |     - |     - |   21.3 KB |
+|                   &#39;Single Async&#39; |   548.7 μs |    51.77 μs |  28.31 μs |   460.2 μs |    675.8 μs | 1,822.4 |     - |     - |     - |  24.44 KB |
+|                 &#39;Query&lt;T&gt; Async&#39; |   617.2 μs |   281.60 μs | 146.16 μs |   440.9 μs |  1,860.8 μs | 1,620.3 |     - |     - |     - |  25.04 KB |
+|          &#39;Query&lt;T&gt; Parent/Child&#39; | 9,247.4 μs | 1,173.06 μs | 594.28 μs | 7,851.9 μs | 12,970.8 μs |   108.1 |     - |     - |     - |  43.68 KB |
+| &#39;Query&lt;T&gt; Parent/Child Together&#39; | 9,288.1 μs | 1,718.65 μs | 860.57 μs | 7,412.3 μs | 14,244.0 μs |   107.7 |     - |     - |     - |  43.72 KB |
+|                                  |            |             |           |            |             |         |       |       |       |           |
+|                        Insert&lt;T&gt; |   775.9 μs |   182.14 μs |  96.97 μs |   559.5 μs |  1,449.5 μs | 1,288.9 |     - |     - |     - |   6.46 KB |
+|                        Update&lt;T&gt; |   811.2 μs |   179.71 μs |  96.95 μs |   643.8 μs |  1,699.0 μs | 1,232.7 |     - |     - |     - |  24.23 KB |
+|                &#39;Update&lt;T&gt; Async&#39; |   906.2 μs |   110.67 μs |  58.17 μs |   758.6 μs |  1,205.8 μs | 1,103.5 |     - |     - |     - |  27.35 KB |
+|                &#39;Insert&lt;T&gt; Async&#39; |   991.7 μs |   277.99 μs | 146.11 μs |   686.4 μs |  1,843.0 μs | 1,008.4 |     - |     - |     - |  10.09 KB |
 
-|                           Method |        Mean |     StdDev |       Error |        Min |         Max |     Op/s | Gen 0 | Gen 1 | Gen 2 | Allocated |
-|--------------------------------- |------------:|-----------:|------------:|-----------:|------------:|---------:|------:|------:|------:|----------:|
-|          &#39;Auto Interface Single&#39; |    491.9 us |   107.4 us |    56.46 us |   276.1 us |    697.2 us | 2,033.01 |     - |     - |     - |   18.2 KB |
-|           &#39;Auto Interface Query&#39; |    578.5 us |   129.7 us |    69.06 us |   303.9 us |    895.5 us | 1,728.53 |     - |     - |     - |   18.2 KB |
-|                         Query&lt;T&gt; |    621.5 us |   126.4 us |    67.27 us |   391.1 us |    901.4 us | 1,609.02 |     - |     - |     - |  17.88 KB |
-|                           Single |    764.8 us |   235.9 us |   125.62 us |   427.5 us |  1,169.5 us | 1,307.57 |     - |     - |     - |   17.9 KB |
-| &#39;Query&lt;T&gt; Parent/Child Together&#39; | 12,927.0 us | 2,514.4 us | 1,273.81 us | 9,489.2 us | 19,464.5 us |    77.36 |     - |     - |     - |  39.54 KB |
-|          &#39;Query&lt;T&gt; Parent/Child&#39; | 17,244.7 us | 5,909.2 us | 2,958.89 us | 8,670.2 us | 33,866.5 us |    57.99 |     - |     - |     - |  39.52 KB |
 
 ## Contributing
 
