@@ -1,5 +1,8 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Insight.Database.Benchmark.Models;
 using Insight.Database.Structure;
@@ -10,13 +13,57 @@ namespace Insight.Database.Benchmark
     public class InsightBenchmark : BaseBenchmark
     {
         protected SqlConnection connection;
-        private int param = 0;
+        private int param;
+
+        public IEnumerable<Post> Posts()
+        {
+            yield return new Post() { Text = new string('X', 2000), CreationDate = DateTime.Now, LastChangeDate = DateTime.Now };
+        }
 
         [Benchmark(Description = "Single")]
         public Post GetSinglePost() => connection.SingleSql<Post>("SELECT * FROM Post WHERE Id = @param", new { param });
 
+        [Benchmark(Description = "Single Async")]
+        public async Task<Post> GetSinglePostAsync() => await connection.SingleSqlAsync<Post>("SELECT * FROM Post WHERE Id = @param", new { param });
+
+        [Benchmark(Description = "Insert<T>")]
+        [ArgumentsSource(nameof(Posts))]
+        public Post InsertSinglePost(Post post) => connection.InsertSql("INSERT INTO Post (Text, CreationDate, LastChangeDate) VALUES (@Text, @CreationDate, @LastChangeDate) ", post);
+
+        [Benchmark(Description = "Insert<T> Async")]
+        [ArgumentsSource(nameof(Posts))]
+        public async Task<Post> InsertSinglePostAsync(Post post) =>
+            await connection.InsertSqlAsync("INSERT INTO Post (Text, CreationDate, LastChangeDate) VALUES (@Text, @CreationDate, @LastChangeDate)", post)
+            .ConfigureAwait(false);
+
+        [Benchmark(Description = "Update<T>")]
+        [ArgumentsSource(nameof(Posts))]
+        public Post UpdateSinglePost(Post post)
+        {
+            post.Id = param;
+            return connection.QueryOntoSql("UPDATE Post SET Text = @Text, CreationDate = @CreationDate, LastChangeDate = @LastChangeDate output inserted.* WHERE Id = @Id", post);
+        }
+
+        [Benchmark(Description = "Update<T> Async")]
+        [ArgumentsSource(nameof(Posts))]
+        public async Task<Post> UpdateSinglePostAsync(Post post)
+        {
+            post.Id = param;
+            return await connection.QueryOntoSqlAsync("UPDATE Post SET Text = @Text, CreationDate = @CreationDate, LastChangeDate = @LastChangeDate output inserted.* WHERE Id = @Id", post)
+                .ConfigureAwait(false);
+        }
+
         [Benchmark(Description = "Query<T>")]
         public Post GetQueryPost() => connection.QuerySql<Post>("SELECT * FROM Post WHERE Id = @param", new { param }).First();
+
+        [Benchmark(Description = "Query<T> Async")]
+        public async Task<Post> GetQueryPostAsync()
+        {
+            var result = await connection.QuerySqlAsync<Post>("SELECT * FROM Post WHERE Id = @param", new { param })
+                .ConfigureAwait(false);
+
+            return result.First();
+        }
 
         [Benchmark(Description = "Auto Interface Single")]
         public Post AutoInterfaceSinglePost() => connection.As<IPostRepository>().AutoISinglePost(param);
@@ -115,7 +162,7 @@ namespace Insight.Database.Benchmark
         {
             var cmd = connection.CreateCommand();
 
-            cmd.CommandText = @"DROP TABLE Post; DROP TABLE Comment;";
+            cmd.CommandText = "DROP TABLE Post; DROP TABLE Comment;";
 
             cmd.Connection = connection;
             cmd.ExecuteNonQuery();
