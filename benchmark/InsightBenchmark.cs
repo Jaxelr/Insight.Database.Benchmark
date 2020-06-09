@@ -32,6 +32,16 @@ namespace Insight.Database.Benchmark
             await connection.SingleSqlAsync<Post>("SELECT * FROM Post WHERE Id = @param", new { param })
             .ConfigureAwait(false);
 
+        [Benchmark(Description = "Single (dynamic)")]
+        [BenchmarkCategory("Get")]
+        public dynamic SinglePostDynamic() => connection.SingleSql<dynamic>("SELECT * FROM Post WHERE Id = @param", new { param });
+
+        [Benchmark(Description = "Single Async (dynamic)")]
+        [BenchmarkCategory("Get")]
+        public async Task<dynamic> SinglePostAsyncDynamic() =>
+            await connection.SingleSqlAsync<dynamic>("SELECT * FROM Post WHERE Id = @param", new { param })
+            .ConfigureAwait(false);
+
         [Benchmark(Description = "Insert<T>")]
         [BenchmarkCategory("Post")]
         [ArgumentsSource(nameof(Posts))]
@@ -65,7 +75,7 @@ namespace Insight.Database.Benchmark
 
         [Benchmark(Description = "Query<T>")]
         [BenchmarkCategory("Get")]
-        public Post QueryPost() => connection.QuerySql<Post>("SELECT * FROM Post WHERE Id = @param", new { param }).First();
+        public Post QueryPost() => connection.QuerySql<Post>("SELECT * FROM Post WHERE Id = @param", new { param }).FirstOrDefault();
 
         [Benchmark(Description = "Query<T> Async")]
         [BenchmarkCategory("Get")]
@@ -74,7 +84,21 @@ namespace Insight.Database.Benchmark
             var result = await connection.QuerySqlAsync<Post>("SELECT * FROM Post WHERE Id = @param", new { param })
                 .ConfigureAwait(false);
 
-            return result.First();
+            return result.FirstOrDefault();
+        }
+
+        [Benchmark(Description = "Query<T> (dynamic)")]
+        [BenchmarkCategory("Get")]
+        public dynamic QueryPostDynamic() => connection.QuerySql("SELECT * FROM Post WHERE Id = @param", new { param }).FirstOrDefault();
+
+        [Benchmark(Description = "Query<T> Async (dynamic)")]
+        [BenchmarkCategory("Get")]
+        public async Task<dynamic> QueryPostAsyncDynamic()
+        {
+            var result = await connection.QuerySqlAsync("SELECT * FROM Post WHERE Id = @param", new { param })
+                .ConfigureAwait(false);
+
+            return result.FirstOrDefault();
         }
 
         [Benchmark(Description = "Auto Interface Single")]
@@ -84,6 +108,14 @@ namespace Insight.Database.Benchmark
         [Benchmark(Description = "Auto Interface Query")]
         [BenchmarkCategory("Get")]
         public Post AutoInterfaceQueryPost() => connection.As<IPostRepository>().AutoIQueryPost(param);
+
+        [Benchmark(Description = "Auto Interface Single (dynamic)")]
+        [BenchmarkCategory("Get")]
+        public dynamic AutoInterfaceSingleDynamic() => connection.As<IPostRepository>().AutoISingleDynamic(param);
+
+        [Benchmark(Description = "Auto Interface Query (dynamic)")]
+        [BenchmarkCategory("Get")]
+        public dynamic AutoInterfaceQueryDynamic() => connection.As<IPostRepository>().AutoIQueryDynamic(param);
 
         [Benchmark(Description = "Query<T> Parent/Child Together")]
         [BenchmarkCategory("Get")]
