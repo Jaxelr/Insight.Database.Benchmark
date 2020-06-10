@@ -45,4 +45,4 @@ Type=InsightBenchmark
 Check the [guidelines](https://github.com/Jaxelr/InsightBenchmark/blob/master/.github/CONTRIBUTING.md) for details on how you could contribute.
 
 [build]: https://ci.appveyor.com/project/Jaxelr/insight-database-benchmark/branch/master?fullLog=true
-[build-svg]: https://ci.appveyor.com/api/projects/status/5ljodk64tubam5i5?svg=true
+[build-svg]: https://ci.appveyor.com/api/projects/status/u7f3dxi8aaw02l0y?svg=true
