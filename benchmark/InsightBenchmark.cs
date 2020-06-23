@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,39 +24,49 @@ namespace Insight.Database.Benchmark
         }
 
         [Benchmark(Description = "Single")]
-        [BenchmarkCategory("Get")]
+        [BenchmarkCategory("Read")]
         public Post SinglePost() => connection.SingleSql<Post>("SELECT * FROM Post WHERE Id = @param", new { param });
 
         [Benchmark(Description = "Single Async")]
-        [BenchmarkCategory("Get")]
+        [BenchmarkCategory("Read")]
         public async Task<Post> SinglePostAsync() =>
             await connection.SingleSqlAsync<Post>("SELECT * FROM Post WHERE Id = @param", new { param })
             .ConfigureAwait(false);
 
         [Benchmark(Description = "Single (dynamic)")]
-        [BenchmarkCategory("Get")]
+        [BenchmarkCategory("Read")]
         public dynamic SinglePostDynamic() => connection.SingleSql<dynamic>("SELECT * FROM Post WHERE Id = @param", new { param });
 
         [Benchmark(Description = "Single Async (dynamic)")]
-        [BenchmarkCategory("Get")]
+        [BenchmarkCategory("Read")]
         public async Task<dynamic> SinglePostAsyncDynamic() =>
             await connection.SingleSqlAsync<dynamic>("SELECT * FROM Post WHERE Id = @param", new { param })
             .ConfigureAwait(false);
 
+        [Benchmark(Description = "Single (Fast Expando)")]
+        [BenchmarkCategory("Read")]
+        public dynamic SinglePostExpando() => connection.SingleSql<FastExpando>("SELECT * FROM Post WHERE Id = @param", new { param });
+
+        [Benchmark(Description = "Single Async (Fast Expando)")]
+        [BenchmarkCategory("Read")]
+        public async Task<dynamic> SinglePostAsyncExpando() =>
+            await connection.SingleSqlAsync<FastExpando>("SELECT * FROM Post WHERE Id = @param", new { param })
+            .ConfigureAwait(false);
+
         [Benchmark(Description = "Insert<T>")]
-        [BenchmarkCategory("Post")]
+        [BenchmarkCategory("Write")]
         [ArgumentsSource(nameof(Posts))]
         public Post InsertPost(Post post) => connection.InsertSql("INSERT INTO Post (Text, CreationDate, LastChangeDate) VALUES (@Text, @CreationDate, @LastChangeDate) ", post);
 
         [Benchmark(Description = "Insert<T> Async")]
-        [BenchmarkCategory("Post")]
+        [BenchmarkCategory("Write")]
         [ArgumentsSource(nameof(Posts))]
         public async Task<Post> InsertPostAsync(Post post) =>
             await connection.InsertSqlAsync("INSERT INTO Post (Text, CreationDate, LastChangeDate) VALUES (@Text, @CreationDate, @LastChangeDate)", post)
             .ConfigureAwait(false);
 
         [Benchmark(Description = "Update<T>")]
-        [BenchmarkCategory("Post")]
+        [BenchmarkCategory("Write")]
         [ArgumentsSource(nameof(Posts))]
         public Post UpdatePost(Post post)
         {
@@ -64,7 +75,7 @@ namespace Insight.Database.Benchmark
         }
 
         [Benchmark(Description = "Update<T> Async")]
-        [BenchmarkCategory("Post")]
+        [BenchmarkCategory("Write")]
         [ArgumentsSource(nameof(Posts))]
         public async Task<Post> UpdatePostAsync(Post post)
         {
@@ -74,11 +85,11 @@ namespace Insight.Database.Benchmark
         }
 
         [Benchmark(Description = "Query<T>")]
-        [BenchmarkCategory("Get")]
+        [BenchmarkCategory("Read")]
         public Post QueryPost() => connection.QuerySql<Post>("SELECT * FROM Post WHERE Id = @param", new { param }).FirstOrDefault();
 
         [Benchmark(Description = "Query<T> Async")]
-        [BenchmarkCategory("Get")]
+        [BenchmarkCategory("Read")]
         public async Task<Post> QueryPostAsync()
         {
             var result = await connection.QuerySqlAsync<Post>("SELECT * FROM Post WHERE Id = @param", new { param })
@@ -88,11 +99,11 @@ namespace Insight.Database.Benchmark
         }
 
         [Benchmark(Description = "Query<T> (dynamic)")]
-        [BenchmarkCategory("Get")]
+        [BenchmarkCategory("Read")]
         public dynamic QueryPostDynamic() => connection.QuerySql("SELECT * FROM Post WHERE Id = @param", new { param }).FirstOrDefault();
 
         [Benchmark(Description = "Query<T> Async (dynamic)")]
-        [BenchmarkCategory("Get")]
+        [BenchmarkCategory("Read")]
         public async Task<dynamic> QueryPostAsyncDynamic()
         {
             var result = await connection.QuerySqlAsync("SELECT * FROM Post WHERE Id = @param", new { param })
@@ -101,36 +112,50 @@ namespace Insight.Database.Benchmark
             return result.FirstOrDefault();
         }
 
+        [Benchmark(Description = "Query<T> (Fast Expando)")]
+        [BenchmarkCategory("Read")]
+        public FastExpando QueryPostFastExpando() => connection.QuerySql("SELECT * FROM Post WHERE Id = @param", new { param }).FirstOrDefault();
+
+        [Benchmark(Description = "Query<T> Async (Fast Expando)")]
+        [BenchmarkCategory("Read")]
+        public async Task<FastExpando> QueryPostAsyncFastExpando()
+        {
+            var result = await connection.QuerySqlAsync("SELECT * FROM Post WHERE Id = @param", new { param })
+                .ConfigureAwait(false);
+
+            return result.FirstOrDefault();
+        }
+
         [Benchmark(Description = "Auto Interface Single")]
-        [BenchmarkCategory("Get")]
+        [BenchmarkCategory("Read")]
         public Post AutoInterfaceSinglePost() => connection.As<IPostRepository>().AutoISinglePost(param);
 
         [Benchmark(Description = "Auto Interface Query")]
-        [BenchmarkCategory("Get")]
+        [BenchmarkCategory("Read")]
         public Post AutoInterfaceQueryPost() => connection.As<IPostRepository>().AutoIQueryPost(param);
 
         [Benchmark(Description = "Auto Interface Single (dynamic)")]
-        [BenchmarkCategory("Get")]
+        [BenchmarkCategory("Read")]
         public dynamic AutoInterfaceSingleDynamic() => connection.As<IPostRepository>().AutoISingleDynamic(param);
 
         [Benchmark(Description = "Auto Interface Query (dynamic)")]
-        [BenchmarkCategory("Get")]
+        [BenchmarkCategory("Read")]
         public dynamic AutoInterfaceQueryDynamic() => connection.As<IPostRepository>().AutoIQueryDynamic(param);
 
         [Benchmark(Description = "Query<T> Parent/Child Together")]
-        [BenchmarkCategory("Get")]
+        [BenchmarkCategory("Read")]
         public Post PostCommentTogether() =>
                 connection.QuerySql("SELECT  * FROM Post p INNER JOIN Comment c ON p.Id = c.PostId WHERE p.Id = @param",
                 new { param },
-                Query.Returns(Together<Post, Comment>.Records)).First();
+                Query.Returns(Together<Post, Comment>.Records)).FirstOrDefault();
 
         [Benchmark(Description = "Query<T> Parent/Child")]
-        [BenchmarkCategory("Get")]
+        [BenchmarkCategory("Read")]
         public Post PostComment() =>
                 connection.QuerySql("DECLARE @Id int = @param; SELECT  * FROM Post p WHERE Id = @Id; SELECT * FROM Comment c WHERE PostId = @Id;",
                 new { param },
                 Query.Returns<Post>()
-                .ThenChildren(Some<Comment>.Records)).First();
+                .ThenChildren(Some<Comment>.Records)).FirstOrDefault();
 
         [IterationSetup]
         public void Increment()
