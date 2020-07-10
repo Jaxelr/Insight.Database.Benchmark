@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -51,6 +50,36 @@ namespace Insight.Database.Benchmark
         [BenchmarkCategory("Read")]
         public async Task<dynamic> SinglePostAsyncExpando() =>
             await connection.SingleSqlAsync<FastExpando>("SELECT * FROM Post WHERE Id = @param", new { param })
+            .ConfigureAwait(false);
+
+        [Benchmark(Description = "Single Procedure")]
+        [BenchmarkCategory("Read")]
+        public Post SinglePostProcedure() => connection.Single<Post>("SelectPost", new { param });
+
+        [Benchmark(Description = "Single Procedure Async")]
+        [BenchmarkCategory("Read")]
+        public async Task<Post> SinglePostProcedureAsync() =>
+            await connection.SingleAsync<Post>("SelectPost", new { param })
+            .ConfigureAwait(false);
+
+        [Benchmark(Description = "Single Procedure (dynamic)")]
+        [BenchmarkCategory("Read")]
+        public dynamic SinglePostProcedureDynamic() => connection.Single<dynamic>("SelectPost", new { param });
+
+        [Benchmark(Description = "Single Procedure Async (dynamic)")]
+        [BenchmarkCategory("Read")]
+        public async Task<dynamic> SinglePostProcedureAsyncDynamic() =>
+            await connection.SingleAsync<dynamic>("SelectPost", new { param })
+            .ConfigureAwait(false);
+
+        [Benchmark(Description = "Single Procedure (Fast Expando)")]
+        [BenchmarkCategory("Read")]
+        public dynamic SinglePostProcedureExpando() => connection.Single<FastExpando>("SelectPost", new { param });
+
+        [Benchmark(Description = "Single Procedure Async (Fast Expando)")]
+        [BenchmarkCategory("Read")]
+        public async Task<dynamic> SinglePostProcedureAsyncExpando() =>
+            await connection.SingleAsync<FastExpando>("SelectPost", new { param })
             .ConfigureAwait(false);
 
         [Benchmark(Description = "Insert<T>")]
@@ -126,6 +155,48 @@ namespace Insight.Database.Benchmark
             return result.FirstOrDefault();
         }
 
+        [Benchmark(Description = "Query<T> Procedure")]
+        [BenchmarkCategory("Read")]
+        public Post QueryPostProcedure() => connection.Query<Post>("SelectPost", new { param }).FirstOrDefault();
+
+        [Benchmark(Description = "Query<T> Procedure Async")]
+        [BenchmarkCategory("Read")]
+        public async Task<Post> QueryPostProcedureAsync()
+        {
+            var result = await connection.QueryAsync<Post>("SelectPost", new { param })
+                .ConfigureAwait(false);
+
+            return result.FirstOrDefault();
+        }
+
+        [Benchmark(Description = "Query<T> Procedure (dynamic)")]
+        [BenchmarkCategory("Read")]
+        public dynamic QueryPostProcedureDynamic() => connection.Query("SelectPost", new { param }).FirstOrDefault();
+
+        [Benchmark(Description = "Query<T> Procedure Async (dynamic)")]
+        [BenchmarkCategory("Read")]
+        public async Task<dynamic> QueryPostProcedureAsyncDynamic()
+        {
+            var result = await connection.QueryAsync("SelectPost", new { param })
+                .ConfigureAwait(false);
+
+            return result.FirstOrDefault();
+        }
+
+        [Benchmark(Description = "Query<T> Procedure (Fast Expando)")]
+        [BenchmarkCategory("Read")]
+        public FastExpando QueryPostProcedureFastExpando() => connection.Query("SelectPost", new { param }).FirstOrDefault();
+
+        [Benchmark(Description = "Query<T> Procedure Async (Fast Expando)")]
+        [BenchmarkCategory("Read")]
+        public async Task<FastExpando> QueryPostProcedureAsyncFastExpando()
+        {
+            var result = await connection.QueryAsync("SelectPost", new { param })
+                .ConfigureAwait(false);
+
+            return result.FirstOrDefault();
+        }
+
         [Benchmark(Description = "Auto Interface Single")]
         [BenchmarkCategory("Read")]
         public Post AutoInterfaceSinglePost() => connection.As<IPostRepository>().AutoISinglePost(param);
@@ -175,56 +246,65 @@ namespace Insight.Database.Benchmark
             var cmd = connection.CreateCommand();
 
             cmd.CommandText = $@"
-					SET NOCOUNT ON;
-					IF (OBJECT_ID('Post') IS NULL)
-					BEGIN
-						CREATE TABLE Post
-						(
-							Id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
-							[Text] VARCHAR(MAX) NOT NULL,
-							CreationDate DATETIME NOT NULL,
-							LastChangeDate DATETIME NOT NULL,
-							Counter1 INT,
-							Counter2 INT,
-							Counter3 INT,
-							Counter4 INT,
-							Counter5 INT,
-							Counter6 INT,
-							Counter7 INT,
-							Counter8 INT,
-							Counter9 INT
-						);
-					END;
-					IF (OBJECT_ID('Comment') IS NULL)
-					BEGIN
-						CREATE TABLE Comment
-						(
-							Id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
-							PostId INT NOT NULL,
-							[CommentText] VARCHAR(MAX) NOT NULL,
-							CreationDate DATETIME NOT NULL
-						);
-					END;
+                    SET NOCOUNT ON;
+                    IF (OBJECT_ID('Post') IS NULL)
+                    BEGIN
+                        CREATE TABLE Post
+                        (
+                            Id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+                            [Text] VARCHAR(MAX) NOT NULL,
+                            CreationDate DATETIME NOT NULL,
+                            LastChangeDate DATETIME NOT NULL,
+                            Counter1 INT,
+                            Counter2 INT,
+                            Counter3 INT,
+                            Counter4 INT,
+                            Counter5 INT,
+                            Counter6 INT,
+                            Counter7 INT,
+                            Counter8 INT,
+                            Counter9 INT
+                        );
+                    END;
+                    IF (OBJECT_ID('Comment') IS NULL)
+                    BEGIN
+                        CREATE TABLE Comment
+                        (
+                            Id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+                            PostId INT NOT NULL,
+                            [CommentText] VARCHAR(MAX) NOT NULL,
+                            CreationDate DATETIME NOT NULL
+                        );
+                    END;
 
-					DELETE FROM dbo.Post;
-					DELETE FROM dbo.Comment;
+                    DELETE FROM dbo.Post;
+                    DELETE FROM dbo.Comment;
 
-					DECLARE @i INT = 0;
-					WHILE (@i <= {Iterations})
-					BEGIN
-						DECLARE @PostId INT;
+                    DECLARE @i INT = 0;
+                    WHILE (@i <= {Iterations})
+                    BEGIN
+                        DECLARE @PostId INT;
 
-						INSERT INTO	Post([Text], CreationDate, LastChangeDate)
-						VALUES (REPLICATE('x', 2000), SYSDATETIME(), SYSDATETIME());
-						SET @i = @i + 1;
+                        INSERT INTO	Post([Text], CreationDate, LastChangeDate)
+                        VALUES (REPLICATE('x', 2000), SYSDATETIME(), SYSDATETIME());
+                        SET @i = @i + 1;
 
-						SELECT @PostId = SCOPE_IDENTITY();
+                        SELECT @PostId = SCOPE_IDENTITY();
 
-						INSERT INTO	Comment([CommentText], CreationDate, PostId)
-						SELECT REPLICATE('x', 2000), SYSDATETIME(), @PostId UNION ALL
-						SELECT REPLICATE('x', 2000), SYSDATETIME(), @PostId
-					END;
-                ";
+                        INSERT INTO	Comment([CommentText], CreationDate, PostId)
+                        SELECT REPLICATE('x', 2000), SYSDATETIME(), @PostId UNION ALL
+                        SELECT REPLICATE('x', 2000), SYSDATETIME(), @PostId
+                    END;";
+
+            cmd.Connection = connection;
+            cmd.ExecuteNonQuery();
+
+            cmd = connection.CreateCommand();
+            cmd.CommandText = @"CREATE OR ALTER PROCEDURE SelectPost (@param int)
+                    AS
+                    BEGIN
+                        SELECT * FROM Post WHERE Id = @param;
+                    END;";
 
             cmd.Connection = connection;
             cmd.ExecuteNonQuery();
@@ -235,7 +315,7 @@ namespace Insight.Database.Benchmark
         {
             var cmd = connection.CreateCommand();
 
-            cmd.CommandText = "DROP TABLE Post; DROP TABLE Comment;";
+            cmd.CommandText = "DROP PROCEDURE SelectPost; DROP TABLE Post; DROP TABLE Comment;";
 
             cmd.Connection = connection;
             cmd.ExecuteNonQuery();
