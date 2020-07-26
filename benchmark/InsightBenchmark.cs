@@ -46,6 +46,18 @@ namespace Insight.Database.Benchmark
         [BenchmarkCategory("Read")]
         public dynamic SinglePostExpando() => connection.SingleSql<FastExpando>("SELECT * FROM Post WHERE Id = @param", new { param });
 
+        [Benchmark(Description = "Single (Tuple)")]
+        [BenchmarkCategory("Read")]
+        public object SinglePostTuple() => connection.SingleSql<(int, string, DateTime, DateTime)>("SELECT Id [Item1], [Text] [Item2], CreationDate [Item3] FROM Post WHERE Id = @param", new { param });
+
+        [Benchmark(Description = "Single Async (Tuple)")]
+        [BenchmarkCategory("Read")]
+        public async Task<object> SinglePostTupleAsync() => await
+            connection.SingleSqlAsync<(int, string, DateTime, DateTime)>
+            ("SELECT Id [Item1], [Text] [Item2], CreationDate [Item3] FROM Post WHERE Id = @param"
+            , new { param })
+            .ConfigureAwait(false);
+
         [Benchmark(Description = "Single Async (Fast Expando)")]
         [BenchmarkCategory("Read")]
         public async Task<dynamic> SinglePostAsyncExpando() =>
@@ -150,6 +162,24 @@ namespace Insight.Database.Benchmark
         public async Task<FastExpando> QueryPostAsyncFastExpando()
         {
             var result = await connection.QuerySqlAsync("SELECT * FROM Post WHERE Id = @param", new { param })
+                .ConfigureAwait(false);
+
+            return result.FirstOrDefault();
+        }
+
+        [Benchmark(Description = "Query<(Tuple)>")]
+        [BenchmarkCategory("Read")]
+        public object QueryPostTuple() =>
+            connection.QuerySql<(int, string, DateTime, DateTime)>
+            ("SELECT Id [Item1], [Text] [Item2], CreationDate [Item3] FROM Post WHERE Id = @param", new { param })
+            .FirstOrDefault();
+
+        [Benchmark(Description = "Single Async (Tuple)")]
+        [BenchmarkCategory("Read")]
+        public async Task<object> QueryPostTupleAsync()
+        {
+            var result = await connection.QuerySqlAsync<(int, string, DateTime, DateTime)>
+                ("SELECT Id [Item1], [Text] [Item2], CreationDate [Item3] FROM Post WHERE Id = @param", new { param })
                 .ConfigureAwait(false);
 
             return result.FirstOrDefault();
