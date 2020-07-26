@@ -254,16 +254,7 @@ namespace Insight.Database.Benchmark
                             Id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
                             [Text] VARCHAR(MAX) NOT NULL,
                             CreationDate DATETIME NOT NULL,
-                            LastChangeDate DATETIME NOT NULL,
-                            Counter1 INT,
-                            Counter2 INT,
-                            Counter3 INT,
-                            Counter4 INT,
-                            Counter5 INT,
-                            Counter6 INT,
-                            Counter7 INT,
-                            Counter8 INT,
-                            Counter9 INT
+                            LastChangeDate DATETIME NOT NULL
                         );
                     END;
                     IF (OBJECT_ID('Comment') IS NULL)
