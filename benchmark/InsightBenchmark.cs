@@ -267,9 +267,12 @@ namespace Insight.Database.Benchmark
                         (
                             Id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
                             [Text] VARCHAR(MAX) NOT NULL,
+                            [JsonText] NVARCHAR(MAX) NOT NULL,
                             CreationDate DATETIME NOT NULL,
                             LastChangeDate DATETIME NOT NULL
                         );
+
+                        ALTER TABLE [dbo].Post ADD CONSTRAINT [Text must be formatted as JSON object] CHECK  (IsJson([JsonText]) > 0)
                     END;
                     IF (OBJECT_ID('Comment') IS NULL)
                     BEGIN
@@ -290,8 +293,8 @@ namespace Insight.Database.Benchmark
                     BEGIN
                         DECLARE @PostId INT;
 
-                        INSERT INTO	Post([Text], CreationDate, LastChangeDate)
-                        VALUES (REPLICATE('x', 2000), SYSDATETIME(), SYSDATETIME());
+                        INSERT INTO	Post([Text], [JsonText], CreationDate, LastChangeDate)
+                        SELECT REPLICATE('x', 2000), (SELECT TOP 1 REPLICATE('x', 2000) JsonText FOR JSON PATH), SYSDATETIME(), SYSDATETIME();;
                         SET @i = @i + 1;
 
                         SELECT @PostId = SCOPE_IDENTITY();
