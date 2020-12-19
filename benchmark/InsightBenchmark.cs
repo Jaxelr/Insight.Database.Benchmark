@@ -267,12 +267,21 @@ namespace Insight.Database.Benchmark
                         (
                             Id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
                             [Text] VARCHAR(MAX) NOT NULL,
-                            [JsonText] NVARCHAR(MAX) NOT NULL,
+                            CreationDate DATETIME NOT NULL,
+                            LastChangeDate DATETIME NOT NULL
+                        );
+                    END;
+                    IF (OBJECT_ID('PostJson') IS NULL)
+                    BEGIN
+                        CREATE TABLE PostJson
+                        (
+                            Id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+                            [Text] NVARCHAR(MAX) NOT NULL,
                             CreationDate DATETIME NOT NULL,
                             LastChangeDate DATETIME NOT NULL
                         );
 
-                        ALTER TABLE [dbo].Post ADD CONSTRAINT [Text must be formatted as JSON object] CHECK  (IsJson([JsonText]) > 0)
+                        ALTER TABLE [dbo].PostJson ADD CONSTRAINT [Text must be formatted as JSON object] CHECK  (IsJson([Text]) > 0)
                     END;
                     IF (OBJECT_ID('Comment') IS NULL)
                     BEGIN
@@ -293,8 +302,8 @@ namespace Insight.Database.Benchmark
                     BEGIN
                         DECLARE @PostId INT;
 
-                        INSERT INTO	Post([Text], [JsonText], CreationDate, LastChangeDate)
-                        SELECT REPLICATE('x', 2000), (SELECT TOP 1 REPLICATE('x', 2000) JsonText FOR JSON PATH), SYSDATETIME(), SYSDATETIME();;
+                        INSERT INTO	Post([Text], CreationDate, LastChangeDate)
+                        SELECT REPLICATE('x', 2000), SYSDATETIME(), SYSDATETIME();
                         SET @i = @i + 1;
 
                         SELECT @PostId = SCOPE_IDENTITY();
@@ -302,6 +311,10 @@ namespace Insight.Database.Benchmark
                         INSERT INTO	Comment([CommentText], CreationDate, PostId)
                         SELECT REPLICATE('x', 2000), SYSDATETIME(), @PostId UNION ALL
                         SELECT REPLICATE('x', 2000), SYSDATETIME(), @PostId
+
+                        INSERT INTO	PostJson([Text], CreationDate, LastChangeDate)
+                        SELECT (SELECT TOP 1 REPLICATE('x', 2000) [Text] FOR JSON PATH), SYSDATETIME(), SYSDATETIME();
+                        SET @i = @i + 1;
                     END;";
 
             cmd.Connection = connection;
