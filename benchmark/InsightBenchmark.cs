@@ -17,9 +17,14 @@ namespace Insight.Database.Benchmark
         protected SqlConnection connection;
         private int param;
 
-        public IEnumerable<Post> Posts()
+        public static IEnumerable<Post> Posts()
         {
-            yield return new Post() { Text = new string('X', 2000), CreationDate = DateTime.Now, LastChangeDate = DateTime.Now };
+            yield return new Post() { Text = new string('x', 2000), CreationDate = DateTime.Now, LastChangeDate = DateTime.Now };
+        }
+
+        public static IEnumerable<Post> PostsJson()
+        {
+            yield return new Post() { Text = string.Concat("[{\"Text\": \"", new string('x', 2000), "\"}]"), CreationDate = DateTime.Now, LastChangeDate = DateTime.Now };
         }
 
         [Benchmark(Description = "Single")]
@@ -92,6 +97,11 @@ namespace Insight.Database.Benchmark
         [ArgumentsSource(nameof(Posts))]
         public Post InsertPost(Post post) => connection.InsertSql("INSERT INTO Post (Text, CreationDate, LastChangeDate) VALUES (@Text, @CreationDate, @LastChangeDate) ", post);
 
+        [Benchmark(Description = "Insert<T> json")]
+        [BenchmarkCategory("Write")]
+        [ArgumentsSource(nameof(PostsJson))]
+        public Post InsertPostJson(Post post) => connection.InsertSql("INSERT INTO PostJson (Text, CreationDate, LastChangeDate) VALUES (@Text, @CreationDate, @LastChangeDate) ", post);
+
         [Benchmark(Description = "Insert<T> Async")]
         [BenchmarkCategory("Write")]
         [ArgumentsSource(nameof(Posts))]
@@ -105,6 +115,15 @@ namespace Insight.Database.Benchmark
         {
             post.Id = param;
             return connection.QueryOntoSql("UPDATE Post SET Text = @Text, CreationDate = @CreationDate, LastChangeDate = @LastChangeDate output inserted.* WHERE Id = @Id", post);
+        }
+
+        [Benchmark(Description = "Update<T> json")]
+        [BenchmarkCategory("Write")]
+        [ArgumentsSource(nameof(PostsJson))]
+        public Post UpdatePostJson(Post post)
+        {
+            post.Id = param;
+            return connection.QueryOntoSql("UPDATE PostJson SET Text = @Text, CreationDate = @CreationDate, LastChangeDate = @LastChangeDate output inserted.* WHERE Id = @Id", post);
         }
 
         [Benchmark(Description = "Update<T> Async")]
@@ -336,7 +355,7 @@ namespace Insight.Database.Benchmark
         {
             var cmd = connection.CreateCommand();
 
-            cmd.CommandText = "DROP PROCEDURE SelectPost; DROP TABLE Post; DROP TABLE Comment;";
+            cmd.CommandText = "DROP PROCEDURE SelectPost; DROP TABLE Post; DROP TABLE Comment; DROP TABLE PostJson";
 
             cmd.Connection = connection;
             cmd.ExecuteNonQuery();
