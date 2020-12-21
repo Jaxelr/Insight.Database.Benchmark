@@ -29,8 +29,7 @@ namespace Insight.Database.Benchmark
         [Benchmark(Description = "Single Async")]
         [BenchmarkCategory("Read")]
         public async Task<Post> SinglePostAsync() =>
-            await connection.SingleSqlAsync<Post>("SELECT * FROM Post WHERE Id = @param", new { param })
-            .ConfigureAwait(false);
+            await connection.SingleSqlAsync<Post>("SELECT * FROM Post WHERE Id = @param", new { param });
 
         [Benchmark(Description = "Single (dynamic)")]
         [BenchmarkCategory("Read")]
@@ -39,8 +38,7 @@ namespace Insight.Database.Benchmark
         [Benchmark(Description = "Single Async (dynamic)")]
         [BenchmarkCategory("Read")]
         public async Task<dynamic> SinglePostAsyncDynamic() =>
-            await connection.SingleSqlAsync<dynamic>("SELECT * FROM Post WHERE Id = @param", new { param })
-            .ConfigureAwait(false);
+            await connection.SingleSqlAsync<dynamic>("SELECT * FROM Post WHERE Id = @param", new { param });
 
         [Benchmark(Description = "Single (Fast Expando)")]
         [BenchmarkCategory("Read")]
@@ -55,14 +53,12 @@ namespace Insight.Database.Benchmark
         public async Task<object> SinglePostTupleAsync() => await
             connection.SingleSqlAsync<(int, string, DateTime, DateTime)>
             ("SELECT Id [Item1], [Text] [Item2], CreationDate [Item3] FROM Post WHERE Id = @param"
-            , new { param })
-            .ConfigureAwait(false);
+            , new { param });
 
         [Benchmark(Description = "Single Async (Fast Expando)")]
         [BenchmarkCategory("Read")]
         public async Task<dynamic> SinglePostAsyncExpando() =>
-            await connection.SingleSqlAsync<FastExpando>("SELECT * FROM Post WHERE Id = @param", new { param })
-            .ConfigureAwait(false);
+            await connection.SingleSqlAsync<FastExpando>("SELECT * FROM Post WHERE Id = @param", new { param });
 
         [Benchmark(Description = "Single Procedure")]
         [BenchmarkCategory("Read")]
@@ -71,8 +67,7 @@ namespace Insight.Database.Benchmark
         [Benchmark(Description = "Single Procedure Async")]
         [BenchmarkCategory("Read")]
         public async Task<Post> SinglePostProcedureAsync() =>
-            await connection.SingleAsync<Post>("SelectPost", new { param })
-            .ConfigureAwait(false);
+            await connection.SingleAsync<Post>("SelectPost", new { param });
 
         [Benchmark(Description = "Single Procedure (dynamic)")]
         [BenchmarkCategory("Read")]
@@ -81,8 +76,7 @@ namespace Insight.Database.Benchmark
         [Benchmark(Description = "Single Procedure Async (dynamic)")]
         [BenchmarkCategory("Read")]
         public async Task<dynamic> SinglePostProcedureAsyncDynamic() =>
-            await connection.SingleAsync<dynamic>("SelectPost", new { param })
-            .ConfigureAwait(false);
+            await connection.SingleAsync<dynamic>("SelectPost", new { param });
 
         [Benchmark(Description = "Single Procedure (Fast Expando)")]
         [BenchmarkCategory("Read")]
@@ -91,8 +85,7 @@ namespace Insight.Database.Benchmark
         [Benchmark(Description = "Single Procedure Async (Fast Expando)")]
         [BenchmarkCategory("Read")]
         public async Task<dynamic> SinglePostProcedureAsyncExpando() =>
-            await connection.SingleAsync<FastExpando>("SelectPost", new { param })
-            .ConfigureAwait(false);
+            await connection.SingleAsync<FastExpando>("SelectPost", new { param });
 
         [Benchmark(Description = "Insert<T>")]
         [BenchmarkCategory("Write")]
@@ -103,8 +96,7 @@ namespace Insight.Database.Benchmark
         [BenchmarkCategory("Write")]
         [ArgumentsSource(nameof(Posts))]
         public async Task<Post> InsertPostAsync(Post post) =>
-            await connection.InsertSqlAsync("INSERT INTO Post (Text, CreationDate, LastChangeDate) VALUES (@Text, @CreationDate, @LastChangeDate)", post)
-            .ConfigureAwait(false);
+            await connection.InsertSqlAsync("INSERT INTO Post (Text, CreationDate, LastChangeDate) VALUES (@Text, @CreationDate, @LastChangeDate)", post);
 
         [Benchmark(Description = "Update<T>")]
         [BenchmarkCategory("Write")]
@@ -121,8 +113,7 @@ namespace Insight.Database.Benchmark
         public async Task<Post> UpdatePostAsync(Post post)
         {
             post.Id = param;
-            return await connection.QueryOntoSqlAsync("UPDATE Post SET Text = @Text, CreationDate = @CreationDate, LastChangeDate = @LastChangeDate output inserted.* WHERE Id = @Id", post)
-                .ConfigureAwait(false);
+            return await connection.QueryOntoSqlAsync("UPDATE Post SET Text = @Text, CreationDate = @CreationDate, LastChangeDate = @LastChangeDate output inserted.* WHERE Id = @Id", post);
         }
 
         [Benchmark(Description = "Query<T>")]
@@ -133,8 +124,7 @@ namespace Insight.Database.Benchmark
         [BenchmarkCategory("Read")]
         public async Task<Post> QueryPostAsync()
         {
-            var result = await connection.QuerySqlAsync<Post>("SELECT * FROM Post WHERE Id = @param", new { param })
-                .ConfigureAwait(false);
+            var result = await connection.QuerySqlAsync<Post>("SELECT * FROM Post WHERE Id = @param", new { param });
 
             return result.FirstOrDefault();
         }
@@ -147,8 +137,7 @@ namespace Insight.Database.Benchmark
         [BenchmarkCategory("Read")]
         public async Task<dynamic> QueryPostAsyncDynamic()
         {
-            var result = await connection.QuerySqlAsync("SELECT * FROM Post WHERE Id = @param", new { param })
-                .ConfigureAwait(false);
+            var result = await connection.QuerySqlAsync("SELECT * FROM Post WHERE Id = @param", new { param });
 
             return result.FirstOrDefault();
         }
@@ -161,8 +150,7 @@ namespace Insight.Database.Benchmark
         [BenchmarkCategory("Read")]
         public async Task<FastExpando> QueryPostAsyncFastExpando()
         {
-            var result = await connection.QuerySqlAsync("SELECT * FROM Post WHERE Id = @param", new { param })
-                .ConfigureAwait(false);
+            var result = await connection.QuerySqlAsync("SELECT * FROM Post WHERE Id = @param", new { param });
 
             return result.FirstOrDefault();
         }
@@ -179,8 +167,7 @@ namespace Insight.Database.Benchmark
         public async Task<object> QueryPostTupleAsync()
         {
             var result = await connection.QuerySqlAsync<(int, string, DateTime, DateTime)>
-                ("SELECT Id [Item1], [Text] [Item2], CreationDate [Item3] FROM Post WHERE Id = @param", new { param })
-                .ConfigureAwait(false);
+                ("SELECT Id [Item1], [Text] [Item2], CreationDate [Item3] FROM Post WHERE Id = @param", new { param });
 
             return result.FirstOrDefault();
         }
@@ -193,8 +180,7 @@ namespace Insight.Database.Benchmark
         [BenchmarkCategory("Read")]
         public async Task<Post> QueryPostProcedureAsync()
         {
-            var result = await connection.QueryAsync<Post>("SelectPost", new { param })
-                .ConfigureAwait(false);
+            var result = await connection.QueryAsync<Post>("SelectPost", new { param });
 
             return result.FirstOrDefault();
         }
@@ -207,8 +193,7 @@ namespace Insight.Database.Benchmark
         [BenchmarkCategory("Read")]
         public async Task<dynamic> QueryPostProcedureAsyncDynamic()
         {
-            var result = await connection.QueryAsync("SelectPost", new { param })
-                .ConfigureAwait(false);
+            var result = await connection.QueryAsync("SelectPost", new { param });
 
             return result.FirstOrDefault();
         }
@@ -221,8 +206,7 @@ namespace Insight.Database.Benchmark
         [BenchmarkCategory("Read")]
         public async Task<FastExpando> QueryPostProcedureAsyncFastExpando()
         {
-            var result = await connection.QueryAsync("SelectPost", new { param })
-                .ConfigureAwait(false);
+            var result = await connection.QueryAsync("SelectPost", new { param });
 
             return result.FirstOrDefault();
         }
