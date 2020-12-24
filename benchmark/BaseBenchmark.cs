@@ -1,8 +1,12 @@
 ﻿using System;
+using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Configs;
 using Microsoft.Extensions.Configuration;
 
 namespace Insight.Database.Benchmark
 {
+    [BenchmarkCategory("Insight.Database")]
+    [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
     public class BaseBenchmark
     {
         public static string ConnectionString;

@@ -4,14 +4,11 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Configs;
 using Insight.Database.Benchmark.Models;
 using Insight.Database.Structure;
 
 namespace Insight.Database.Benchmark
 {
-    [BenchmarkCategory("Insight.Database")]
-    [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
     public class InsightBenchmark : BaseBenchmark
     {
         protected SqlConnection connection;
@@ -20,11 +17,6 @@ namespace Insight.Database.Benchmark
         public static IEnumerable<Post> Posts()
         {
             yield return new Post() { Text = new string('x', 2000), CreationDate = DateTime.Now, LastChangeDate = DateTime.Now };
-        }
-
-        public static IEnumerable<Post> PostsJson()
-        {
-            yield return new Post() { Text = string.Concat("{\"Text\": \"", new string('x', 2000), "\"}"), CreationDate = DateTime.Now, LastChangeDate = DateTime.Now };
         }
 
         [Benchmark(Description = "Single")]
@@ -64,14 +56,6 @@ namespace Insight.Database.Benchmark
         [BenchmarkCategory("Read")]
         public async Task<dynamic> SinglePostAsyncExpando() =>
             await connection.SingleSqlAsync<FastExpando>("SELECT * FROM Post WHERE Id = @param", new { param });
-
-        [Benchmark(Description = "Single json")]
-        [BenchmarkCategory("Read")]
-        public PostJson SinglePostJson() => connection.SingleSql<PostJson, ChildJson>("SELECT * FROM PostJson WHERE Id = @param", new { param });
-
-        [Benchmark(Description = "Single Async json")]
-        [BenchmarkCategory("Read")]
-        public async Task<PostJson> SingleAsyncPostJson() => await connection.SingleSqlAsync<PostJson, ChildJson>("SELECT * FROM PostJson WHERE Id = @param", new { param });
 
         [Benchmark(Description = "Single Procedure")]
         [BenchmarkCategory("Read")]
@@ -115,11 +99,6 @@ namespace Insight.Database.Benchmark
         [ArgumentsSource(nameof(Posts))]
         public Post InsertPost(Post post) => connection.InsertSql("INSERT INTO Post (Text, CreationDate, LastChangeDate) VALUES (@Text, @CreationDate, @LastChangeDate) ", post);
 
-        [Benchmark(Description = "Insert<T> json")]
-        [BenchmarkCategory("Write")]
-        [ArgumentsSource(nameof(PostsJson))]
-        public Post InsertPostJson(Post post) => connection.InsertSql("INSERT INTO PostJson (Child, CreationDate, LastChangeDate) VALUES (@Text, @CreationDate, @LastChangeDate) ", post);
-
         [Benchmark(Description = "Insert<T> Async")]
         [BenchmarkCategory("Write")]
         [ArgumentsSource(nameof(Posts))]
@@ -133,15 +112,6 @@ namespace Insight.Database.Benchmark
         {
             post.Id = param;
             return connection.QueryOntoSql("UPDATE Post SET Text = @Text, CreationDate = @CreationDate, LastChangeDate = @LastChangeDate output inserted.* WHERE Id = @Id", post);
-        }
-
-        [Benchmark(Description = "Update<T> json")]
-        [BenchmarkCategory("Write")]
-        [ArgumentsSource(nameof(PostsJson))]
-        public Post UpdatePostJson(Post post)
-        {
-            post.Id = param;
-            return connection.QueryOntoSql("UPDATE PostJson SET Child = @Text, CreationDate = @CreationDate, LastChangeDate = @LastChangeDate output inserted.* WHERE Id = @Id", post);
         }
 
         [Benchmark(Description = "Update<T> Async")]
@@ -188,19 +158,6 @@ namespace Insight.Database.Benchmark
         public async Task<FastExpando> QueryPostAsyncFastExpando()
         {
             var result = await connection.QuerySqlAsync("SELECT * FROM Post WHERE Id = @param", new { param });
-
-            return result.FirstOrDefault();
-        }
-
-        [Benchmark(Description = "Query<T> json")]
-        [BenchmarkCategory("Read")]
-        public PostJson QueryPostJson() => connection.QuerySql<PostJson, ChildJson>("SELECT * FROM PostJson WHERE Id = @param", new { param }).FirstOrDefault();
-
-        [Benchmark(Description = "Query<T> Async json")]
-        [BenchmarkCategory("Read")]
-        public async Task<PostJson> QueryAsyncPostJson()
-        {
-            var result = await connection.QuerySqlAsync<PostJson, ChildJson>("SELECT * FROM PostJson WHERE Id = @param", new { param });
 
             return result.FirstOrDefault();
         }
@@ -311,18 +268,6 @@ namespace Insight.Database.Benchmark
                             LastChangeDate DATETIME NOT NULL
                         );
                     END;
-                    IF (OBJECT_ID('PostJson') IS NULL)
-                    BEGIN
-                        CREATE TABLE PostJson
-                        (
-                            Id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
-                            [Child] NVARCHAR(MAX) NOT NULL,
-                            CreationDate DATETIME NOT NULL,
-                            LastChangeDate DATETIME NOT NULL
-                        );
-
-                        ALTER TABLE [dbo].PostJson ADD CONSTRAINT [Text must be formatted as JSON object] CHECK  (IsJson([Child]) > 0)
-                    END;
                     IF (OBJECT_ID('Comment') IS NULL)
                     BEGIN
                         CREATE TABLE Comment
@@ -335,7 +280,6 @@ namespace Insight.Database.Benchmark
                     END;
 
                     DELETE FROM dbo.Post;
-                    DELETE FROM dbo.PostJson;
                     DELETE FROM dbo.Comment;
 
                     DECLARE @i INT = 0;
@@ -352,10 +296,6 @@ namespace Insight.Database.Benchmark
                         INSERT INTO	Comment([CommentText], CreationDate, PostId)
                         SELECT REPLICATE('x', 2000), SYSDATETIME(), @PostId UNION ALL
                         SELECT REPLICATE('x', 2000), SYSDATETIME(), @PostId
-
-                        INSERT INTO	PostJson([Child], CreationDate, LastChangeDate)
-                        SELECT (SELECT TOP 1 REPLICATE('x', 2000) [Text] FOR JSON PATH, WITHOUT_ARRAY_WRAPPER), SYSDATETIME(), SYSDATETIME();
-                        SET @i = @i + 1;
                     END;";
 
             cmd.Connection = connection;
@@ -377,7 +317,7 @@ namespace Insight.Database.Benchmark
         {
             var cmd = connection.CreateCommand();
 
-            cmd.CommandText = "DROP PROCEDURE SelectPost; DROP TABLE Post; DROP TABLE Comment; DROP TABLE PostJson";
+            cmd.CommandText = "DROP PROCEDURE SelectPost; DROP TABLE Post; DROP TABLE Comment;";
 
             cmd.Connection = connection;
             cmd.ExecuteNonQuery();
