@@ -29,11 +29,11 @@ namespace Insight.Database.Benchmark
             AddColumnProvider(DefaultColumnProviders.Metrics);
 
             AddJob(Job.ShortRun
-             .WithLaunchCount(5)
-             .WithWarmupCount(5)
-             .WithMinIterationCount(5)
-             .WithMaxIterationCount(10)
-             .WithIterationCount(5));
+             .WithLaunchCount(1)
+             .WithWarmupCount(1)
+             .WithMinIterationCount(1)
+             .WithMaxIterationCount(5)
+             .WithIterationCount(1));
 
             Orderer = new DefaultOrderer(SummaryOrderPolicy.FastestToSlowest);
             Options |= ConfigOptions.JoinSummary;
