@@ -31,7 +31,8 @@ namespace Insight.Database.Benchmark
             AddJob(Job.ShortRun
              .WithLaunchCount(5)
              .WithWarmupCount(5)
-             .WithMaxIterationCount(20)
+             .WithMinIterationCount(5)
+             .WithMaxIterationCount(10)
              .WithIterationCount(5));
 
             Orderer = new DefaultOrderer(SummaryOrderPolicy.FastestToSlowest);
