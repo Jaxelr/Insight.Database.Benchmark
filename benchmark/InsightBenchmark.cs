@@ -4,22 +4,19 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Configs;
 using Insight.Database.Benchmark.Models;
 using Insight.Database.Structure;
 
 namespace Insight.Database.Benchmark
 {
-    [BenchmarkCategory("Insight.Database")]
-    [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
     public class InsightBenchmark : BaseBenchmark
     {
         protected SqlConnection connection;
         private int param;
 
-        public IEnumerable<Post> Posts()
+        public static IEnumerable<Post> Posts()
         {
-            yield return new Post() { Text = new string('X', 2000), CreationDate = DateTime.Now, LastChangeDate = DateTime.Now };
+            yield return new Post() { Text = new string('x', 2000), CreationDate = DateTime.Now, LastChangeDate = DateTime.Now };
         }
 
         [Benchmark(Description = "Single")]
@@ -86,6 +83,16 @@ namespace Insight.Database.Benchmark
         [BenchmarkCategory("Read")]
         public async Task<dynamic> SinglePostProcedureAsyncExpando() =>
             await connection.SingleAsync<FastExpando>("SelectPost", new { param });
+
+        [Benchmark(Description = "Single Async (Tuple)")]
+        [BenchmarkCategory("Read")]
+        public async Task<object> QueryPostTupleAsync()
+        {
+            var result = await connection.QuerySqlAsync<(int, string, DateTime, DateTime)>
+                ("SELECT Id [Item1], [Text] [Item2], CreationDate [Item3] FROM Post WHERE Id = @param", new { param });
+
+            return result.FirstOrDefault();
+        }
 
         [Benchmark(Description = "Insert<T>")]
         [BenchmarkCategory("Write")]
@@ -161,16 +168,6 @@ namespace Insight.Database.Benchmark
             connection.QuerySql<(int, string, DateTime, DateTime)>
             ("SELECT Id [Item1], [Text] [Item2], CreationDate [Item3] FROM Post WHERE Id = @param", new { param })
             .FirstOrDefault();
-
-        [Benchmark(Description = "Single Async (Tuple)")]
-        [BenchmarkCategory("Read")]
-        public async Task<object> QueryPostTupleAsync()
-        {
-            var result = await connection.QuerySqlAsync<(int, string, DateTime, DateTime)>
-                ("SELECT Id [Item1], [Text] [Item2], CreationDate [Item3] FROM Post WHERE Id = @param", new { param });
-
-            return result.FirstOrDefault();
-        }
 
         [Benchmark(Description = "Query<T> Procedure")]
         [BenchmarkCategory("Read")]
@@ -291,7 +288,7 @@ namespace Insight.Database.Benchmark
                         DECLARE @PostId INT;
 
                         INSERT INTO	Post([Text], CreationDate, LastChangeDate)
-                        VALUES (REPLICATE('x', 2000), SYSDATETIME(), SYSDATETIME());
+                        SELECT REPLICATE('x', 2000), SYSDATETIME(), SYSDATETIME();
                         SET @i = @i + 1;
 
                         SELECT @PostId = SCOPE_IDENTITY();
