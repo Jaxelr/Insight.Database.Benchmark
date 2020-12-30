@@ -12,7 +12,6 @@ namespace Insight.Database.Benchmark
     public class InsightBenchmark : BaseBenchmark
     {
         protected SqlConnection connection;
-        private int param;
 
         public static IEnumerable<Post> Posts()
         {
@@ -238,14 +237,6 @@ namespace Insight.Database.Benchmark
                 new { param },
                 Query.Returns<Post>()
                 .ThenChildren(Some<Comment>.Records)).FirstOrDefault();
-
-        [IterationSetup]
-        public void Increment()
-        {
-            if (param > iterations)
-                param = 0;
-            param++;
-        }
 
         [GlobalSetup]
         public void DbSetup()

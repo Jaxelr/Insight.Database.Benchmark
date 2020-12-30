@@ -11,7 +11,7 @@ namespace Insight.Database.Benchmark
     public class InsightBenchmarkJson : BaseBenchmark
     {
         protected SqlConnection connection;
-        private int param;
+
 
         public static IEnumerable<Post> PostsJson()
         {
@@ -103,14 +103,6 @@ namespace Insight.Database.Benchmark
 
             connection.Close();
             connection.Dispose();
-        }
-
-        [IterationSetup]
-        public void Increment()
-        {
-            if (param > iterations)
-                param = 0;
-            param++;
         }
     }
 }

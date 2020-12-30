@@ -9,6 +9,7 @@ namespace Insight.Database.Benchmark
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
     public class BaseBenchmark
     {
+        protected int param;
         protected readonly string connectionString;
         protected readonly int iterations;
 
@@ -30,6 +31,14 @@ namespace Insight.Database.Benchmark
             }
 
             iterations = int.Parse(configuration.GetSection("Records").Value);
+        }
+
+        [IterationSetup]
+        public void Increment()
+        {
+            if (param > iterations)
+                param = 0;
+            param++;
         }
     }
 }
