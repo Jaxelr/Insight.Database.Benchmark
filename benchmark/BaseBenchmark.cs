@@ -9,8 +9,8 @@ namespace Insight.Database.Benchmark
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
     public class BaseBenchmark
     {
-        public static string ConnectionString;
-        public static int Iterations;
+        protected readonly string connectionString;
+        protected readonly int iterations;
 
         public BaseBenchmark()
         {
@@ -21,15 +21,15 @@ namespace Insight.Database.Benchmark
 
             IConfigurationRoot configuration = builder.Build();
 
-            ConnectionString = configuration.GetConnectionString("Default");
+            connectionString = configuration.GetConnectionString("Default");
 
             //Overwrite with external configuration
             if (!string.IsNullOrEmpty(connEnv))
             {
-                ConnectionString = connEnv;
+                connectionString = connEnv;
             }
 
-            Iterations = int.Parse(configuration.GetSection("Records").Value);
+            iterations = int.Parse(configuration.GetSection("Records").Value);
         }
     }
 }

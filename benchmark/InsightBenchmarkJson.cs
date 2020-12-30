@@ -56,7 +56,7 @@ namespace Insight.Database.Benchmark
         [GlobalSetup]
         public void DbSetup()
         {
-            connection = new SqlConnection(ConnectionString);
+            connection = new SqlConnection(connectionString);
             SqlInsightDbProvider.RegisterProvider();
             connection.Open();
 
@@ -80,7 +80,7 @@ namespace Insight.Database.Benchmark
                     DELETE FROM dbo.PostJson;
 
                     DECLARE @i INT = 0;
-                    WHILE (@i <= {Iterations})
+                    WHILE (@i <= {iterations})
                     BEGIN
                         INSERT INTO	PostJson([Child], CreationDate, LastChangeDate)
                         SELECT (SELECT TOP 1 REPLICATE('x', 2000) [Text] FOR JSON PATH, WITHOUT_ARRAY_WRAPPER), SYSDATETIME(), SYSDATETIME();
@@ -108,7 +108,7 @@ namespace Insight.Database.Benchmark
         [IterationSetup]
         public void Increment()
         {
-            if (param > Iterations)
+            if (param > iterations)
                 param = 0;
             param++;
         }

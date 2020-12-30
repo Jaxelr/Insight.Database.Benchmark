@@ -242,7 +242,7 @@ namespace Insight.Database.Benchmark
         [IterationSetup]
         public void Increment()
         {
-            if (param > Iterations)
+            if (param > iterations)
                 param = 0;
             param++;
         }
@@ -250,7 +250,7 @@ namespace Insight.Database.Benchmark
         [GlobalSetup]
         public void DbSetup()
         {
-            connection = new SqlConnection(ConnectionString);
+            connection = new SqlConnection(connectionString);
             SqlInsightDbProvider.RegisterProvider();
             connection.Open();
 
@@ -283,7 +283,7 @@ namespace Insight.Database.Benchmark
                     DELETE FROM dbo.Comment;
 
                     DECLARE @i INT = 0;
-                    WHILE (@i <= {Iterations})
+                    WHILE (@i <= {iterations})
                     BEGIN
                         DECLARE @PostId INT;
 
