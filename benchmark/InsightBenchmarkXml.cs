@@ -12,10 +12,17 @@ namespace Insight.Database.Benchmark
     {
         protected SqlConnection connection;
 
+        private const string NamespaceHeader = "<UserQuery.ChildXml xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.datacontract.org/2004/07/\"><Text>";
+        private const string NamespaceFooter = "</Text></UserQuery.ChildXml>";
 
         public static IEnumerable<Post> PostsXml()
         {
-            yield return new Post() { Text = string.Concat("<text>", new string('x', 2000), "</text>"), CreationDate = DateTime.Now, LastChangeDate = DateTime.Now };
+            yield return new Post()
+            {
+                Text = NamespaceHeader + new string('x', 50) + NamespaceFooter,
+                CreationDate = DateTime.Now,
+                LastChangeDate = DateTime.Now
+            };
         }
 
         [Benchmark(Description = "Insert<T> xml")]
@@ -38,7 +45,7 @@ namespace Insight.Database.Benchmark
 
         [Benchmark(Description = "Single Async xml")]
         [BenchmarkCategory("Read")]
-        public async Task<PostXml> SingleAsyncPostXml() => await connection.SingleSqlAsync<PostXml, ChildXml>("SELECT * FROM PostXml WHERE Id = @param", new { param });
+        public async Task<PostXml> SingleAsyncPostXml() => await connection.SingleSqlAsync<PostXml>("SELECT * FROM PostXml WHERE Id = @param", new { param });
 
         [Benchmark(Description = "Query<T> xml")]
         [BenchmarkCategory("Read")]
@@ -82,8 +89,8 @@ namespace Insight.Database.Benchmark
                     WHILE (@i <= {iterations})
                     BEGIN
                         INSERT INTO	PostXml([Child], CreationDate, LastChangeDate)
-                        SELECT CONCAT('<text>',REPLICATE('x', 2000),'</text>'), SYSDATETIME(), SYSDATETIME();
-                        SET @i = @i + 1;
+                        SELECT CONCAT(N'{NamespaceHeader}', REPLICATE('x', 50), '{NamespaceFooter}'), SYSDATETIME(), SYSDATETIME();
+                                SET @i = @i + 1;
                     END;";
 
             cmd.Connection = connection;
