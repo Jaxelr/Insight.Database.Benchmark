@@ -19,7 +19,7 @@ namespace Insight.Database.Benchmark
         {
             yield return new Post()
             {
-                Text = NamespaceHeader + new string('x', 50) + NamespaceFooter,
+                Text = string.Concat(NamespaceHeader, new string('x', 2000) , NamespaceFooter),
                 CreationDate = DateTime.Now,
                 LastChangeDate = DateTime.Now
             };
@@ -89,7 +89,7 @@ namespace Insight.Database.Benchmark
                     WHILE (@i <= {iterations})
                     BEGIN
                         INSERT INTO	PostXml([Child], CreationDate, LastChangeDate)
-                        SELECT CONCAT(N'{NamespaceHeader}', REPLICATE('x', 50), '{NamespaceFooter}'), SYSDATETIME(), SYSDATETIME();
+                        SELECT CONCAT(N'{NamespaceHeader}', REPLICATE('x', 2000), '{NamespaceFooter}'), SYSDATETIME(), SYSDATETIME();
                                 SET @i = @i + 1;
                     END;";
 
