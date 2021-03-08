@@ -12,8 +12,8 @@ namespace Insight.Database.Benchmark
     {
         protected SqlConnection connection;
 
-        private const string NamespaceHeader = "<UserQuery.ChildXml xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.datacontract.org/2004/07/\"><Text>";
-        private const string NamespaceFooter = "</Text></UserQuery.ChildXml>";
+        private const string NamespaceHeader = "<ChildXml xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.datacontract.org/2004/07/Insight.Database.Benchmark.Models\"><Text>";
+        private const string NamespaceFooter = "</Text></ChildXml>";
 
         public static IEnumerable<Post> PostsXml()
         {
