@@ -8,8 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
-    <PackageReference Include="Insight.Database" Version="6.3.4" />
+    <PackageReference Include="Insight.Database" Version="6.3.5-preview" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />

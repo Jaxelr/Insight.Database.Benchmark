@@ -1,6 +1,6 @@
 ﻿using Insight.Database.Benchmark.Models;
 
-namespace Insight.Database.Benchmark
+namespace Insight.Database.Benchmark.SqlServer
 {
     public interface IPostRepository
     {

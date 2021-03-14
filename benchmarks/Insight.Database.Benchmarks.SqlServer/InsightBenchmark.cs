@@ -6,7 +6,7 @@ using BenchmarkDotNet.Attributes;
 using Insight.Database.Benchmark.Models;
 using Insight.Database.Structure;
 
-namespace Insight.Database.Benchmark
+namespace Insight.Database.Benchmark.SqlServer
 {
     public class InsightBenchmark : BaseBenchmark
     {

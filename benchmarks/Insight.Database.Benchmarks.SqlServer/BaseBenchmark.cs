@@ -3,7 +3,7 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using Microsoft.Extensions.Configuration;
 
-namespace Insight.Database.Benchmark
+namespace Insight.Database.Benchmark.SqlServer
 {
     [BenchmarkCategory("Insight.Database")]
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]

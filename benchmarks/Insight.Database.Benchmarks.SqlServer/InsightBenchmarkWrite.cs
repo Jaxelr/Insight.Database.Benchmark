@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Insight.Database.Benchmark.Models;
 
-namespace Insight.Database.Benchmark
+namespace Insight.Database.Benchmark.SqlServer
 {
     public class InsightBenchmarkWrite : InsightBenchmark
     {
