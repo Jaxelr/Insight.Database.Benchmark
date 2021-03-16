@@ -17,7 +17,8 @@ before_build:
 build_script:
   - cmd: dotnet build . -v quiet
 after_test:
-  - cmd: dotnet run --project ./benchmark/Insight.Database.Benchmarks.SqlServer/Insight.Database.Benchmarks.SqlServer.csproj  --filter *Insight.Database.Benchmark.SqlServer*
+  - cmd: dotnet run --project ./benchmarks/Insight.Database.Benchmarks.SqlServer/Insight.Database.Benchmarks.SqlServer.csproj  --filter *Insight.Database.Benchmarks*
+  - cmd: dotnet run --project ./benchmarks/Insight.Database.Benchmarks.Postgres/Insight.Database.Benchmarks.Postgres.csproj  --filter *Insight.Database.Benchmarks*
 skip_commits:
   files:
     - '**/*.md'
