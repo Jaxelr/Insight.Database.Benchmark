@@ -3,7 +3,7 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using Microsoft.Extensions.Configuration;
 
-namespace Insight.Database.Benchmark.Postgres
+namespace Insight.Database.Benchmarks.Postgres
 {
     [BenchmarkCategory("Insight.Database")]
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]

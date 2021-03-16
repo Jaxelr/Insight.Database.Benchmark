@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{B2B2
 		.github\PULL_REQUEST_TEMPLATE.md = .github\PULL_REQUEST_TEMPLATE.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insight.Database.Benchmarks.Postgres", "benchmarks\Insight.Database.Benchmarks.Postgres\Insight.Database.Benchmarks.Postgres\Insight.Database.Benchmarks.Postgres.csproj", "{5B72CDA3-9710-414D-ABD5-9E9417D350A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Insight.Database.Benchmarks.Postgres", "benchmarks\Insight.Database.Benchmarks.Postgres\Insight.Database.Benchmarks.Postgres\Insight.Database.Benchmarks.Postgres.csproj", "{5B72CDA3-9710-414D-ABD5-9E9417D350A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

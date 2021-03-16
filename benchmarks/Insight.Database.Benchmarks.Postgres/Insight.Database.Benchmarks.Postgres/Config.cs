@@ -6,7 +6,7 @@ using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Order;
 
-namespace Insight.Database.Benchmark.Postgres
+namespace Insight.Database.Benchmarks.Postgres
 {
     public class Config : ManualConfig
     {
