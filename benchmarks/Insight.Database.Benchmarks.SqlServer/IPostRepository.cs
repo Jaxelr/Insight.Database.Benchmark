@@ -1,6 +1,6 @@
-﻿using Insight.Database.Benchmark.Models;
+﻿using Insight.Database.Benchmarks.SqlServer.Models;
 
-namespace Insight.Database.Benchmark.SqlServer
+namespace Insight.Database.Benchmarks.SqlServer
 {
     public interface IPostRepository
     {
@@ -15,6 +15,5 @@ namespace Insight.Database.Benchmark.SqlServer
 
         [Sql("SELECT * FROM Post WHERE Id = @param")]
         dynamic AutoISingleDynamic(int param);
-
     }
 }

@@ -4,14 +4,13 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
-using Insight.Database.Benchmark.Models;
+using Insight.Database.Benchmarks.SqlServer.Models;
 
-namespace Insight.Database.Benchmark.SqlServer
+namespace Insight.Database.Benchmarks.SqlServer
 {
     public class InsightBenchmarkJson : BaseBenchmark
     {
         protected SqlConnection connection;
-
 
         public static IEnumerable<Post> PostsJson()
         {

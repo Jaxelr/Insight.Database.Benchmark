@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
-using Insight.Database.Benchmark.Models;
+using Insight.Database.Benchmarks.SqlServer.Models;
 
-namespace Insight.Database.Benchmark.SqlServer
+namespace Insight.Database.Benchmarks.SqlServer
 {
     public class InsightBenchmarkWrite : InsightBenchmark
     {
