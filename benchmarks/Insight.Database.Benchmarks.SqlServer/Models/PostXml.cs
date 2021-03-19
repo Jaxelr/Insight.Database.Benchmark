@@ -1,20 +1,22 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
-namespace Insight.Database.Benchmark.Models
+namespace Insight.Database.Benchmarks.SqlServer.Models
 {
-    public class PostJson
+    public class PostXml
     {
         public int Id { get; set; }
 
-        [Column(SerializationMode = SerializationMode.Json)]
-        public ChildJson Child { get; set; }
+        public ChildXml Child { get; set; }
 
         public DateTime CreationDate { get; set; }
         public DateTime LastChangeDate { get; set; }
     }
 
-    public class ChildJson
+    [DataContract]
+    public class ChildXml
     {
+        [DataMember]
         public string Text { get; set; }
     }
 }

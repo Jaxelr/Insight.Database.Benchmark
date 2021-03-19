@@ -1,6 +1,6 @@
-﻿using Insight.Database.Benchmark.Models;
+﻿using Insight.Database.Benchmarks.Postgres.Models;
 
-namespace Insight.Database.Benchmark
+namespace Insight.Database.Benchmarks.Postgres
 {
     public interface IPostRepository
     {
@@ -15,6 +15,5 @@ namespace Insight.Database.Benchmark
 
         [Sql("SELECT * FROM Post WHERE Id = @param")]
         dynamic AutoISingleDynamic(int param);
-
     }
 }

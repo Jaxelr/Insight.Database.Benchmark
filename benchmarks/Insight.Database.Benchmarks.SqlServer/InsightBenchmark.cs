@@ -3,10 +3,10 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
-using Insight.Database.Benchmark.Models;
+using Insight.Database.Benchmarks.SqlServer.Models;
 using Insight.Database.Structure;
 
-namespace Insight.Database.Benchmark
+namespace Insight.Database.Benchmarks.SqlServer
 {
     public class InsightBenchmark : BaseBenchmark
     {

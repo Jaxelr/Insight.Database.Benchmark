@@ -3,7 +3,7 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using Microsoft.Extensions.Configuration;
 
-namespace Insight.Database.Benchmark
+namespace Insight.Database.Benchmarks.Postgres
 {
     [BenchmarkCategory("Insight.Database")]
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
@@ -15,7 +15,7 @@ namespace Insight.Database.Benchmark
 
         public BaseBenchmark()
         {
-            string connEnv = Environment.GetEnvironmentVariable("Sql_Connection");
+            string connEnv = Environment.GetEnvironmentVariable("Postgres_Connection");
 
             var builder = new ConfigurationBuilder()
                             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);

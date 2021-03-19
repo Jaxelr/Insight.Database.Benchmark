@@ -1,4 +1,4 @@
-﻿namespace Insight.Database.Benchmark.Models
+﻿namespace Insight.Database.Benchmarks.Postgres.Models
 {
     public class Comment
     {

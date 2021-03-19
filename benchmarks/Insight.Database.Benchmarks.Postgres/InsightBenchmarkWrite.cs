@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
-using Insight.Database.Benchmark.Models;
+using Insight.Database.Benchmarks.Postgres.Models;
 
-namespace Insight.Database.Benchmark
+namespace Insight.Database.Benchmarks.Postgres
 {
     public class InsightBenchmarkWrite : InsightBenchmark
     {
@@ -16,13 +16,13 @@ namespace Insight.Database.Benchmark
         [Benchmark(Description = "Insert<T>")]
         [BenchmarkCategory("Write")]
         [ArgumentsSource(nameof(Posts))]
-        public Post InsertPost(Post post) => connection.InsertSql("INSERT INTO Post (Text, CreationDate, LastChangeDate) VALUES (@Text, @CreationDate, @LastChangeDate) ", post);
+        public Post InsertPost(Post post) => connection.InsertSql("INSERT INTO Post (\"Text\", CreationDate, LastChangeDate) VALUES (@Text, @CreationDate, @LastChangeDate) ", post);
 
         [Benchmark(Description = "Insert<T> Async")]
         [BenchmarkCategory("Write")]
         [ArgumentsSource(nameof(Posts))]
         public async Task<Post> InsertPostAsync(Post post) =>
-            await connection.InsertSqlAsync("INSERT INTO Post (Text, CreationDate, LastChangeDate) VALUES (@Text, @CreationDate, @LastChangeDate)", post);
+            await connection.InsertSqlAsync("INSERT INTO Post (\"Text\", CreationDate, LastChangeDate) VALUES (@Text, @CreationDate, @LastChangeDate)", post);
 
         [Benchmark(Description = "Update<T>")]
         [BenchmarkCategory("Write")]
@@ -30,7 +30,7 @@ namespace Insight.Database.Benchmark
         public Post UpdatePost(Post post)
         {
             post.Id = param;
-            return connection.QueryOntoSql("UPDATE Post SET Text = @Text, CreationDate = @CreationDate, LastChangeDate = @LastChangeDate output inserted.* WHERE Id = @Id", post);
+            return connection.QueryOntoSql("UPDATE Post SET \"Text\" = @Text, CreationDate = @CreationDate, LastChangeDate = @LastChangeDate WHERE Id = @Id Returning *", post);
         }
 
         [Benchmark(Description = "Update<T> Async")]
@@ -39,7 +39,7 @@ namespace Insight.Database.Benchmark
         public async Task<Post> UpdatePostAsync(Post post)
         {
             post.Id = param;
-            return await connection.QueryOntoSqlAsync("UPDATE Post SET Text = @Text, CreationDate = @CreationDate, LastChangeDate = @LastChangeDate output inserted.* WHERE Id = @Id", post);
+            return await connection.QueryOntoSqlAsync("UPDATE Post SET \"Text\" = @Text, CreationDate = @CreationDate, LastChangeDate = @LastChangeDate WHERE Id = @Id Returning *", post);
         }
     }
 }

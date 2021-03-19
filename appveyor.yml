@@ -9,6 +9,7 @@ configuration:
   - Release
 services:
   - mssql2017
+  - postgresql101
 nuget:
   disable_publish_on_pr: true
 before_build:
@@ -16,7 +17,8 @@ before_build:
 build_script:
   - cmd: dotnet build . -v quiet
 after_test:
-  - cmd: dotnet run --project ./benchmark/Insight.Database.Benchmarks.csproj  --filter *Insight.Database.Benchmark*
+  - cmd: dotnet run --project ./benchmarks/Insight.Database.Benchmarks.SqlServer/Insight.Database.Benchmarks.SqlServer.csproj  --filter *Insight.Database.Benchmarks*
+  - cmd: dotnet run --project ./benchmarks/Insight.Database.Benchmarks.Postgres/Insight.Database.Benchmarks.Postgres.csproj  --filter *Insight.Database.Benchmarks*
 skip_commits:
   files:
     - '**/*.md'
