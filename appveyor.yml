@@ -22,3 +22,8 @@ after_test:
 skip_commits:
   files:
     - '**/*.md'
+environment:
+  postgres_connection:
+    secure: YW0OmwTb/Q3byjNiJzsXc4UN5JJRbI3uYItkJPLB3F2d/rxamWDJbfwQ7aI0FEfQ6YYPoafFf4Of9o0bYo1ls8w8DzT1xx9RIBZ5nSdnUR9yFIHo2imYYHD+w+4JMGHh
+  sql_connection:
+    secure: IDN3XLRl6oFBvm1ql3udiL77wdDcn+zDJHi3fV0rHByKD87DyilxrR78kvuhroAqEm57nDSMDt4/gjWhkcV6Z6+1hazXfVXk8JAtzSVSjMg=
