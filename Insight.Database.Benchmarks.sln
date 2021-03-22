@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{B2B2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Insight.Database.Benchmarks.Postgres", "benchmarks\Insight.Database.Benchmarks.Postgres\Insight.Database.Benchmarks.Postgres.csproj", "{5B72CDA3-9710-414D-ABD5-9E9417D350A0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Insight.Database.Benchmarks.MySql", "benchmarks\Insight.Database.Benchmarks.MySql\Insight.Database.Benchmarks.MySql.csproj", "{A0DF6CC8-F1D0-4022-8464-B32A93BD7180}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{5B72CDA3-9710-414D-ABD5-9E9417D350A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B72CDA3-9710-414D-ABD5-9E9417D350A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B72CDA3-9710-414D-ABD5-9E9417D350A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0DF6CC8-F1D0-4022-8464-B32A93BD7180}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0DF6CC8-F1D0-4022-8464-B32A93BD7180}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0DF6CC8-F1D0-4022-8464-B32A93BD7180}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0DF6CC8-F1D0-4022-8464-B32A93BD7180}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
