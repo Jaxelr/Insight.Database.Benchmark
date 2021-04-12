@@ -10,6 +10,7 @@ configuration:
   - Release
 services:
   - postgresql101
+  - mysql
 nuget:
   disable_publish_on_pr: true
 before_build:
@@ -19,6 +20,7 @@ build_script:
 after_test:
   - cmd: dotnet run --project ./benchmarks/Insight.Database.Benchmarks.SqlServer/Insight.Database.Benchmarks.SqlServer.csproj  --filter *Insight.Database.Benchmarks*
   - cmd: dotnet run --project ./benchmarks/Insight.Database.Benchmarks.Postgres/Insight.Database.Benchmarks.Postgres.csproj  --filter *Insight.Database.Benchmarks*
+  - cmd: dotnet run --project ./benchmarks/Insight.Database.Benchmarks.MySql/Insight.Database.Benchmarks.MySql.csproj  --filter *Insight.Database.Benchmarks*
 skip_commits:
   files:
     - '**/*.md'
@@ -27,3 +29,5 @@ environment:
     secure: YW0OmwTb/Q3byjNiJzsXc4UN5JJRbI3uYItkJPLB3F2d/rxamWDJbfwQ7aI0FEfQ6YYPoafFf4Of9o0bYo1ls8w8DzT1xx9RIBZ5nSdnUR9yFIHo2imYYHD+w+4JMGHh
   sql_connection:
     secure: IDN3XLRl6oFBvm1ql3udiL77wdDcn+zDJHi3fV0rHByKD87DyilxrR78kvuhroAqEm57nDSMDt4/gjWhkcV6Z6+1hazXfVXk8JAtzSVSjMg=
+  mysql_connection:
+    secure: JHZerPMEMjDsHWjtYLx7CWy3azfQ51OoKFYeOhHmQjCGhfBKku4CZ57AFMMzkc+v06Zb5YE/g+vFdjJs6sLgu00m5bSmS7ohA6WYQ3p94hM=
