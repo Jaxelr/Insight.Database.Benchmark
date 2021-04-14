@@ -12,7 +12,7 @@ namespace Insight.Database.Benchmarks.SqlServer
     {
         protected SqlConnection connection;
 
-        private const string NamespaceHeader = "<ChildXml xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.datacontract.org/2004/07/Insight.Database.Benchmark.Models\"><Text>";
+        private const string NamespaceHeader = "<ChildXml xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.datacontract.org/2004/07/Insight.Database.Benchmarks.SqlServer.Models\"><Text>";
         private const string NamespaceFooter = "</Text></ChildXml>";
 
         public static IEnumerable<Post> PostsXml()
