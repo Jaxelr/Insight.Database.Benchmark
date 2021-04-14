@@ -28,12 +28,24 @@ namespace Insight.Database.Benchmarks.SqlServer
             AddColumn(StatisticColumn.OperationsPerSecond);
             AddColumnProvider(DefaultColumnProviders.Metrics);
 
-            AddJob(Job.ShortRun
-             .WithLaunchCount(1)
-             .WithWarmupCount(1)
-             .WithMinIterationCount(1)
-             .WithMaxIterationCount(5)
-             .WithIterationCount(1));
+            if (System.Environment.GetEnvironmentVariable("LOCAL_BENCHMARK") is not null)
+            {
+                AddJob(Job.ShortRun
+                 .WithLaunchCount(5)
+                 .WithWarmupCount(5)
+                 .WithMinIterationCount(5)
+                 .WithMaxIterationCount(10)
+                 .WithIterationCount(10));
+            }
+            else
+            {
+                AddJob(Job.ShortRun
+                 .WithLaunchCount(1)
+                 .WithWarmupCount(1)
+                 .WithMinIterationCount(1)
+                 .WithMaxIterationCount(5)
+                 .WithIterationCount(1));
+            }
 
             Orderer = new DefaultOrderer(SummaryOrderPolicy.FastestToSlowest);
             Options |= ConfigOptions.JoinSummary;
