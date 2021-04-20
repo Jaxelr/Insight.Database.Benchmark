@@ -5,10 +5,10 @@ branches:
   - master
 init:
   - cmd: git config --global core.autocrlf true
+  - cmd: net start MSSQL$SQL2019
 configuration:
   - Release
 services:
-  - mssql2017
   - postgresql101
 nuget:
   disable_publish_on_pr: true
