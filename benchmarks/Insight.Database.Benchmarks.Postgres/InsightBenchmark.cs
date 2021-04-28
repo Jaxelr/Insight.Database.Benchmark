@@ -162,7 +162,7 @@ namespace Insight.Database.Benchmarks.Postgres
                         iter := 0;
                     WHILE iter< {iterations} LOOP
                         INSERT INTO Post(""Text"", CreationDate, LastChangeDate)
-                        SELECT repeat('x', 2000), NOW(), NOW();
+                        SELECT REPEAT('x', 2000), NOW(), NOW();
 
                         INSERT INTO Comment(CommentText, CreationDate, PostId)
                         SELECT REPEAT('x', 2000), NOW(), currval(pg_get_serial_sequence('post', 'id')) UNION ALL
