@@ -1,0 +1,32 @@
+version: 2
+updates:
+  - package-ecosystem: "nuget"
+    directory: "/benchmarks/Insight.Database.Benchmarks.MySql" #Insight.Database.Benchmarks.MySql.csproj
+    schedule:
+      interval: "weekly"
+      day: "friday"
+    commit-message:
+      prefix: "deps"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+  - package-ecosystem: "nuget"
+    directory: "/benchmarks/Insight.Database.Benchmarks.Postgres" #Insight.Database.Benchmarks.Postgres.csproj
+    schedule:
+      interval: "weekly"
+      day: "friday"
+    commit-message:
+      prefix: "deps"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+  - package-ecosystem: "nuget"
+    directory: "/benchmarks/Insight.Database.Benchmarks.SqlServer" #Insight.Database.Benchmarks.SqlServer.csproj
+    schedule:
+      interval: "weekly"
+      day: "friday"
+    commit-message:
+      prefix: "deps"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
