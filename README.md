@@ -6,6 +6,7 @@ These are benchmark scenarios for the ORM library [Insight.Database](https://git
 
 - [Sql Server benchmarks](benchmarks/Insight.Database.Benchmarks.SqlServer/README.md)
 - [Postgres benchmarks](benchmarks/Insight.Database.Benchmarks.Postgres/README.md)
+- [MySql benchmarks](benchmarks/Insight.Database.Benchmarks.MySql/README.md)
 
 ## Contributing
 
