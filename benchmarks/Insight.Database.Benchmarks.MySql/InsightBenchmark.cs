@@ -53,30 +53,30 @@ namespace Insight.Database.Benchmarks.MySql
 
         [Benchmark(Description = "Single Procedure")]
         [BenchmarkCategory("Read")]
-        public Post SinglePostProcedure() => connection.Single<Post>("SelectPost", new { param });
+        public Post SinglePostProcedure() => connection.Single<Post>("Select_Post", new { param });
 
         [Benchmark(Description = "Single Procedure Async")]
         [BenchmarkCategory("Read")]
         public async Task<Post> SinglePostProcedureAsync() =>
-            await connection.SingleAsync<Post>("SelectPost", new { param });
+            await connection.SingleAsync<Post>("Select_Post", new { param });
 
         [Benchmark(Description = "Single Procedure (dynamic)")]
         [BenchmarkCategory("Read")]
-        public dynamic SinglePostProcedureDynamic() => connection.Single<dynamic>("SelectPost", new { param });
+        public dynamic SinglePostProcedureDynamic() => connection.Single<dynamic>("Select_Post", new { param });
 
         [Benchmark(Description = "Single Procedure Async (dynamic)")]
         [BenchmarkCategory("Read")]
         public async Task<dynamic> SinglePostProcedureAsyncDynamic() =>
-            await connection.SingleAsync<dynamic>("SelectPost", new { param });
+            await connection.SingleAsync<dynamic>("Select_Post", new { param });
 
         [Benchmark(Description = "Single Procedure (Fast Expando)")]
         [BenchmarkCategory("Read")]
-        public dynamic SinglePostProcedureExpando() => connection.Single<FastExpando>("SelectPost", new { param });
+        public dynamic SinglePostProcedureExpando() => connection.Single<FastExpando>("Select_Post", new { param });
 
         [Benchmark(Description = "Single Procedure Async (Fast Expando)")]
         [BenchmarkCategory("Read")]
         public async Task<dynamic> SinglePostProcedureAsyncExpando() =>
-            await connection.SingleAsync<FastExpando>("SelectPost", new { param });
+            await connection.SingleAsync<FastExpando>("Select_Post", new { param });
 
         [Benchmark(Description = "Single Async (Tuple)")]
         [BenchmarkCategory("Read")]
@@ -136,39 +136,39 @@ namespace Insight.Database.Benchmarks.MySql
 
         [Benchmark(Description = "Query<T> Procedure")]
         [BenchmarkCategory("Read")]
-        public Post QueryPostProcedure() => connection.Query<Post>("SelectPost", new { param }).FirstOrDefault();
+        public Post QueryPostProcedure() => connection.Query<Post>("Select_Post", new { param }).FirstOrDefault();
 
         [Benchmark(Description = "Query<T> Procedure Async")]
         [BenchmarkCategory("Read")]
         public async Task<Post> QueryPostProcedureAsync()
         {
-            var result = await connection.QueryAsync<Post>("SelectPost", new { param });
+            var result = await connection.QueryAsync<Post>("Select_Post", new { param });
 
             return result.FirstOrDefault();
         }
 
         [Benchmark(Description = "Query<T> Procedure (dynamic)")]
         [BenchmarkCategory("Read")]
-        public dynamic QueryPostProcedureDynamic() => connection.Query("SelectPost", new { param }).FirstOrDefault();
+        public dynamic QueryPostProcedureDynamic() => connection.Query("Select_Post", new { param }).FirstOrDefault();
 
         [Benchmark(Description = "Query<T> Procedure Async (dynamic)")]
         [BenchmarkCategory("Read")]
         public async Task<dynamic> QueryPostProcedureAsyncDynamic()
         {
-            var result = await connection.QueryAsync("SelectPost", new { param });
+            var result = await connection.QueryAsync("Select_Post", new { param });
 
             return result.FirstOrDefault();
         }
 
         [Benchmark(Description = "Query<T> Procedure (Fast Expando)")]
         [BenchmarkCategory("Read")]
-        public FastExpando QueryPostProcedureFastExpando() => connection.Query("SelectPost", new { param }).FirstOrDefault();
+        public FastExpando QueryPostProcedureFastExpando() => connection.Query("Select_Post", new { param }).FirstOrDefault();
 
         [Benchmark(Description = "Query<T> Procedure Async (Fast Expando)")]
         [BenchmarkCategory("Read")]
         public async Task<FastExpando> QueryPostProcedureAsyncFastExpando()
         {
-            var result = await connection.QueryAsync("SelectPost", new { param });
+            var result = await connection.QueryAsync("Select_Post", new { param });
 
             return result.FirstOrDefault();
         }
