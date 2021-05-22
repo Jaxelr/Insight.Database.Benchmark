@@ -21,7 +21,7 @@ namespace Insight.Database.Benchmarks.Postgres
         [Benchmark(Description = "Insert<T> json")]
         [BenchmarkCategory("Write")]
         [ArgumentsSource(nameof(PostsJson))]
-        public Post InsertPostJson(Post post) => connection.InsertSql("INSERT INTO PostJson (Child, CreationDate, LastChangeDate) VALUES (@Text, @CreationDate, @LastChangeDate) ", post);
+        public Post InsertPostJson(Post post) => connection.InsertSql("INSERT INTO PostJson (Child, CreationDate, LastChangeDate) VALUES (to_json(@Text), @CreationDate, @LastChangeDate) ", post);
 
         [Benchmark(Description = "Update<T> json")]
         [BenchmarkCategory("Write")]
@@ -29,26 +29,26 @@ namespace Insight.Database.Benchmarks.Postgres
         public Post UpdatePostJson(Post post)
         {
             post.Id = param;
-            return connection.QueryOntoSql("UPDATE PostJson SET Child = @Text, CreationDate = @CreationDate, LastChangeDate = @LastChangeDate output inserted.* WHERE Id = @Id", post);
+            return connection.QueryOntoSql("UPDATE PostJson SET Child = to_json(@Text), CreationDate = @CreationDate, LastChangeDate = @LastChangeDate WHERE Id = @Id Returning *", post);
         }
 
         [Benchmark(Description = "Single json")]
         [BenchmarkCategory("Read")]
-        public PostJson SinglePostJson() => connection.SingleSql<PostJson, ChildJson>("SELECT * FROM PostJson WHERE Id = @param", new { param });
+        public PostJson SinglePostJson() => connection.SingleSql<PostJson, ChildJson>(@"SELECT Id, CreationDate, LastChangeDate, Child ""Text"" FROM PostJson WHERE Id = @param", new { param });
 
         [Benchmark(Description = "Single Async json")]
         [BenchmarkCategory("Read")]
-        public async Task<PostJson> SingleAsyncPostJson() => await connection.SingleSqlAsync<PostJson, ChildJson>("SELECT * FROM PostJson WHERE Id = @param", new { param });
+        public async Task<PostJson> SingleAsyncPostJson() => await connection.SingleSqlAsync<PostJson, ChildJson>(@"SELECT Id, CreationDate, LastChangeDate, Child ""Text"" FROM PostJson WHERE Id = @param", new { param });
 
         [Benchmark(Description = "Query<T> json")]
         [BenchmarkCategory("Read")]
-        public PostJson QueryPostJson() => connection.QuerySql<PostJson, ChildJson>("SELECT * FROM PostJson WHERE Id = @param", new { param }).FirstOrDefault();
+        public PostJson QueryPostJson() => connection.QuerySql<PostJson, ChildJson>(@"SELECT Id, CreationDate, LastChangeDate, Child ""Text"" FROM PostJson WHERE Id = @param", new { param }).FirstOrDefault();
 
         [Benchmark(Description = "Query<T> Async json")]
         [BenchmarkCategory("Read")]
         public async Task<PostJson> QueryAsyncPostJson()
         {
-            var result = await connection.QuerySqlAsync<PostJson, ChildJson>("SELECT * FROM PostJson WHERE Id = @param", new { param });
+            var result = await connection.QuerySqlAsync<PostJson, ChildJson>(@"SELECT Id, CreationDate, LastChangeDate, Child ""Text"" FROM PostJson WHERE Id = @param", new { param });
 
             return result.FirstOrDefault();
         }
