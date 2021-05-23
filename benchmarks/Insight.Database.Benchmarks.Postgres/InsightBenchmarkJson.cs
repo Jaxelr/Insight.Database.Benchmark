@@ -76,18 +76,20 @@ namespace Insight.Database.Benchmarks.Postgres
                 DO $$
                 DECLARE iter integer;
                         PostId integer;
+                        ChildField json;
                 BEGIN
                     iter := 0;
+                    ChildField := '\{ "Text": ""' || REPEAT('x', 2) || '"" \}';
                 WHILE iter< {iterations}
                 LOOP
 
                     INSERT INTO PostJson(Child, CreationDate, LastChangeDate)
-                    SELECT to_json('\{ "text": ' || REPEAT('x', 2) || ' \}') Child, NOW(), NOW();
+                    SELECT ChildField, NOW(), NOW();
 
                     iter:= iter + 1;
                 END LOOP;
                 END $$;
-";
+				";
 
             cmd.Connection = connection;
             cmd.ExecuteNonQuery();
