@@ -21,7 +21,7 @@ namespace Insight.Database.Benchmarks.Postgres
         [Benchmark(Description = "Insert<T> json")]
         [BenchmarkCategory("Write")]
         [ArgumentsSource(nameof(PostsJson))]
-        public Post InsertPostJson(Post post) => connection.InsertSql("INSERT INTO PostJson (Child, CreationDate, LastChangeDate) VALUES (to_json(@Text), @CreationDate, @LastChangeDate) ", post);
+        public Post InsertPostJson(Post post) => connection.InsertSql("INSERT INTO PostJson (Child, CreationDate, LastChangeDate) VALUES (to_json(@Text::json), @CreationDate, @LastChangeDate) ", post);
 
         [Benchmark(Description = "Update<T> json")]
         [BenchmarkCategory("Write")]
@@ -29,7 +29,7 @@ namespace Insight.Database.Benchmarks.Postgres
         public Post UpdatePostJson(Post post)
         {
             post.Id = param;
-            return connection.QueryOntoSql("UPDATE PostJson SET Child = to_json(@Text), CreationDate = @CreationDate, LastChangeDate = @LastChangeDate WHERE Id = @Id Returning *", post);
+            return connection.QueryOntoSql("UPDATE PostJson SET Child = to_json(@Text::json), CreationDate = @CreationDate, LastChangeDate = @LastChangeDate WHERE Id = @Id Returning *", post);
         }
 
         [Benchmark(Description = "Single json")]
@@ -79,7 +79,7 @@ namespace Insight.Database.Benchmarks.Postgres
                         ChildField json;
                 BEGIN
                     iter := 0;
-                    ChildField := '\{ "Text": ""' || REPEAT('x', 2) || '"" \}';
+                    ChildField := '\{ "Text": ""' || REPEAT('x', 2000) || '"" \}';
                 WHILE iter< {iterations}
                 LOOP
 
