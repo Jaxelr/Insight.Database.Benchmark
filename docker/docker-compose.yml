@@ -1,0 +1,33 @@
+version: '3'
+services:
+
+  postgres:
+    # For more details on configuring the Postgres Docker image, see:
+    #   https://hub.docker.com/_/postgres/
+    image: postgres:12.4-alpine
+
+    # Expose the default Postgres port on localhost
+    ports:
+      - '5432:5432'
+    network_mode: bridge
+    container_name: postgres
+
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_DB: 'postgres'
+
+  mysql:
+    # For more details on configuring the Mysql Docker image, see:
+    #   https://hub.docker.com/_/mysql
+    image: mysql/mysql-server:latest
+
+    # Expose the default Mysql port on localhost
+    ports:
+    - "3306:3306"
+    container_name: mysql
+
+    environment:
+    - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    - MYSQL_ROOT_HOST=%
+    - MYSQL_DATABASE=test
