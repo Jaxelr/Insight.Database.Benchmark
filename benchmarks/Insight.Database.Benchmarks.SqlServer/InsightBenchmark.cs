@@ -273,7 +273,7 @@ namespace Insight.Database.Benchmarks.SqlServer
         {
             var cmd = connection.CreateCommand();
 
-            cmd.CommandText = "DROP PROCEDURE SelectPost; DROP TABLE Post; DROP TABLE Comment;";
+            cmd.CommandText = "DROP PROCEDURE IF EXISTS SelectPost; DROP TABLE IF EXISTS Post ; DROP TABLE IF EXISTS Comment;";
 
             cmd.Connection = connection;
             cmd.ExecuteNonQuery();
