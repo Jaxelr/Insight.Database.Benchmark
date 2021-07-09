@@ -133,7 +133,7 @@ namespace Insight.Database.Benchmarks.Sqlite
         [Benchmark(Description = "Query<T> Parent/Child")]
         [BenchmarkCategory("Read")]
         public Post PostComment() =>
-                connection.QuerySql("DECLARE @Id int = @param; SELECT  * FROM Post p WHERE Id = @Id; SELECT * FROM Comment c WHERE PostId = @Id;",
+                connection.QuerySql("SELECT  * FROM Post p WHERE Id = @param; SELECT * FROM Comment c WHERE PostId = @param;",
                 new { param },
                 Query.Returns<Post>()
                 .ThenChildren(Some<Comment>.Records)).FirstOrDefault();
