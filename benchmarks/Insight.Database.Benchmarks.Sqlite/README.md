@@ -1,4 +1,4 @@
-﻿# Insight.Database.Benchmarks.Postgres
+﻿# Insight.Database.Benchmarks.Sqlite
 
 These are benchmark scenarios for the Default Provider of [Insight.Database](https://github.com/jonwagner/Insight.Database) but using Sqlite as a database 
 
