@@ -67,7 +67,7 @@ namespace Insight.Database.Benchmarks.MySql
                 DECLARE postId INT DEFAULT 0;
                 DECLARE ChildText JSON ;
 
-                SET ChildText = {Text}
+                SET ChildText = '{Text}';
 
                 WHILE(iter <= {iterations}) DO
                 INSERT INTO PostJson(Child, CreationDate, LastChangeDate)
