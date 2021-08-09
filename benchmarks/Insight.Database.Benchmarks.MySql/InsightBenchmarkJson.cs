@@ -20,6 +20,20 @@ namespace Insight.Database.Benchmarks.MySql
             yield return new Post() { Text = Text, CreationDate = DateTime.Now, LastChangeDate = DateTime.Now };
         }
 
+        [Benchmark(Description = "Insert<T> json")]
+        [BenchmarkCategory("Write")]
+        [ArgumentsSource(nameof(PostsJson))]
+        public Post InsertPostJson(Post post) => connection.InsertSql("INSERT INTO PostJson (Child, CreationDate, LastChangeDate) VALUES (@Text, @CreationDate, @LastChangeDate); SELECT LAST_INSERT_ID() Id;", post);
+
+        [Benchmark(Description = "Update<T> json")]
+        [BenchmarkCategory("Write")]
+        [ArgumentsSource(nameof(PostsJson))]
+        public Post UpdatePostJson(Post post)
+        {
+            post.Id = param;
+            return connection.QueryOntoSql("UPDATE PostJson SET Child = to_json(@Text::json), CreationDate = @CreationDate, LastChangeDate = @LastChangeDate WHERE Id = @Id Returning *", post);
+        }
+
         [Benchmark(Description = "Single json")]
         [BenchmarkCategory("Read")]
         public PostJson SinglePostJson() => connection.SingleSql<PostJson, ChildJson>("SELECT Id, CreationDate, LastChangeDate, Child FROM PostJson WHERE Id = @param", new { param });
