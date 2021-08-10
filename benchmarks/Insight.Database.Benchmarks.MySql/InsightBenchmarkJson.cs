@@ -31,7 +31,7 @@ namespace Insight.Database.Benchmarks.MySql
         public Post UpdatePostJson(Post post)
         {
             post.Id = param;
-            return connection.QueryOntoSql("UPDATE PostJson SET Child = to_json(@Text::json), CreationDate = @CreationDate, LastChangeDate = @LastChangeDate WHERE Id = @Id Returning *", post);
+            return connection.QueryOntoSql("UPDATE PostJson SET Child = @Text, CreationDate = @CreationDate, LastChangeDate = @LastChangeDate WHERE Id = @Id; SELECT LAST_INSERT_ID() Id;", post);
         }
 
         [Benchmark(Description = "Single json")]
