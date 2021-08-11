@@ -8,10 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Insight.Database" Version="6.3.6" />
+    <PackageReference Include="Insight.Database" Version="6.3.7" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.114.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Insight.Database.Benchmarks.Models\Insight.Database.Benchmarks.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

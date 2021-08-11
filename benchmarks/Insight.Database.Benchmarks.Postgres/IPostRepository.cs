@@ -1,4 +1,4 @@
-﻿using Insight.Database.Benchmarks.Postgres.Models;
+﻿using Insight.Database.Benchmarks.Models;
 
 namespace Insight.Database.Benchmarks.Postgres
 {

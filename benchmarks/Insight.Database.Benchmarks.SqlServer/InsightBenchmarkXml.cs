@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
-using Insight.Database.Benchmarks.SqlServer.Models;
+using Insight.Database.Benchmarks.Models;
 
 namespace Insight.Database.Benchmarks.SqlServer
 {

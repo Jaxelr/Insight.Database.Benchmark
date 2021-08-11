@@ -1,4 +1,4 @@
-﻿using Insight.Database.Benchmarks.SqlServer.Models;
+﻿using Insight.Database.Benchmarks.Models;
 
 namespace Insight.Database.Benchmarks.SqlServer
 {

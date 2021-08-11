@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
-using Insight.Database.Benchmarks.Postgres.Models;
+using Insight.Database.Benchmarks.Models;
 using Insight.Database.Providers.PostgreSQL;
 using Npgsql;
 
