@@ -28,6 +28,21 @@ services:
     container_name: mysql
 
     environment:
-    - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-    - MYSQL_ROOT_HOST=%
-    - MYSQL_DATABASE=test
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: 'test'
+
+  sqlserver:
+    # For more details on configuring the Mysql Docker image, see:
+    #   https://hub.docker.com/_/microsoft-mssql-server
+    image: mcr.microsoft.com/mssql/server:2019-latest
+
+    # Expose the default Sql Server port on localhost
+    ports:
+    - "1433:1433"
+    container_name: sqlserver
+
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: 'P@ssword123'
+      MSSQL_PID: 'Enterprise'
