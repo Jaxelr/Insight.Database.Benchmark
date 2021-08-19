@@ -16,6 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{B2B2D061-4064-4B19-AFE4-8D10E92317AF}"
 	ProjectSection(SolutionItems) = preProject
 		.github\CONTRIBUTING.md = .github\CONTRIBUTING.md
+		.github\dependabot.yml = .github\dependabot.yml
 		.github\PULL_REQUEST_TEMPLATE.md = .github\PULL_REQUEST_TEMPLATE.md
 	EndProjectSection
 EndProject
@@ -25,7 +26,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Insight.Database.Benchmarks
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Insight.Database.Benchmarks.Sqlite", "benchmarks\Insight.Database.Benchmarks.Sqlite\Insight.Database.Benchmarks.Sqlite.csproj", "{163B2C70-B3AE-4178-93ED-0672F155EA90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insight.Database.Benchmarks.Models", "benchmarks\Insight.Database.Benchmarks.Models\Insight.Database.Benchmarks.Models.csproj", "{ADAB500E-185E-4CEC-B9B8-F9C56FB1FFB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Insight.Database.Benchmarks.Models", "benchmarks\Insight.Database.Benchmarks.Models\Insight.Database.Benchmarks.Models.csproj", "{ADAB500E-185E-4CEC-B9B8-F9C56FB1FFB1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{BFBF8E9C-D9F8-40D7-B9CC-CB3CF69C697C}"
+	ProjectSection(SolutionItems) = preProject
+		docker\.env = docker\.env
+		docker\build-docker-compose-localhost.md = docker\build-docker-compose-localhost.md
+		docker\docker-compose.yml = docker\docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +67,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B2B2D061-4064-4B19-AFE4-8D10E92317AF} = {2D8FB582-91C2-4570-9445-E9DBC47BFB47}
+		{BFBF8E9C-D9F8-40D7-B9CC-CB3CF69C697C} = {2D8FB582-91C2-4570-9445-E9DBC47BFB47}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9BFC8CB-A03B-4533-B314-90388D237421}
