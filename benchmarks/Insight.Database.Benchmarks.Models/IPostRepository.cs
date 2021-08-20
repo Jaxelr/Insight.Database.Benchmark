@@ -1,6 +1,4 @@
-﻿using Insight.Database.Benchmarks.Models;
-
-namespace Insight.Database.Benchmarks.Sqlite
+﻿namespace Insight.Database.Benchmarks.Models
 {
     public interface IPostRepository
     {
