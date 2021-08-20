@@ -6,7 +6,7 @@ namespace Insight.Database.Benchmarks.MySql
     {
         private static void Main(string[] args) =>
             _ = BenchmarkSwitcher
-                .FromAssembly(typeof(BaseBenchmark).Assembly)
+                .FromAssembly(typeof(InsightBenchmark).Assembly)
                 .Run(args, new Config());
     }
 }
