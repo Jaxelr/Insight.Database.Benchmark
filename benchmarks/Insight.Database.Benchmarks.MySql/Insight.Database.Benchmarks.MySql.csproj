@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Insight.Database.Benchmarks.Models\Insight.Database.Benchmarks.Models.csproj" />
+    <ProjectReference Include="..\Insight.Database.Benchmarks\Insight.Database.Benchmarks.csproj" />
   </ItemGroup>
 
   <ItemGroup>

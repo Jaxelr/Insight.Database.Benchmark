@@ -3,7 +3,7 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using Microsoft.Extensions.Configuration;
 
-namespace Insight.Database.Benchmarks.Sqlite
+namespace Insight.Database.Benchmarks
 {
     [BenchmarkCategory("Insight.Database")]
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
@@ -15,7 +15,7 @@ namespace Insight.Database.Benchmarks.Sqlite
 
         public BaseBenchmark()
         {
-            string connEnv = Environment.GetEnvironmentVariable("Sqlite_Connection");
+            string connEnv = Environment.GetEnvironmentVariable("MySql_Connection");
 
             var builder = new ConfigurationBuilder()
                             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
