@@ -15,8 +15,6 @@ namespace Insight.Database.Benchmarks
 
         public BaseBenchmark()
         {
-            string connEnv = Environment.GetEnvironmentVariable("MySql_Connection");
-
             var builder = new ConfigurationBuilder()
                             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
@@ -24,11 +22,7 @@ namespace Insight.Database.Benchmarks
 
             connectionString = configuration.GetConnectionString("Default");
 
-            //Overwrite with external configuration
-            if (!string.IsNullOrEmpty(connEnv))
-            {
-                connectionString = connEnv;
-            }
+            Console.WriteLine(connectionString);
 
             iterations = int.Parse(configuration.GetSection("Records").Value);
         }
