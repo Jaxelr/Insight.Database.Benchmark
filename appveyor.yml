@@ -5,12 +5,9 @@ branches:
   - master
 init:
   - cmd: git config --global core.autocrlf true
-  - cmd: net start MSSQL$SQL2019
+  - cmd: docker-compose -f docker/docker-compose.yml up -d
 configuration:
   - Release
-services:
-  - postgresql101
-  - mysql
 nuget:
   disable_publish_on_pr: true
 before_build:
