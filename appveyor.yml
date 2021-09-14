@@ -5,7 +5,7 @@ branches:
   - master
 init:
   - cmd: git config --global core.autocrlf true
-  - cmd: docker-compose -f docker/docker-compose.yml up -d
+  - cmd: docker-compose -f ./docker/docker-compose.yml up -d
 configuration:
   - Release
 nuget:
