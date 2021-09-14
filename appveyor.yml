@@ -21,6 +21,7 @@ after_test:
   - cmd: dotnet run --project ./benchmarks/Insight.Database.Benchmarks.SqlServer/Insight.Database.Benchmarks.SqlServer.csproj  --filter *Insight.Database.Benchmarks*
   - cmd: dotnet run --project ./benchmarks/Insight.Database.Benchmarks.Postgres/Insight.Database.Benchmarks.Postgres.csproj  --filter *Insight.Database.Benchmarks*
   - cmd: dotnet run --project ./benchmarks/Insight.Database.Benchmarks.MySql/Insight.Database.Benchmarks.MySql.csproj  --filter *Insight.Database.Benchmarks*
+  - cmd: dotnet run --project ./benchmarks/Insight.Database.Benchmarks.Sqlite/Insight.Database.Benchmarks.Sqlite.csproj  --filter *Insight.Database.Benchmarks*
 skip_commits:
   files:
     - '**/*.md'
