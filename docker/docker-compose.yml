@@ -34,8 +34,13 @@ services:
 
   sqlserver:
     # For more details on configuring the Mysql Docker image, see:
+    # For more details on configuring the MsSql Docker image, see:
     #   https://hub.docker.com/_/microsoft-mssql-server
-    image: mcr.microsoft.com/mssql/server:2019-latest
+    # There is an issue with appveyor and the official sql server image
+    # having a host with less than 2 gigs of RAM exits the image
+    # See this github issue https://github.com/Microsoft/mssql-docker/issues/293
+    # and repo https://github.com/justin2004/mssql_server_tiny
+    image: justin2004/mssql_server_tiny
 
     # Expose the default Sql Server port on localhost
     ports:
