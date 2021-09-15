@@ -9,7 +9,6 @@ services:
     # Expose the default Postgres port on localhost
     ports:
       - '5432:5432'
-    network_mode: bridge
     container_name: postgres
 
     environment:
