@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".SolutionItems", ".Solution
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		appveyor.yml = appveyor.yml
+		benchmarks\Directory.Build.props = benchmarks\Directory.Build.props
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -35,7 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{BFBF8E
 		docker\docker-compose.yml = docker\docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insight.Database.Benchmarks", "benchmarks\Insight.Database.Benchmarks\Insight.Database.Benchmarks.csproj", "{9D34C1A8-A183-455C-9379-C30A5F10232A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Insight.Database.Benchmarks", "benchmarks\Insight.Database.Benchmarks\Insight.Database.Benchmarks.csproj", "{9D34C1A8-A183-455C-9379-C30A5F10232A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
