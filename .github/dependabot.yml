@@ -1,6 +1,26 @@
 version: 2
 updates:
   - package-ecosystem: "nuget"
+    directory: "/benchmarks/Insight.Database.Benchmarks" #Insight.Database.Benchmarks.csproj
+    schedule:
+      interval: "weekly"
+      day: "friday"
+    commit-message:
+      prefix: "deps"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+  - package-ecosystem: "nuget"
+    directory: "/benchmarks/Insight.Database.Benchmarks.Models" #Insight.Database.Benchmarks.Models.csproj
+    schedule:
+      interval: "weekly"
+      day: "friday"
+    commit-message:
+      prefix: "deps"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+  - package-ecosystem: "nuget"
     directory: "/benchmarks/Insight.Database.Benchmarks.MySql" #Insight.Database.Benchmarks.MySql.csproj
     schedule:
       interval: "weekly"
@@ -22,6 +42,16 @@ updates:
       - "dependencies"
   - package-ecosystem: "nuget"
     directory: "/benchmarks/Insight.Database.Benchmarks.SqlServer" #Insight.Database.Benchmarks.SqlServer.csproj
+    schedule:
+      interval: "weekly"
+      day: "friday"
+    commit-message:
+      prefix: "deps"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+  - package-ecosystem: "nuget"
+    directory: "/benchmarks/Insight.Database.Benchmarks.Slite" #Insight.Database.Benchmarks.Slite.csproj
     schedule:
       interval: "weekly"
       day: "friday"
