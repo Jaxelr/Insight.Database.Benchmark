@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Insight.Database" Version="6.3.7" />
+    <PackageReference Include="Insight.Database" Version="6.3.8" />
   </ItemGroup>
 
 </Project>
