@@ -1,5 +1,5 @@
 version: '1.0.0.{build}'
-image: Visual Studio 2022
+image: Visual Studio 2019
 branches:
   only:
   - master
@@ -10,6 +10,7 @@ configuration:
 nuget:
   disable_publish_on_pr: true
 before_build:
+  - cmd: choco install dotnet
   - cmd: dotnet --version
   - cmd: docker-compose -f ./docker/docker-compose.yml up -d
   - cmd: sleep 60
