@@ -1,0 +1,40 @@
+name: .NET
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+    - name: Build Reason
+      run: echo ${{github.ref}} and ${{github.event_name}}
+    - name: Run dependant images
+      run: docker-compose -f ./docker/docker-compose.yml up -d
+    - name: Sleep
+      run: sleep 60s
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore 
+    - name: Benchmark MySql
+      run: dotnet run --project ./benchmarks/Insight.Database.Benchmarks.MySql/Insight.Database.Benchmarks.MySql.csproj  --filter *Insight.Database.Benchmarks* --configuration Release
+    - name: Benchmark Sqlite
+      run: dotnet run --project ./benchmarks/Insight.Database.Benchmarks.Sqlite/Insight.Database.Benchmarks.Sqlite.csproj  --filter *Insight.Database.Benchmarks* --configuration Release
+    - name: Benchmark Postgres
+      run: dotnet run --project ./benchmarks/Insight.Database.Benchmarks.Postgres/Insight.Database.Benchmarks.Postgres.csproj  --filter *Insight.Database.Benchmarks* --configuration Release
+    - name: Benchmark Sql Server
+      run: dotnet run --project ./benchmarks/Insight.Database.Benchmarks.SqlServer/Insight.Database.Benchmarks.SqlServer.csproj  --filter *Insight.Database.Benchmarks* --configuration Release
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
