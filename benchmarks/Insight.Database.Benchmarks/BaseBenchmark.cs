@@ -1,5 +1,4 @@
-﻿using System;
-using BenchmarkDotNet.Attributes;
+﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using Microsoft.Extensions.Configuration;
 
@@ -21,9 +20,6 @@ public class BaseBenchmark
         IConfigurationRoot configuration = builder.Build();
 
         connectionString = configuration.GetConnectionString("Default");
-
-        Console.WriteLine(connectionString);
-
         iterations = int.Parse(configuration.GetSection("Records").Value);
     }
 
