@@ -32,7 +32,6 @@ services:
       MYSQL_DATABASE: 'test'
 
   sqlserver:
-    # For more details on configuring the Mysql Docker image, see:
     # For more details on configuring the MsSql Docker image, see:
     #   https://hub.docker.com/_/microsoft-mssql-server
     # There is an issue with appveyor and the official sql server image
