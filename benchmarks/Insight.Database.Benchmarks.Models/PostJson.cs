@@ -1,20 +1,19 @@
 ﻿using System;
 
-namespace Insight.Database.Benchmarks.Models
+namespace Insight.Database.Benchmarks.Models;
+
+public class PostJson
 {
-    public class PostJson
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        [Column(SerializationMode = SerializationMode.Json)]
-        public ChildJson Child { get; set; }
+    [Column(SerializationMode = SerializationMode.Json)]
+    public ChildJson Child { get; set; }
 
-        public DateTime CreationDate { get; set; }
-        public DateTime LastChangeDate { get; set; }
-    }
+    public DateTime CreationDate { get; set; }
+    public DateTime LastChangeDate { get; set; }
+}
 
-    public class ChildJson
-    {
-        public string Text { get; set; }
-    }
+public class ChildJson
+{
+    public string Text { get; set; }
 }
