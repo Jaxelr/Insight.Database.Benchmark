@@ -15,7 +15,7 @@ public class BaseBenchmark
     public BaseBenchmark()
     {
         var builder = new ConfigurationBuilder()
-                        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+                        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false);
 
         IConfigurationRoot configuration = builder.Build();
 
