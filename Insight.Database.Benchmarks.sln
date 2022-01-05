@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".SolutionItems", ".Solution
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
+		appveyor.yml = appveyor.yml
 		benchmarks\Directory.Build.props = benchmarks\Directory.Build.props
 		README.md = README.md
 	EndProjectSection
@@ -36,11 +37,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{BFBF8E
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Insight.Database.Benchmarks", "benchmarks\Insight.Database.Benchmarks\Insight.Database.Benchmarks.csproj", "{9D34C1A8-A183-455C-9379-C30A5F10232A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{34B58A78-F806-4794-9EE6-0EAE00976154}"
-	ProjectSection(SolutionItems) = preProject
-		.github\workflows\ci.yml = .github\workflows\ci.yml
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,7 +75,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B2B2D061-4064-4B19-AFE4-8D10E92317AF} = {2D8FB582-91C2-4570-9445-E9DBC47BFB47}
 		{BFBF8E9C-D9F8-40D7-B9CC-CB3CF69C697C} = {2D8FB582-91C2-4570-9445-E9DBC47BFB47}
-		{34B58A78-F806-4794-9EE6-0EAE00976154} = {B2B2D061-4064-4B19-AFE4-8D10E92317AF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9BFC8CB-A03B-4533-B314-90388D237421}
