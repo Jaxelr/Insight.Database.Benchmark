@@ -22,30 +22,19 @@ public class Config : ManualConfig
         AddColumn(TargetMethodColumn.Type);
         AddColumn(StatisticColumn.Mean);
         AddColumn(StatisticColumn.StdDev);
+        AddColumn(StatisticColumn.Median);
         AddColumn(StatisticColumn.Error);
         AddColumn(StatisticColumn.Min);
         AddColumn(StatisticColumn.Max);
         AddColumn(StatisticColumn.OperationsPerSecond);
         AddColumnProvider(DefaultColumnProviders.Metrics);
 
-        if (System.Environment.GetEnvironmentVariable("LOCAL_BENCHMARK") is not null)
-        {
-            AddJob(Job.ShortRun
-             .WithLaunchCount(5)
-             .WithWarmupCount(5)
-             .WithMinIterationCount(5)
-             .WithMaxIterationCount(10)
-             .WithIterationCount(10));
-        }
-        else
-        {
-            AddJob(Job.ShortRun
-             .WithLaunchCount(1)
-             .WithWarmupCount(1)
-             .WithMinIterationCount(1)
-             .WithMaxIterationCount(5)
-             .WithIterationCount(1));
-        }
+        AddJob(Job.ShortRun
+         .WithLaunchCount(5)
+         .WithWarmupCount(5)
+         .WithMinIterationCount(5)
+         .WithMaxIterationCount(10)
+         .WithIterationCount(10));
 
         Orderer = new DefaultOrderer(SummaryOrderPolicy.FastestToSlowest);
         Options |= ConfigOptions.JoinSummary;

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 namespace Insight.Database.Benchmarks;
 
 [BenchmarkCategory("Insight.Database")]
+
 [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
 public class BaseBenchmark
 {
