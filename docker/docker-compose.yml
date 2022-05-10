@@ -36,7 +36,7 @@ services:
 
     # Expose the default Sql Server port on localhost
     ports:
-    - "1433:1433"
+    - "1434:1433"
     container_name: sqlserver
 
     environment:
