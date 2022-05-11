@@ -1,3 +1,3 @@
-For localhost debugging:
+For localhost debugging `docker-compose -f docker-compose.yml up -d`
 
-docker-compose -f docker-compose.yml up -d
+For removing the resources `docker-compose rm --stop`
