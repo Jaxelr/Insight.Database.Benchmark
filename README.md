@@ -1,6 +1,6 @@
 # Insight.Database.Benchmarks
 
-[![Build status][build-svg]][build]
+![.NET](https://github.com/Jaxelr/Insight.Database.Benchmark/workflows/.NET/badge.svg?branch=master)
 
 These are benchmark scenarios for the ORM library [Insight.Database](https://github.com/jonwagner/Insight.Database) under various providers
 
@@ -13,6 +13,3 @@ These are benchmark scenarios for the ORM library [Insight.Database](https://git
 ## Contributing
 
 Check the [guidelines](.github/CONTRIBUTING.md) for details on how you could contribute.
-
-[build]: https://ci.appveyor.com/project/Jaxelr/insight-database-benchmark/branch/master?fullLog=true
-[build-svg]: https://ci.appveyor.com/api/projects/status/p1spnvls3ih42g55?svg=true
