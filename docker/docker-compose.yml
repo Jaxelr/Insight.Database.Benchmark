@@ -19,7 +19,7 @@ services:
   mysql:
     # For more details on configuring the Mysql Docker image, see:
     #   https://hub.docker.com/_/mysql
-    image: mysql/mysql-server:latest
+    image: mysql/mysql-server:5.7
 
     # Expose the default Mysql port on localhost
     ports:
