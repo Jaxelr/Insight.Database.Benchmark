@@ -1,6 +1,6 @@
 ﻿# Insight.Database.Benchmarks.Postgres
 
-These are benchmark scenarios for the Postgres Provider of [Insight.Database](https://github.com/jonwagner/Insight.Database)
+These are benchmark scenarios for the Postgres Provider of [Insight.Database](https://github.com/jonwagner/Insight.Database) running over Postgresql version 12.4.
 
 ``` ini
 

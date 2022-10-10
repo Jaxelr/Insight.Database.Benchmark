@@ -1,6 +1,6 @@
 # Insight.Database.Benchmarks.MySql
 
-These are benchmark scenarios for the MySql Provider of [Insight.Database](https://github.com/jonwagner/Insight.Database)
+These are benchmark scenarios for the MySql Provider of [Insight.Database](https://github.com/jonwagner/Insight.Database) running over the MySql version 5.7.
 
 ``` ini
 

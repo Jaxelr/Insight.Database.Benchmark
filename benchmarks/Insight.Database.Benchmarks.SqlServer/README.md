@@ -1,6 +1,6 @@
 # Insight.Database.Benchmarks.SqlServer
 
-These are benchmark scenarios for the Default Provider of [Insight.Database](https://github.com/jonwagner/Insight.Database) running over Sql Server
+These are benchmark scenarios for the Default Provider of [Insight.Database](https://github.com/jonwagner/Insight.Database) running over the latest Sql Server 2019.
 
 ``` ini
 
