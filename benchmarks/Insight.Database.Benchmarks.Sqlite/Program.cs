@@ -1,12 +1,11 @@
 ﻿using BenchmarkDotNet.Running;
 
-namespace Insight.Database.Benchmarks.Sqlite
+namespace Insight.Database.Benchmarks.Sqlite;
+
+public static class Program
 {
-    public static class Program
-    {
-        private static void Main(string[] args) =>
-            _ = BenchmarkSwitcher
-                .FromAssembly(typeof(InsightBenchmark).Assembly)
-                .Run(args, new Config());
-    }
+    private static void Main(string[] args) =>
+        _ = BenchmarkSwitcher
+            .FromAssembly(typeof(InsightBenchmark).Assembly)
+            .Run(args, new Config());
 }
