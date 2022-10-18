@@ -6,62 +6,62 @@ using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Insight.Database.Benchmarks.Models;
 
-namespace Insight.Database.Benchmarks.SqlServer
+namespace Insight.Database.Benchmarks.SqlServer;
+
+public class InsightBenchmarkJson : BaseBenchmark
 {
-    public class InsightBenchmarkJson : BaseBenchmark
+    protected SqlConnection connection;
+
+    public static IEnumerable<Post> PostsJson()
     {
-        protected SqlConnection connection;
+        yield return new Post() { Text = string.Concat("{\"Text\": \"", new string('x', 2000), "\"}"), CreationDate = DateTime.Now, LastChangeDate = DateTime.Now };
+    }
 
-        public static IEnumerable<Post> PostsJson()
-        {
-            yield return new Post() { Text = string.Concat("{\"Text\": \"", new string('x', 2000), "\"}"), CreationDate = DateTime.Now, LastChangeDate = DateTime.Now };
-        }
+    [Benchmark(Description = "Insert<T> json")]
+    [BenchmarkCategory("Write")]
+    [ArgumentsSource(nameof(PostsJson))]
+    public Post InsertPostJson(Post post) => connection.InsertSql("INSERT INTO PostJson (Child, CreationDate, LastChangeDate) VALUES (@Text, @CreationDate, @LastChangeDate) ", post);
 
-        [Benchmark(Description = "Insert<T> json")]
-        [BenchmarkCategory("Write")]
-        [ArgumentsSource(nameof(PostsJson))]
-        public Post InsertPostJson(Post post) => connection.InsertSql("INSERT INTO PostJson (Child, CreationDate, LastChangeDate) VALUES (@Text, @CreationDate, @LastChangeDate) ", post);
+    [Benchmark(Description = "Update<T> json")]
+    [BenchmarkCategory("Write")]
+    [ArgumentsSource(nameof(PostsJson))]
+    public Post UpdatePostJson(Post post)
+    {
+        post.Id = param;
+        return connection.QueryOntoSql("UPDATE PostJson SET Child = @Text, CreationDate = @CreationDate, LastChangeDate = @LastChangeDate output inserted.* WHERE Id = @Id", post);
+    }
 
-        [Benchmark(Description = "Update<T> json")]
-        [BenchmarkCategory("Write")]
-        [ArgumentsSource(nameof(PostsJson))]
-        public Post UpdatePostJson(Post post)
-        {
-            post.Id = param;
-            return connection.QueryOntoSql("UPDATE PostJson SET Child = @Text, CreationDate = @CreationDate, LastChangeDate = @LastChangeDate output inserted.* WHERE Id = @Id", post);
-        }
+    [Benchmark(Description = "Single json")]
+    [BenchmarkCategory("Read")]
+    public PostJson SinglePostJson() => connection.SingleSql<PostJson, ChildJson>("SELECT * FROM PostJson WHERE Id = @param", new { param });
 
-        [Benchmark(Description = "Single json")]
-        [BenchmarkCategory("Read")]
-        public PostJson SinglePostJson() => connection.SingleSql<PostJson, ChildJson>("SELECT * FROM PostJson WHERE Id = @param", new { param });
+    [Benchmark(Description = "Single Async json")]
+    [BenchmarkCategory("Read")]
+    public async Task<PostJson> SingleAsyncPostJson() => await connection.SingleSqlAsync<PostJson, ChildJson>("SELECT * FROM PostJson WHERE Id = @param", new { param });
 
-        [Benchmark(Description = "Single Async json")]
-        [BenchmarkCategory("Read")]
-        public async Task<PostJson> SingleAsyncPostJson() => await connection.SingleSqlAsync<PostJson, ChildJson>("SELECT * FROM PostJson WHERE Id = @param", new { param });
+    [Benchmark(Description = "Query<T> json")]
+    [BenchmarkCategory("Read")]
+    public PostJson QueryPostJson() => connection.QuerySql<PostJson, ChildJson>("SELECT * FROM PostJson WHERE Id = @param", new { param }).FirstOrDefault();
 
-        [Benchmark(Description = "Query<T> json")]
-        [BenchmarkCategory("Read")]
-        public PostJson QueryPostJson() => connection.QuerySql<PostJson, ChildJson>("SELECT * FROM PostJson WHERE Id = @param", new { param }).FirstOrDefault();
+    [Benchmark(Description = "Query<T> Async json")]
+    [BenchmarkCategory("Read")]
+    public async Task<PostJson> QueryAsyncPostJson()
+    {
+        var result = await connection.QuerySqlAsync<PostJson, ChildJson>("SELECT * FROM PostJson WHERE Id = @param", new { param });
 
-        [Benchmark(Description = "Query<T> Async json")]
-        [BenchmarkCategory("Read")]
-        public async Task<PostJson> QueryAsyncPostJson()
-        {
-            var result = await connection.QuerySqlAsync<PostJson, ChildJson>("SELECT * FROM PostJson WHERE Id = @param", new { param });
+        return result.FirstOrDefault();
+    }
 
-            return result.FirstOrDefault();
-        }
+    [GlobalSetup]
+    public void DbSetup()
+    {
+        connection = new SqlConnection(connectionString);
+        SqlInsightDbProvider.RegisterProvider();
+        connection.Open();
 
-        [GlobalSetup]
-        public void DbSetup()
-        {
-            connection = new SqlConnection(connectionString);
-            SqlInsightDbProvider.RegisterProvider();
-            connection.Open();
+        var cmd = connection.CreateCommand();
 
-            var cmd = connection.CreateCommand();
-
-            cmd.CommandText = $@"
+        cmd.CommandText = $@"
                     SET NOCOUNT ON;
                     IF (OBJECT_ID('PostJson') IS NULL)
                     BEGIN
@@ -86,22 +86,21 @@ namespace Insight.Database.Benchmarks.SqlServer
                         SET @i = @i + 1;
                     END;";
 
-            cmd.Connection = connection;
-            cmd.ExecuteNonQuery();
-        }
+        cmd.Connection = connection;
+        cmd.ExecuteNonQuery();
+    }
 
-        [GlobalCleanup]
-        public void DbCleanup()
-        {
-            var cmd = connection.CreateCommand();
+    [GlobalCleanup]
+    public void DbCleanup()
+    {
+        var cmd = connection.CreateCommand();
 
-            cmd.CommandText = "DROP TABLE PostJson;";
+        cmd.CommandText = "DROP TABLE PostJson;";
 
-            cmd.Connection = connection;
-            cmd.ExecuteNonQuery();
+        cmd.Connection = connection;
+        cmd.ExecuteNonQuery();
 
-            connection.Close();
-            connection.Dispose();
-        }
+        connection.Close();
+        connection.Dispose();
     }
 }
