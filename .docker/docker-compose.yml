@@ -4,7 +4,7 @@ services:
   postgres:
     # For more details on configuring the Postgres Docker image, see:
     #   https://hub.docker.com/_/postgres/
-    image: postgres:12.4-alpine
+    image: docker.io/postgres:12.4-alpine
 
     # Expose the default Postgres port on localhost
     ports:
@@ -19,7 +19,7 @@ services:
   mysql:
     # For more details on configuring the Mysql Docker image, see:
     #   https://hub.docker.com/_/mysql
-    image: mysql/mysql-server:5.7
+    image: docker.io/mysql/mysql-server:5.7
 
     # Expose the default Mysql port on localhost
     ports:
@@ -32,7 +32,7 @@ services:
       MYSQL_DATABASE: 'test'
 
   sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    image: docker.io/mcr.microsoft.com/mssql/server:2022-latest
 
     # Expose the default Sql Server port on localhost
     ports:
