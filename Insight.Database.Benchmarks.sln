@@ -28,11 +28,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Insight.Database.Benchmarks
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Insight.Database.Benchmarks.Models", "benchmarks\Insight.Database.Benchmarks.Models\Insight.Database.Benchmarks.Models.csproj", "{ADAB500E-185E-4CEC-B9B8-F9C56FB1FFB1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{BFBF8E9C-D9F8-40D7-B9CC-CB3CF69C697C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".docker", ".docker", "{BFBF8E9C-D9F8-40D7-B9CC-CB3CF69C697C}"
 	ProjectSection(SolutionItems) = preProject
-		docker\.env = docker\.env
-		docker\build-docker-compose-localhost.md = docker\build-docker-compose-localhost.md
-		docker\docker-compose.yml = docker\docker-compose.yml
+		.docker\.env = .docker\.env
+		.docker\build-docker-compose-localhost.md = .docker\build-docker-compose-localhost.md
+		.docker\docker-compose.yml = .docker\docker-compose.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Insight.Database.Benchmarks", "benchmarks\Insight.Database.Benchmarks\Insight.Database.Benchmarks.csproj", "{9D34C1A8-A183-455C-9379-C30A5F10232A}"
