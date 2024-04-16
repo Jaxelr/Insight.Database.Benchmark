@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Insight.Database.Benchmarks.SqlServer", "benchmarks\Insight.Database.Benchmarks.SqlServer\Insight.Database.Benchmarks.SqlServer.csproj", "{252F99F2-26F7-456B-AC47-1A25B7F1EA51}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".SolutionItems", ".SolutionItems", "{2D8FB582-91C2-4570-9445-E9DBC47BFB47}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2D8FB582-91C2-4570-9445-E9DBC47BFB47}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
@@ -36,6 +36,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".docker", ".docker", "{BFBF
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Insight.Database.Benchmarks", "benchmarks\Insight.Database.Benchmarks\Insight.Database.Benchmarks.csproj", "{9D34C1A8-A183-455C-9379-C30A5F10232A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflow", "workflow", "{74E2FAE3-3F14-4713-A883-44A920922C69}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\ci.yml = .github\workflows\ci.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,6 +79,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B2B2D061-4064-4B19-AFE4-8D10E92317AF} = {2D8FB582-91C2-4570-9445-E9DBC47BFB47}
 		{BFBF8E9C-D9F8-40D7-B9CC-CB3CF69C697C} = {2D8FB582-91C2-4570-9445-E9DBC47BFB47}
+		{74E2FAE3-3F14-4713-A883-44A920922C69} = {B2B2D061-4064-4B19-AFE4-8D10E92317AF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9BFC8CB-A03B-4533-B314-90388D237421}
