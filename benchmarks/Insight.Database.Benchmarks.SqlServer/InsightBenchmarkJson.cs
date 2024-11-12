@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Insight.Database.Benchmarks.Models;
+using Insight.Database.Providers.MsSqlClient;
 
 namespace Insight.Database.Benchmarks.SqlServer;
 
