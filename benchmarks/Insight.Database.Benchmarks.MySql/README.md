@@ -4,92 +4,92 @@ These are benchmark scenarios for the MySql Provider of [Insight.Database](https
 
 ```
 
-BenchmarkDotNet v0.13.12, Windows 11 (10.0.22631.3235/23H2/2023Update/SunValley3)
+BenchmarkDotNet v0.14.0, Windows 11 (10.0.26100.2314)
 11th Gen Intel Core i5-1135G7 2.40GHz, 1 CPU, 8 logical and 4 physical cores
-.NET SDK 8.0.201
-  [Host]   : .NET 8.0.2 (8.0.224.6711), X64 RyuJIT AVX-512F+CD+BW+DQ+VL+VBMI
-  ShortRun : .NET 8.0.2 (8.0.224.6711), X64 RyuJIT AVX-512F+CD+BW+DQ+VL+VBMI
+.NET SDK 9.0.100
+  [Host]   : .NET 9.0.0 (9.0.24.52809), X64 RyuJIT AVX-512F+CD+BW+DQ+VL+VBMI
+  ShortRun : .NET 9.0.0 (9.0.24.52809), X64 RyuJIT AVX-512F+CD+BW+DQ+VL+VBMI
 
 
 ```
-| Method                                    | Type                  | Mean      | StdDev    | Error     | Median    | Min       | Max       | Op/s   | Allocated |
-|------------------------------------------ |---------------------- |----------:|----------:|----------:|----------:|----------:|----------:|-------:|----------:|
-| &#39;Single (Tuple)&#39;                          | InsightBenchmarkWrite |  1.089 ms | 0.0831 ms | 0.0442 ms |  1.087 ms | 0.9701 ms |  1.281 ms | 918.46 |  50.21 KB |
-| &#39;Query&lt;T&gt; (Fast Expando)&#39;                 | InsightBenchmarkWrite |  1.099 ms | 0.0824 ms | 0.0428 ms |  1.087 ms | 0.9724 ms |  1.289 ms | 910.26 |  18.28 KB |
-| &#39;Single (Fast Expando)&#39;                   | InsightBenchmarkWrite |  1.099 ms | 0.0722 ms | 0.0380 ms |  1.096 ms | 0.9742 ms |  1.271 ms | 910.00 |  50.47 KB |
-| &#39;Auto Interface Single (dynamic)&#39;         | InsightBenchmark      |  1.102 ms | 0.1280 ms | 0.0682 ms |  1.067 ms | 0.9294 ms |  1.472 ms | 907.28 |  18.93 KB |
-| &#39;Query&lt;T&gt; Async&#39;                          | InsightBenchmarkWrite |  1.118 ms | 0.0876 ms | 0.0467 ms |  1.118 ms | 0.9581 ms |  1.470 ms | 894.23 |  18.76 KB |
-| &#39;Single Async (Fast Expando)&#39;             | InsightBenchmark      |  1.122 ms | 0.0697 ms | 0.0367 ms |  1.113 ms | 0.9874 ms |  1.339 ms | 891.31 |   50.9 KB |
-| &#39;Single (dynamic)&#39;                        | InsightBenchmark      |  1.126 ms | 0.1179 ms | 0.0620 ms |  1.101 ms | 0.9667 ms |  1.493 ms | 887.80 |  50.47 KB |
-| &#39;Single Async&#39;                            | InsightBenchmarkWrite |  1.127 ms | 0.0782 ms | 0.0416 ms |  1.110 ms | 1.0001 ms |  1.316 ms | 887.45 |  18.76 KB |
-| &#39;Single (dynamic)&#39;                        | InsightBenchmarkWrite |  1.127 ms | 0.1308 ms | 0.0679 ms |  1.089 ms | 0.9514 ms |  1.687 ms | 887.20 |  50.47 KB |
-| &#39;Single Procedure (dynamic)&#39;              | InsightBenchmarkWrite |  1.130 ms | 0.0782 ms | 0.0416 ms |  1.127 ms | 1.0048 ms |  1.316 ms | 884.73 |  20.55 KB |
-| Query&lt;T&gt;                                  | InsightBenchmarkWrite |  1.133 ms | 0.1251 ms | 0.0658 ms |  1.096 ms | 0.9619 ms |  1.584 ms | 882.56 |  18.31 KB |
-| &#39;Query&lt;T&gt; Async&#39;                          | InsightBenchmark      |  1.138 ms | 0.1024 ms | 0.0545 ms |  1.131 ms | 0.9629 ms |  1.527 ms | 879.00 |  50.93 KB |
-| &#39;Single Procedure (Fast Expando)&#39;         | InsightBenchmark      |  1.138 ms | 0.0719 ms | 0.0388 ms |  1.133 ms | 1.0311 ms |  1.339 ms | 878.92 |  52.73 KB |
-| &#39;Query&lt;T&gt; (dynamic)&#39;                      | InsightBenchmarkWrite |  1.139 ms | 0.1288 ms | 0.0686 ms |  1.098 ms | 0.9499 ms |  1.397 ms | 878.35 |  18.28 KB |
-| &#39;Query&lt;T&gt; Async (dynamic)&#39;                | InsightBenchmarkWrite |  1.139 ms | 0.1031 ms | 0.0535 ms |  1.126 ms | 0.9986 ms |  1.432 ms | 877.90 |  18.73 KB |
-| &#39;Query&lt;T&gt; Async (dynamic)&#39;                | InsightBenchmark      |  1.140 ms | 0.0965 ms | 0.0501 ms |  1.126 ms | 0.9960 ms |  1.454 ms | 877.56 |   50.9 KB |
-| Query&lt;T&gt;                                  | InsightBenchmark      |  1.141 ms | 0.0885 ms | 0.0471 ms |  1.119 ms | 1.0110 ms |  1.355 ms | 876.64 |  50.48 KB |
-| &#39;Single (Fast Expando)&#39;                   | InsightBenchmark      |  1.145 ms | 0.1791 ms | 0.0930 ms |  1.101 ms | 0.9618 ms |  1.770 ms | 873.72 |  50.47 KB |
-| Query&lt;(Tuple)&gt;                            | InsightBenchmark      |  1.145 ms | 0.1168 ms | 0.0614 ms |  1.116 ms | 1.0095 ms |  1.475 ms | 873.54 |  50.27 KB |
-| &#39;Single Procedure (dynamic)&#39;              | InsightBenchmark      |  1.145 ms | 0.0853 ms | 0.0448 ms |  1.121 ms | 0.9942 ms |  1.439 ms | 873.10 |  52.73 KB |
-| &#39;Single Async (dynamic)&#39;                  | InsightBenchmarkWrite |  1.146 ms | 0.1000 ms | 0.0532 ms |  1.121 ms | 0.9910 ms |  1.403 ms | 872.86 |  18.73 KB |
-| &#39;Query&lt;T&gt; Procedure (Fast Expando)&#39;       | InsightBenchmark      |  1.146 ms | 0.0774 ms | 0.0418 ms |  1.141 ms | 1.0358 ms |  1.409 ms | 872.28 |  20.54 KB |
-| &#39;Single Async (dynamic)&#39;                  | InsightBenchmark      |  1.151 ms | 0.1196 ms | 0.0628 ms |  1.130 ms | 0.9768 ms |  1.450 ms | 868.99 |   50.9 KB |
-| &#39;Query&lt;T&gt; Async (Fast Expando)&#39;           | InsightBenchmark      |  1.152 ms | 0.0976 ms | 0.0513 ms |  1.153 ms | 0.9881 ms |  1.478 ms | 868.15 |   50.9 KB |
-| &#39;Auto Interface Query&#39;                    | InsightBenchmark      |  1.154 ms | 0.1043 ms | 0.0548 ms |  1.144 ms | 1.0145 ms |  1.455 ms | 866.71 |  18.96 KB |
-| &#39;Query&lt;T&gt; Procedure Async (Fast Expando)&#39; | InsightBenchmark      |  1.160 ms | 0.0859 ms | 0.0457 ms |  1.142 ms | 1.0352 ms |  1.412 ms | 861.81 |  20.98 KB |
-| &#39;Single (Tuple)&#39;                          | InsightBenchmark      |  1.166 ms | 0.1640 ms | 0.0851 ms |  1.120 ms | 0.9764 ms |  1.708 ms | 857.32 |  50.21 KB |
-| &#39;Single Procedure Async (dynamic)&#39;        | InsightBenchmark      |  1.171 ms | 0.0915 ms | 0.0481 ms |  1.168 ms | 1.0099 ms |  1.405 ms | 853.84 |  53.16 KB |
-| Single                                    | InsightBenchmarkWrite |  1.172 ms | 0.1055 ms | 0.0562 ms |  1.160 ms | 1.0105 ms |  1.445 ms | 853.45 |  18.33 KB |
-| &#39;Query&lt;T&gt; Procedure Async&#39;                | InsightBenchmarkWrite |  1.172 ms | 0.0881 ms | 0.0457 ms |  1.160 ms | 0.9889 ms |  1.352 ms | 853.03 |  21.02 KB |
-| Single                                    | InsightBenchmark      |  1.173 ms | 0.1255 ms | 0.0643 ms |  1.147 ms | 0.9758 ms |  1.416 ms | 852.75 |   50.5 KB |
-| &#39;Single Async (Tuple)&#39;                    | InsightBenchmarkWrite |  1.174 ms | 0.1006 ms | 0.0516 ms |  1.155 ms | 1.0180 ms |  1.427 ms | 851.44 |  18.46 KB |
-| &#39;Query&lt;T&gt; Procedure (dynamic)&#39;            | InsightBenchmarkWrite |  1.184 ms | 0.1327 ms | 0.0689 ms |  1.155 ms | 0.9415 ms |  1.667 ms | 844.80 |  20.54 KB |
-| &#39;Single Procedure&#39;                        | InsightBenchmark      |  1.187 ms | 0.0952 ms | 0.0501 ms |  1.186 ms | 1.0232 ms |  1.430 ms | 842.34 |  52.76 KB |
-| &#39;Auto Interface Query (dynamic)&#39;          | InsightBenchmark      |  1.191 ms | 0.2086 ms | 0.1057 ms |  1.108 ms | 0.9730 ms |  2.045 ms | 839.69 |  18.93 KB |
-| &#39;Single Async (Tuple)&#39;                    | InsightBenchmarkWrite |  1.192 ms | 0.1157 ms | 0.0601 ms |  1.152 ms | 1.0280 ms |  1.462 ms | 838.79 |  18.41 KB |
-| &#39;Query&lt;T&gt; Procedure Async (dynamic)&#39;      | InsightBenchmark      |  1.195 ms | 0.1420 ms | 0.0728 ms |  1.157 ms | 1.0010 ms |  1.570 ms | 836.51 |  20.98 KB |
-| &#39;Query&lt;T&gt; (Fast Expando)&#39;                 | InsightBenchmark      |  1.197 ms | 0.1936 ms | 0.0981 ms |  1.121 ms | 1.0279 ms |  1.937 ms | 835.15 |  50.45 KB |
-| &#39;Single json&#39;                             | InsightBenchmarkJson  |  1.201 ms | 0.0937 ms | 0.0520 ms |  1.200 ms | 0.9839 ms |  1.458 ms | 832.32 |  44.52 KB |
-| &#39;Query&lt;T&gt; Procedure Async&#39;                | InsightBenchmark      |  1.207 ms | 0.1145 ms | 0.0618 ms |  1.179 ms | 1.0632 ms |  1.622 ms | 828.73 |  53.19 KB |
-| &#39;Single Procedure Async (Fast Expando)&#39;   | InsightBenchmark      |  1.207 ms | 0.1324 ms | 0.0696 ms |  1.147 ms | 1.0100 ms |  1.525 ms | 828.39 |  53.16 KB |
-| &#39;Query&lt;T&gt; Procedure&#39;                      | InsightBenchmark      |  1.209 ms | 0.1135 ms | 0.0612 ms |  1.186 ms | 1.0487 ms |  1.632 ms | 827.46 |  52.74 KB |
-| &#39;Single Async (Fast Expando)&#39;             | InsightBenchmarkWrite |  1.212 ms | 0.2302 ms | 0.1166 ms |  1.149 ms | 0.9742 ms |  2.060 ms | 824.76 |  18.73 KB |
-| &#39;Query&lt;T&gt; (dynamic)&#39;                      | InsightBenchmark      |  1.216 ms | 0.2852 ms | 0.1499 ms |  1.105 ms | 1.0159 ms |  2.159 ms | 822.64 |  50.45 KB |
-| &#39;Single Procedure&#39;                        | InsightBenchmarkWrite |  1.218 ms | 0.1255 ms | 0.0660 ms |  1.170 ms | 0.9865 ms |  1.495 ms | 820.75 |  20.59 KB |
-| &#39;Single Procedure Async&#39;                  | InsightBenchmarkWrite |  1.244 ms | 0.1414 ms | 0.0716 ms |  1.202 ms | 0.9960 ms |  1.560 ms | 804.14 |  21.02 KB |
-| &#39;Single Procedure Async (Fast Expando)&#39;   | InsightBenchmarkWrite |  1.246 ms | 0.1756 ms | 0.0961 ms |  1.193 ms | 1.0444 ms |  1.686 ms | 802.79 |  20.98 KB |
-| &#39;Query&lt;T&gt; Procedure (dynamic)&#39;            | InsightBenchmark      |  1.256 ms | 0.2095 ms | 0.1101 ms |  1.198 ms | 1.0281 ms |  1.819 ms | 796.05 |  20.54 KB |
-| &#39;Single Async json&#39;                       | InsightBenchmarkJson  |  1.259 ms | 0.0857 ms | 0.0468 ms |  1.236 ms | 1.1251 ms |  1.485 ms | 794.55 |  44.95 KB |
-| &#39;Single Async&#39;                            | InsightBenchmark      |  1.265 ms | 0.1716 ms | 0.0902 ms |  1.209 ms | 1.0307 ms |  1.733 ms | 790.71 |  50.93 KB |
-| &#39;Single Procedure (Fast Expando)&#39;         | InsightBenchmarkWrite |  1.267 ms | 0.2820 ms | 0.1482 ms |  1.170 ms | 0.9946 ms |  2.037 ms | 789.29 |  20.55 KB |
-| &#39;Single Procedure Async&#39;                  | InsightBenchmark      |  1.268 ms | 0.1405 ms | 0.0720 ms |  1.227 ms | 1.0824 ms |  1.580 ms | 788.62 |  53.19 KB |
-| &#39;Query&lt;T&gt; json&#39;                           | InsightBenchmarkJson  |  1.280 ms | 0.1884 ms | 0.0966 ms |  1.233 ms | 1.0227 ms |  1.901 ms | 781.39 |  44.51 KB |
-| &#39;Query&lt;T&gt; Async (Fast Expando)&#39;           | InsightBenchmarkWrite |  1.282 ms | 0.3163 ms | 0.1684 ms |  1.136 ms | 0.9947 ms |  2.285 ms | 780.02 |  18.73 KB |
-| &#39;Single Procedure Async (dynamic)&#39;        | InsightBenchmarkWrite |  1.285 ms | 0.2142 ms | 0.1085 ms |  1.245 ms | 0.9500 ms |  1.838 ms | 778.02 |  20.98 KB |
-| &#39;Query&lt;T&gt; Async json&#39;                     | InsightBenchmarkJson  |  1.294 ms | 0.1481 ms | 0.0759 ms |  1.237 ms | 1.1149 ms |  1.725 ms | 772.97 |  44.95 KB |
-| &#39;Single Async (Tuple)&#39;                    | InsightBenchmark      |  1.339 ms | 0.3424 ms | 0.1734 ms |  1.196 ms | 1.0019 ms |  2.381 ms | 746.65 |  50.71 KB |
-| &#39;Auto Interface Single&#39;                   | InsightBenchmark      |  1.351 ms | 0.4007 ms | 0.2106 ms |  1.174 ms | 1.0243 ms |  2.204 ms | 740.13 |  51.13 KB |
-| &#39;Query&lt;T&gt; Procedure Async (dynamic)&#39;      | InsightBenchmarkWrite |  1.363 ms | 0.3473 ms | 0.1849 ms |  1.227 ms | 1.0005 ms |  2.289 ms | 733.54 |  20.98 KB |
-| &#39;Query&lt;T&gt; Procedure&#39;                      | InsightBenchmarkWrite |  1.372 ms | 0.3382 ms | 0.1756 ms |  1.226 ms | 1.0247 ms |  2.342 ms | 728.92 |  20.57 KB |
-| &#39;Auto Interface Query (dynamic)&#39;          | InsightBenchmarkWrite |  1.373 ms | 0.2606 ms | 0.1388 ms |  1.467 ms | 0.9902 ms |  1.826 ms | 728.43 |  18.93 KB |
-| &#39;Auto Interface Single (dynamic)&#39;         | InsightBenchmarkWrite |  1.379 ms | 0.3750 ms | 0.1971 ms |  1.209 ms | 0.9730 ms |  2.162 ms | 725.34 |  18.93 KB |
-| &#39;Single Async (Tuple)&#39;                    | InsightBenchmark      |  1.403 ms | 0.2163 ms | 0.1096 ms |  1.432 ms | 1.0731 ms |  1.884 ms | 713.00 |  50.76 KB |
-| &#39;Auto Interface Single&#39;                   | InsightBenchmarkWrite |  1.470 ms | 0.3291 ms | 0.1752 ms |  1.493 ms | 1.0419 ms |  2.123 ms | 680.14 |  18.96 KB |
-| &#39;Auto Interface Query&#39;                    | InsightBenchmarkWrite |  1.568 ms | 0.1636 ms | 0.0849 ms |  1.560 ms | 1.2526 ms |  2.168 ms | 637.73 |  18.96 KB |
-| &#39;Query&lt;T&gt; Procedure Async (Fast Expando)&#39; | InsightBenchmarkWrite |  1.579 ms | 0.3302 ms | 0.1781 ms |  1.572 ms | 1.0555 ms |  2.335 ms | 633.23 |  20.98 KB |
-| &#39;Query&lt;T&gt; Procedure (Fast Expando)&#39;       | InsightBenchmarkWrite |  1.711 ms | 0.3696 ms | 0.1895 ms |  1.636 ms | 1.1287 ms |  2.473 ms | 584.57 |  20.54 KB |
-| Query&lt;(Tuple)&gt;                            | InsightBenchmarkWrite |  1.870 ms | 0.4405 ms | 0.2231 ms |  2.019 ms | 1.0674 ms |  2.545 ms | 534.72 |  17.97 KB |
-| &#39;Query&lt;T&gt; Parent/Child&#39;                   | InsightBenchmark      |  2.820 ms | 0.1369 ms | 0.0729 ms |  2.793 ms | 2.6390 ms |  3.292 ms | 354.62 |  72.65 KB |
-| &#39;Query&lt;T&gt; Parent/Child Together&#39;          | InsightBenchmark      |  3.038 ms | 0.5392 ms | 0.2798 ms |  2.798 ms | 2.5348 ms |  5.023 ms | 329.11 |  39.63 KB |
-| &#39;Query&lt;T&gt; Parent/Child Together&#39;          | InsightBenchmarkWrite |  3.113 ms | 0.3175 ms | 0.1628 ms |  3.103 ms | 2.6052 ms |  3.784 ms | 321.19 |   38.7 KB |
-| &#39;Query&lt;T&gt; Parent/Child&#39;                   | InsightBenchmarkWrite |  3.262 ms | 0.3899 ms | 0.2049 ms |  3.351 ms | 2.7005 ms |  4.123 ms | 306.57 |  40.35 KB |
-|                                           |                       |           |           |           |           |           |           |        |           |
-| Update&lt;T&gt;                                 | InsightBenchmarkWrite |  3.434 ms | 0.7728 ms | 0.3825 ms |  3.449 ms | 2.3553 ms |  4.816 ms | 291.17 |  21.84 KB |
-| &#39;Update&lt;T&gt; Async&#39;                         | InsightBenchmarkWrite |  3.462 ms | 0.7528 ms | 0.3727 ms |  3.721 ms | 2.3125 ms |  4.890 ms | 288.84 |  22.39 KB |
-| &#39;Insert&lt;T&gt; Async&#39;                         | InsightBenchmarkWrite |  3.572 ms | 0.8383 ms | 0.4150 ms |  3.643 ms | 2.3529 ms |  5.027 ms | 279.97 |   21.3 KB |
-| Insert&lt;T&gt;                                 | InsightBenchmarkWrite |  3.812 ms | 0.8477 ms | 0.4196 ms |  3.836 ms | 2.3426 ms |  5.376 ms | 262.33 |  20.97 KB |
-| &#39;Update&lt;T&gt; json&#39;                          | InsightBenchmarkJson  | 10.334 ms | 1.2036 ms | 0.6171 ms | 10.528 ms | 5.8813 ms | 11.569 ms |  96.77 |  32.48 KB |
-| &#39;Insert&lt;T&gt; json&#39;                          | InsightBenchmarkJson  | 10.395 ms | 0.4455 ms | 0.2284 ms | 10.421 ms | 8.9982 ms | 11.060 ms |  96.20 |  67.41 KB |
+| Method                                    | Type                  | Mean        | StdDev      | Error     | Median      | Min        | Max         | Op/s     | Allocated |
+|------------------------------------------ |---------------------- |------------:|------------:|----------:|------------:|-----------:|------------:|---------:|----------:|
+| &#39;Query&lt;T&gt; (Fast Expando)&#39;                 | InsightBenchmarkWrite |    996.1 μs |    90.37 μs |  46.33 μs |    989.3 μs |   832.8 μs |  1,299.2 μs | 1,003.94 |  21.92 KB |
+| &#39;Auto Interface Query (dynamic)&#39;          | InsightBenchmarkWrite |  1,000.8 μs |   113.48 μs |  58.90 μs |    960.7 μs |   863.2 μs |  1,404.1 μs |   999.18 |  22.57 KB |
+| &#39;Single Procedure (dynamic)&#39;              | InsightBenchmarkWrite |  1,004.8 μs |    63.53 μs |  33.83 μs |    989.4 μs |   915.1 μs |  1,175.8 μs |   995.19 |  24.98 KB |
+| &#39;Auto Interface Single (dynamic)&#39;         | InsightBenchmarkWrite |  1,019.1 μs |   141.65 μs |  73.52 μs |    992.4 μs |   852.8 μs |  1,495.8 μs |   981.25 |  22.57 KB |
+| &#39;Auto Interface Query (dynamic)&#39;          | InsightBenchmark      |  1,026.1 μs |   157.90 μs |  80.96 μs |    995.6 μs |   837.7 μs |  1,676.7 μs |   974.60 |  22.57 KB |
+| &#39;Auto Interface Single&#39;                   | InsightBenchmarkWrite |  1,033.1 μs |   104.18 μs |  52.16 μs |  1,015.5 μs |   867.8 μs |  1,246.8 μs |   967.94 |  22.59 KB |
+| &#39;Query&lt;T&gt; (dynamic)&#39;                      | InsightBenchmark      |  1,039.9 μs |   107.73 μs |  56.62 μs |  1,014.9 μs |   876.6 μs |  1,344.7 μs |   961.63 |  21.92 KB |
+| &#39;Query&lt;T&gt; Procedure&#39;                      | InsightBenchmarkWrite |  1,042.6 μs |   101.94 μs |  52.91 μs |  1,021.8 μs |   879.6 μs |  1,355.6 μs |   959.18 |  24.99 KB |
+| Query&lt;T&gt;                                  | InsightBenchmarkWrite |  1,051.1 μs |   117.59 μs |  58.88 μs |  1,032.1 μs |   852.8 μs |  1,350.5 μs |   951.37 |  21.95 KB |
+| &#39;Single (Fast Expando)&#39;                   | InsightBenchmarkWrite |  1,052.4 μs |   148.42 μs |  77.03 μs |  1,023.0 μs |   884.2 μs |  1,511.0 μs |   950.24 |  21.94 KB |
+| &#39;Single Async&#39;                            | InsightBenchmarkWrite |  1,057.5 μs |   100.45 μs |  51.50 μs |  1,040.1 μs |   918.4 μs |  1,342.5 μs |   945.61 |  24.23 KB |
+| Query&lt;T&gt;                                  | InsightBenchmark      |  1,058.3 μs |   141.92 μs |  73.66 μs |  1,028.8 μs |   910.8 μs |  1,552.8 μs |   944.93 |  21.95 KB |
+| &#39;Single (Tuple)&#39;                          | InsightBenchmarkWrite |  1,068.5 μs |   129.83 μs |  65.01 μs |  1,027.5 μs |   867.1 μs |  1,360.5 μs |   935.88 |  21.02 KB |
+| &#39;Query&lt;T&gt; Procedure (Fast Expando)&#39;       | InsightBenchmarkWrite |  1,068.8 μs |   112.75 μs |  58.52 μs |  1,046.0 μs |   920.7 μs |  1,496.5 μs |   935.60 |  24.97 KB |
+| &#39;Single Procedure (dynamic)&#39;              | InsightBenchmark      |  1,069.4 μs |   120.31 μs |  62.44 μs |  1,042.6 μs |   842.0 μs |  1,423.2 μs |   935.10 |  24.98 KB |
+| &#39;Single Procedure&#39;                        | InsightBenchmarkWrite |  1,079.2 μs |    90.81 μs |  47.73 μs |  1,049.1 μs |   942.6 μs |  1,354.1 μs |   926.64 |  25.01 KB |
+| Query&lt;(Tuple)&gt;                            | InsightBenchmarkWrite |  1,081.9 μs |   116.33 μs |  59.65 μs |  1,053.6 μs |   923.1 μs |  1,528.4 μs |   924.34 |  21.07 KB |
+| &#39;Query&lt;T&gt; Procedure (dynamic)&#39;            | InsightBenchmarkWrite |  1,098.6 μs |   131.01 μs |  69.75 μs |  1,084.7 μs |   937.4 μs |  1,470.8 μs |   910.21 |  24.97 KB |
+| &#39;Single Async (dynamic)&#39;                  | InsightBenchmarkWrite |  1,099.3 μs |   116.39 μs |  58.96 μs |  1,075.4 μs |   853.1 μs |  1,402.4 μs |   909.70 |  24.48 KB |
+| &#39;Single Procedure (Fast Expando)&#39;         | InsightBenchmarkWrite |  1,111.9 μs |   165.86 μs |  85.04 μs |  1,053.0 μs |   919.0 μs |  1,701.7 μs |   899.34 |  24.98 KB |
+| &#39;Query&lt;T&gt; Procedure (Fast Expando)&#39;       | InsightBenchmark      |  1,112.3 μs |   118.58 μs |  60.07 μs |  1,124.3 μs |   886.6 μs |  1,422.1 μs |   899.00 |  24.97 KB |
+| &#39;Single Async (Tuple)&#39;                    | InsightBenchmarkWrite |  1,118.9 μs |   117.03 μs |  62.31 μs |  1,102.7 μs |   950.5 μs |  1,557.5 μs |   893.77 |  23.54 KB |
+| &#39;Query&lt;T&gt; Async (dynamic)&#39;                | InsightBenchmarkWrite |  1,119.9 μs |   120.50 μs |  62.54 μs |  1,088.5 μs |   939.6 μs |  1,472.0 μs |   892.95 |  24.62 KB |
+| Query&lt;(Tuple)&gt;                            | InsightBenchmark      |  1,120.0 μs |   147.24 μs |  74.59 μs |  1,116.8 μs |   899.1 μs |  1,564.6 μs |   892.88 |  20.79 KB |
+| &#39;Query&lt;T&gt; (dynamic)&#39;                      | InsightBenchmarkWrite |  1,121.1 μs |   246.60 μs | 127.99 μs |  1,020.6 μs |   875.7 μs |  2,110.9 μs |   891.99 |  21.92 KB |
+| &#39;Auto Interface Query&#39;                    | InsightBenchmark      |  1,135.8 μs |   196.47 μs | 103.27 μs |  1,066.8 μs |   899.8 μs |  1,673.1 μs |   880.47 |  22.59 KB |
+| &#39;Single Async (Tuple)&#39;                    | InsightBenchmarkWrite |  1,135.8 μs |   123.77 μs |  62.71 μs |  1,112.6 μs |   980.7 μs |  1,668.5 μs |   880.45 |  23.49 KB |
+| &#39;Single Procedure&#39;                        | InsightBenchmark      |  1,148.0 μs |   166.37 μs |  85.30 μs |  1,095.8 μs |   938.5 μs |  1,589.8 μs |   871.10 |  24.73 KB |
+| &#39;Query&lt;T&gt; Procedure&#39;                      | InsightBenchmark      |  1,150.9 μs |   194.83 μs | 101.12 μs |  1,116.5 μs |   880.1 μs |  1,665.5 μs |   868.88 |  24.71 KB |
+| &#39;Query&lt;T&gt; Async (Fast Expando)&#39;           | InsightBenchmark      |  1,155.7 μs |   175.92 μs |  91.31 μs |  1,123.2 μs |   931.6 μs |  1,717.7 μs |   865.27 |  24.48 KB |
+| &#39;Single Procedure (Fast Expando)&#39;         | InsightBenchmark      |  1,155.7 μs |   174.11 μs |  92.70 μs |  1,115.1 μs |   938.4 μs |  1,652.3 μs |   865.25 |  24.98 KB |
+| &#39;Query&lt;T&gt; Async&#39;                          | InsightBenchmark      |  1,156.8 μs |   176.48 μs |  91.60 μs |  1,101.3 μs |   981.1 μs |  1,726.0 μs |   864.44 |  24.51 KB |
+| &#39;Single Procedure Async (dynamic)&#39;        | InsightBenchmarkWrite |  1,158.0 μs |    91.99 μs |  48.35 μs |  1,126.3 μs | 1,017.3 μs |  1,391.2 μs |   863.54 |  27.24 KB |
+| &#39;Query&lt;T&gt; Async (Fast Expando)&#39;           | InsightBenchmarkWrite |  1,165.3 μs |   176.57 μs |  92.80 μs |  1,116.2 μs |   919.3 μs |  1,619.5 μs |   858.16 |   24.2 KB |
+| Single                                    | InsightBenchmarkWrite |  1,168.5 μs |   305.53 μs | 156.65 μs |  1,034.7 μs |   830.0 μs |  1,956.1 μs |   855.77 |  21.96 KB |
+| &#39;Query&lt;T&gt; Procedure Async (Fast Expando)&#39; | InsightBenchmark      |  1,178.7 μs |   102.66 μs |  53.96 μs |  1,149.4 μs |   988.5 μs |  1,430.8 μs |   848.39 |  27.24 KB |
+| &#39;Query&lt;T&gt; Procedure Async (dynamic)&#39;      | InsightBenchmarkWrite |  1,181.4 μs |    98.77 μs |  50.04 μs |  1,158.7 μs | 1,035.8 μs |  1,414.5 μs |   846.42 |  27.53 KB |
+| &#39;Query&lt;T&gt; (Fast Expando)&#39;                 | InsightBenchmark      |  1,181.6 μs |   354.24 μs | 179.46 μs |  1,087.7 μs |   847.5 μs |  2,472.1 μs |   846.29 |  21.92 KB |
+| &#39;Single Procedure Async (Fast Expando)&#39;   | InsightBenchmarkWrite |  1,185.6 μs |   146.13 μs |  74.92 μs |  1,156.5 μs |   967.0 μs |  1,688.2 μs |   843.45 |  27.53 KB |
+| &#39;Auto Interface Query&#39;                    | InsightBenchmarkWrite |  1,185.8 μs |   280.18 μs | 140.29 μs |  1,084.0 μs |   835.3 μs |  1,912.2 μs |   843.30 |  22.59 KB |
+| &#39;Query&lt;T&gt; Procedure (dynamic)&#39;            | InsightBenchmark      |  1,186.3 μs |   232.56 μs | 123.82 μs |  1,106.0 μs |   929.1 μs |  2,023.3 μs |   842.95 |  24.69 KB |
+| &#39;Single json&#39;                             | InsightBenchmarkJson  |  1,189.0 μs |   156.61 μs |  84.49 μs |  1,164.7 μs |   947.8 μs |  1,608.5 μs |   841.02 |   48.1 KB |
+| &#39;Query&lt;T&gt; Procedure Async&#39;                | InsightBenchmarkWrite |  1,189.5 μs |   119.36 μs |  60.47 μs |  1,151.4 μs | 1,026.3 μs |  1,534.8 μs |   840.70 |  27.55 KB |
+| &#39;Query&lt;T&gt; Procedure Async (Fast Expando)&#39; | InsightBenchmarkWrite |  1,197.8 μs |   109.84 μs |  57.73 μs |  1,187.9 μs | 1,054.2 μs |  1,489.9 μs |   834.89 |  27.24 KB |
+| &#39;Single Procedure Async (dynamic)&#39;        | InsightBenchmark      |  1,199.0 μs |   131.88 μs |  71.15 μs |  1,184.6 μs | 1,007.0 μs |  1,598.9 μs |   834.03 |  27.53 KB |
+| &#39;Query&lt;T&gt; json&#39;                           | InsightBenchmarkJson  |  1,200.8 μs |   215.70 μs | 110.59 μs |  1,125.6 μs |   951.2 μs |  1,763.6 μs |   832.79 |  48.37 KB |
+| &#39;Auto Interface Single&#39;                   | InsightBenchmark      |  1,203.3 μs |   268.41 μs | 137.62 μs |  1,109.1 μs |   890.3 μs |  1,997.0 μs |   831.03 |  22.31 KB |
+| &#39;Single Async json&#39;                       | InsightBenchmarkJson  |  1,205.2 μs |   121.99 μs |  64.95 μs |  1,174.8 μs | 1,030.6 μs |  1,622.8 μs |   829.75 |  50.65 KB |
+| &#39;Query&lt;T&gt; Procedure Async&#39;                | InsightBenchmark      |  1,231.3 μs |   116.08 μs |  61.01 μs |  1,201.2 μs | 1,045.1 μs |  1,487.8 μs |   812.14 |  26.98 KB |
+| &#39;Single Procedure Async&#39;                  | InsightBenchmark      |  1,234.7 μs |   140.48 μs |  72.02 μs |  1,206.9 μs | 1,025.2 μs |  1,640.8 μs |   809.88 |  27.55 KB |
+| &#39;Query&lt;T&gt; Async&#39;                          | InsightBenchmarkWrite |  1,235.7 μs |   233.54 μs | 119.74 μs |  1,149.7 μs |   950.4 μs |  1,890.2 μs |   809.27 |  25.05 KB |
+| &#39;Single (dynamic)&#39;                        | InsightBenchmarkWrite |  1,241.4 μs |   362.86 μs | 190.72 μs |  1,089.7 μs |   861.7 μs |  2,150.6 μs |   805.54 |  21.66 KB |
+| &#39;Single Procedure Async (Fast Expando)&#39;   | InsightBenchmark      |  1,245.0 μs |   181.37 μs |  92.99 μs |  1,191.2 μs | 1,029.3 μs |  1,761.4 μs |   803.21 |  27.53 KB |
+| &#39;Query&lt;T&gt; Procedure Async (dynamic)&#39;      | InsightBenchmark      |  1,253.3 μs |   156.34 μs |  84.35 μs |  1,181.5 μs | 1,026.9 μs |  1,652.6 μs |   797.91 |  27.53 KB |
+| &#39;Single Async (Fast Expando)&#39;             | InsightBenchmark      |  1,255.2 μs |   204.53 μs | 104.87 μs |  1,285.9 μs |   946.0 μs |  2,026.0 μs |   796.68 |  23.91 KB |
+| &#39;Single Procedure Async&#39;                  | InsightBenchmarkWrite |  1,272.4 μs |   235.93 μs | 120.96 μs |  1,188.4 μs |   996.0 μs |  1,862.3 μs |   785.94 |  27.55 KB |
+| &#39;Query&lt;T&gt; Async (dynamic)&#39;                | InsightBenchmark      |  1,273.2 μs |   215.39 μs | 111.79 μs |  1,228.6 μs |   949.1 μs |  1,909.5 μs |   785.43 |   24.2 KB |
+| &#39;Single Async (Fast Expando)&#39;             | InsightBenchmarkWrite |  1,275.0 μs |   418.44 μs | 214.54 μs |  1,092.2 μs |   913.4 μs |  2,432.9 μs |   784.32 |   24.9 KB |
+| &#39;Auto Interface Single (dynamic)&#39;         | InsightBenchmark      |  1,276.3 μs |   356.22 μs | 184.89 μs |  1,152.0 μs |   898.4 μs |  2,406.3 μs |   783.53 |  22.29 KB |
+| &#39;Single Async (Tuple)&#39;                    | InsightBenchmark      |  1,290.6 μs |   195.49 μs | 101.47 μs |  1,236.2 μs | 1,013.5 μs |  1,839.7 μs |   774.84 |  23.49 KB |
+| &#39;Single Async&#39;                            | InsightBenchmark      |  1,316.5 μs |   249.17 μs | 130.96 μs |  1,203.8 μs |   997.1 μs |  1,793.7 μs |   759.61 |  24.22 KB |
+| &#39;Single (Tuple)&#39;                          | InsightBenchmark      |  1,347.9 μs |   405.02 μs | 205.19 μs |  1,257.2 μs |   888.4 μs |  2,357.8 μs |   741.91 |  21.02 KB |
+| &#39;Single Async (dynamic)&#39;                  | InsightBenchmark      |  1,356.9 μs |   285.11 μs | 142.76 μs |  1,291.4 μs |   958.3 μs |  2,011.6 μs |   736.99 |  24.48 KB |
+| &#39;Single (dynamic)&#39;                        | InsightBenchmark      |  1,388.2 μs |   404.04 μs | 204.69 μs |  1,252.0 μs |   855.4 μs |  2,310.4 μs |   720.38 |  21.94 KB |
+| &#39;Single Async (Tuple)&#39;                    | InsightBenchmark      |  1,423.4 μs |   321.24 μs | 162.74 μs |  1,418.0 μs | 1,002.1 μs |  2,171.9 μs |   702.54 |  23.25 KB |
+| &#39;Single (Fast Expando)&#39;                   | InsightBenchmark      |  1,460.5 μs |   289.84 μs | 145.13 μs |  1,455.9 μs |   912.3 μs |  2,195.2 μs |   684.68 |  21.94 KB |
+| Single                                    | InsightBenchmark      |  1,733.1 μs |   309.04 μs | 164.54 μs |  1,655.0 μs | 1,204.7 μs |  2,474.2 μs |   577.01 |  21.68 KB |
+| &#39;Query&lt;T&gt; Async json&#39;                     | InsightBenchmarkJson  |  1,758.9 μs |   403.02 μs | 204.17 μs |  1,828.5 μs | 1,158.8 μs |  2,493.2 μs |   568.53 |  50.93 KB |
+| &#39;Query&lt;T&gt; Parent/Child Together&#39;          | InsightBenchmarkWrite |  2,635.8 μs |   181.63 μs |  96.70 μs |  2,589.1 μs | 2,402.3 μs |  3,234.0 μs |   379.39 |  47.49 KB |
+| &#39;Query&lt;T&gt; Parent/Child Together&#39;          | InsightBenchmark      |  2,724.1 μs |   259.33 μs | 134.60 μs |  2,659.1 μs | 2,370.4 μs |  3,473.5 μs |   367.10 |  47.49 KB |
+| &#39;Query&lt;T&gt; Parent/Child&#39;                   | InsightBenchmarkWrite |  2,750.1 μs |   148.50 μs |  79.07 μs |  2,713.2 μs | 2,530.2 μs |  3,186.9 μs |   363.62 |  46.95 KB |
+| &#39;Query&lt;T&gt; Parent/Child&#39;                   | InsightBenchmark      |  2,766.1 μs |   360.60 μs | 184.88 μs |  2,657.6 μs | 2,428.3 μs |  4,281.6 μs |   361.52 |  46.95 KB |
+|                                           |                       |             |             |           |             |            |             |          |           |
+| &#39;Insert&lt;T&gt; json&#39;                          | InsightBenchmarkJson  | 10,267.7 μs | 1,344.73 μs | 689.45 μs | 10,442.9 μs | 5,307.7 μs | 11,938.3 μs |    97.39 |   35.7 KB |
+| Insert&lt;T&gt;                                 | InsightBenchmarkWrite | 10,280.9 μs |   800.54 μs | 396.30 μs | 10,364.9 μs | 5,709.9 μs | 11,403.9 μs |    97.27 |  23.45 KB |
+| &#39;Update&lt;T&gt; json&#39;                          | InsightBenchmarkJson  | 10,615.1 μs |   546.99 μs | 280.45 μs | 10,590.8 μs | 9,471.8 μs | 11,715.4 μs |    94.21 |  36.06 KB |
+| &#39;Insert&lt;T&gt; Async&#39;                         | InsightBenchmarkWrite | 10,649.2 μs |   581.77 μs | 294.73 μs | 10,632.1 μs | 8,989.6 μs | 12,039.8 μs |    93.90 |  25.48 KB |
+| &#39;Update&lt;T&gt; Async&#39;                         | InsightBenchmarkWrite | 10,702.5 μs |   935.79 μs | 485.71 μs | 10,766.1 μs | 5,888.2 μs | 11,844.2 μs |    93.44 |  26.11 KB |
+| Update&lt;T&gt;                                 | InsightBenchmarkWrite | 10,882.0 μs |   631.52 μs | 331.93 μs | 10,925.7 μs | 8,772.0 μs | 12,091.0 μs |    91.89 |  23.52 KB |
