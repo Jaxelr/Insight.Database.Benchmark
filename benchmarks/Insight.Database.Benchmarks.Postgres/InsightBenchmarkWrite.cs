@@ -10,7 +10,7 @@ public class InsightBenchmarkWrite : InsightBenchmark
 {
     public static IEnumerable<Post> Posts()
     {
-        yield return new Post() { Text = new string('x', 2000), CreationDate = DateTime.Now, LastChangeDate = DateTime.Now };
+        yield return new Post() { Text = new string('x', 2000), CreationDate = DateTime.UtcNow, LastChangeDate = DateTime.UtcNow };
     }
 
     [Benchmark(Description = "Insert<T>")]
