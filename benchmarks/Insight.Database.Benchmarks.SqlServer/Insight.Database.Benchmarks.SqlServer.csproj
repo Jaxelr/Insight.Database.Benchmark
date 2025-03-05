@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,13 +6,6 @@
     <RootNamespace>Insight.Database.Benchmarks.SqlServer</RootNamespace>
     <AssemblyName>Insight.Database.Benchmarks.SqlServer</AssemblyName>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Insight.Database" Version="8.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Insight.Database.Benchmarks.Models\Insight.Database.Benchmarks.Models.csproj" />
