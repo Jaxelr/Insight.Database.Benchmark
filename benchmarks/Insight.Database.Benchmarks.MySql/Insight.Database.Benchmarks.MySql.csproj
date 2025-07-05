@@ -1,14 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net9.0</TargetFramework>
     <AssemblyName>Insight.Database.Benchmarks.MySql</AssemblyName>
     <RootNamespace>Insight.Database.Benchmarks.MySql</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Insight.Database.Providers.MySql" Version="8.0.5" />
+    <PackageReference Include="Insight.Database.Providers.MySql" />
   </ItemGroup>
 
   <ItemGroup>

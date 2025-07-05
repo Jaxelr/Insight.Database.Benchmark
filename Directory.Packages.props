@@ -1,0 +1,15 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="BenchmarkDotNet" Version="0.15.0" />
+    <PackageVersion Include="Insight.Database" Version="8.0.5" />
+    <PackageVersion Include="Insight.Database.Providers.MySql" Version="8.0.5" />
+    <PackageVersion Include="Insight.Database.Providers.PostgreSQL" Version="8.0.5" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.5" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.5" />
+    <PackageVersion Include="System.Data.SQLite" Version="1.0.119" />
+  </ItemGroup>
+</Project>
