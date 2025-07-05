@@ -1,6 +1,6 @@
 # Insight.Database.Benchmarks
 
-![.NET](https://github.com/Jaxelr/Insight.Database.Benchmark/workflows/.NET/badge.svg?branch=master)
+[![.NET](https://github.com/Jaxelr/Insight.Database.Benchmark/actions/workflows/ci.yml/badge.svg)](https://github.com/Jaxelr/Insight.Database.Benchmark/actions/workflows/ci.yml)
 
 These are benchmark scenarios for the ORM library [Insight.Database](https://github.com/jonwagner/Insight.Database) under various providers
 
