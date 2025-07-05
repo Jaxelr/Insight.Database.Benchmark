@@ -1,12 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <LangVersion>Latest</LangVersion>
-  </PropertyGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="Insight.Database" Version="8.0.5" />
+    <PackageReference Include="Insight.Database" />
   </ItemGroup>
 
 </Project>
