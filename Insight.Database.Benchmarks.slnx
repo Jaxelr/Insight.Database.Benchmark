@@ -1,0 +1,29 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="benchmarks/Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/Solution Items/.docker/">
+    <File Path=".docker/.env" />
+    <File Path=".docker/build-docker-compose-localhost.md" />
+    <File Path=".docker/docker-compose.yml" />
+  </Folder>
+  <Folder Name="/Solution Items/.github/">
+    <File Path=".github/CONTRIBUTING.md" />
+    <File Path=".github/dependabot.yml" />
+    <File Path=".github/PULL_REQUEST_TEMPLATE.md" />
+  </Folder>
+  <Folder Name="/Solution Items/.github/workflow/">
+    <File Path=".github/workflows/ci.yml" />
+  </Folder>
+  <Project Path="benchmarks/Insight.Database.Benchmarks.Models/Insight.Database.Benchmarks.Models.csproj" />
+  <Project Path="benchmarks/Insight.Database.Benchmarks.MySql/Insight.Database.Benchmarks.MySql.csproj" />
+  <Project Path="benchmarks/Insight.Database.Benchmarks.Postgres/Insight.Database.Benchmarks.Postgres.csproj" />
+  <Project Path="benchmarks/Insight.Database.Benchmarks.Sqlite/Insight.Database.Benchmarks.Sqlite.csproj" />
+  <Project Path="benchmarks/Insight.Database.Benchmarks.SqlServer/Insight.Database.Benchmarks.SqlServer.csproj" />
+  <Project Path="benchmarks/Insight.Database.Benchmarks/Insight.Database.Benchmarks.csproj" />
+</Solution>
