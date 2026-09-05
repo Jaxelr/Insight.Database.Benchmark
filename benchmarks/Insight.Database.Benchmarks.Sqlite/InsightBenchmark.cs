@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data.SQLite;
+using Microsoft.Data.Sqlite;
 using System.Linq;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
@@ -11,7 +11,7 @@ namespace Insight.Database.Benchmarks.Sqlite;
 
 public class InsightBenchmark : BaseBenchmark
 {
-    protected SQLiteConnection connection;
+    protected SqliteConnection connection;
 
     [Benchmark(Description = "Single")]
     [BenchmarkCategory("Read")]
@@ -141,7 +141,7 @@ public class InsightBenchmark : BaseBenchmark
     [GlobalSetup]
     public void DbSetup()
     {
-        connection = new SQLiteConnection(connectionString);
+        connection = new SqliteConnection(connectionString);
         SqlInsightDbProvider.RegisterProvider();
         connection.Open();
 
