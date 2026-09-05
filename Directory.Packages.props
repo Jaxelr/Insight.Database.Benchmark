@@ -5,11 +5,11 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="BenchmarkDotNet" Version="0.15.8" />
-    <PackageVersion Include="Insight.Database" Version="8.0.5" />
-    <PackageVersion Include="Insight.Database.Providers.MySql" Version="8.0.5" />
-    <PackageVersion Include="Insight.Database.Providers.PostgreSQL" Version="8.0.5" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="10.0.1" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="10.0.1" />
-    <PackageVersion Include="System.Data.SQLite" Version="1.0.119" />
+    <PackageVersion Include="Insight.Database" Version="8.0.6" />
+    <PackageVersion Include="Insight.Database.Providers.MySql" Version="8.0.6" />
+    <PackageVersion Include="Insight.Database.Providers.PostgreSQL" Version="8.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="10.0.11" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="10.0.11" />
+    <PackageVersion Include="System.Data.SQLite" Version="2.0.4" />
   </ItemGroup>
 </Project>
